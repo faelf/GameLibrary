@@ -83,7 +83,7 @@ document.addEventListener("click", (event) => {
 */
 window.addEventListener("load", () => {
   // Get the page name from the URL hash (without the '#' symbol)
-  const initialPage = window.location.hash.substring(1) || "home";
+  const initialPage = window.location.hash.substring(1) || "home-page";
   // Load the initial page
   updateMainContent(initialPage);
 });
@@ -96,7 +96,7 @@ window.addEventListener("load", () => {
 */
 window.addEventListener("popstate", () => {
   // Get page from hash or default
-  const currentPage = window.location.hash.substring(1) || "home";
+  const currentPage = window.location.hash.substring(1) || "home-page";
   // Load the page
   updateMainContent(currentPage);
 });
