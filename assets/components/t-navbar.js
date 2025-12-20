@@ -16,6 +16,9 @@ class TNavbar extends HTMLElement {
             <li class="nav-item">
               <a href="#games-list-page" class="nav-link" data-page="games-list-page">Games List</a>
             </li>
+            <li class="nav-item">
+              <a href="#settings-page" class="nav-link" data-page="settings-page">Settings</a>
+            </li>
           </ul>
         </div>
       </div>
