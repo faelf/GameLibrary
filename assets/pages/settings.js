@@ -1,4 +1,5 @@
 import { gamesStorage } from "../data/games-storage.js";
+import { config } from "../data/config.js";
 
 export const settingsPage = {
   title: "Settings",
@@ -15,10 +16,12 @@ export const settingsPage = {
 
         <div class="card-body">
           <div class="mb-3">
-            <label for="first_name" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="first_name">
+            <label for="first-name" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="first-name">
             <div class="form-text mb-3">It will be displayed in the dashboard.</div>
-            <button type="button" class="btn btn-primary"><span class="bi bi-floppy-fill"></span>Save</button>
+            <button id="first-name-btn" type="button" class="btn btn-primary">
+              <span class="bi bi-floppy-fill"></span>Save
+            </button>
           </div>
         </div>
       </div>
@@ -127,11 +130,32 @@ export const settingsPage = {
   setup() {
     const toastBody = document.getElementById("toast-body");
     const currency = document.getElementById("currency-select");
+    const firstName = document.getElementById("first-name");
+    const firstNameBtn = document.getElementById("first-name-btn");
     const deleteData = document.getElementById("delete-data");
     const exportButton = document.getElementById("export-data");
     const importInput = document.getElementById("import-data");
     const importBtn = document.getElementById("import-data-btn");
     let gamesData = gamesStorage.load();
+
+    // Display First Name
+    firstName.value = config.getFirstName();
+
+    // Save Personal Information
+    function updateFirstName() {
+      const firstNameInput = firstName.value;
+      localStorage.setItem("first-name", firstNameInput);
+
+      let lsFirstName = firstNameInput;
+
+      // Show toast notification
+      toastBody.innerText = `Name updated successfully!`;
+      const toastElement = document.getElementById("currency-toast");
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
+    }
+
+    firstNameBtn.addEventListener("click", updateFirstName);
 
     // Export into CSV
     function exportGamesToCSV() {
