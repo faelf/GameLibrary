@@ -124,6 +124,12 @@ class TAddGame extends HTMLElement {
 
       // Updates the array on Local Storage
       gamesStorage.save(games);
+
+      // Close the modal
+      const modal = bootstrap.Modal.getInstance(
+        document.getElementById("add-game")
+      );
+      modal.hide();
     }
 
     addGameBtn.addEventListener("click", addGame);
