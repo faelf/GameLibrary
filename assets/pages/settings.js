@@ -60,7 +60,7 @@ export const settingsPage = {
             <p class="card-text">
               Download your entire game library as a file for backup or transfer.
             </p>
-            <button class="btn btn-primary">
+            <button id="export-data" class="btn btn-primary">
               <span class="bi bi-cloud-arrow-down-fill"></span>
               Export Games
             </button>
@@ -102,7 +102,62 @@ export const settingsPage = {
   setup() {
     const currency = document.getElementById("currency-select");
     const deleteData = document.getElementById("delete-data");
+    const exportButton = document.getElementById("export-data");
     let gamesData = gamesStorage.load();
+
+    // Export into CSV
+    function exportGamesToCSV() {
+      if (gamesData.length === 0) {
+        alert("No games to export!");
+        return;
+      }
+
+      // Create CSV header
+      const headers = [
+        "id",
+        "name",
+        "platform",
+        "year",
+        "status",
+        "purchase_date",
+        "price",
+      ];
+      const csvRows = [headers.join(",")];
+
+      // Add each game as a CSV row
+      gamesData.forEach((game) => {
+        const row = [
+          game.id,
+          `"${game.name}"`, // Quote text fields to handle commas
+          game.platform,
+          game.year,
+          game.status,
+          game.purchase_date,
+          game.price,
+        ];
+        csvRows.push(row.join(","));
+      });
+
+      // Convert array of rows into a single CSV string
+      const csvString = csvRows.join("\n");
+
+      // Create a Blob and URL for download
+      const blob = new Blob([csvString], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+
+      // Create a temporary link and click it to trigger download
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "games-library.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      // Release the object URL
+      URL.revokeObjectURL(url);
+    }
+
+    exportButton.addEventListener("click", exportGamesToCSV);
 
     // Delete Data
     deleteData.addEventListener("click", function () {
