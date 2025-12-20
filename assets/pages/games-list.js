@@ -36,8 +36,16 @@ export const gamesListPage = {
         <td data-cell="Status">${game.status}</td>
         <td data-cell="Purchase Date">${formattedDate}</td>
         <td data-cell="Price">£${parseFloat(game.price).toFixed(2)}</td>
-        <td data-cell="Edit"><button type="button" class="btn btn-sm btn-warning">Edit</button></td>
-        <td data-cell="Delete"><button type="button" class="btn btn-sm btn-danger">Delete</button></td>
+        <td data-cell="Edit" class="text-lg-center">
+          <button type="button" class="btn btn-sm btn-warning">
+            <span class="bi bi-pencil-square"></span>
+          </button>
+        </td>
+        <td data-cell="Delete" class="text-lg-center">
+          <button type="button" class="btn btn-sm btn-danger">
+            <span class="bi bi-trash3-fill"></span>
+          </button>
+        </td>
       </tr>
     `;
     }
