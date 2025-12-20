@@ -18,6 +18,68 @@ export const settingsPage = {
         </select>
       </div>
     </div>
+
+    <div class="card mb-3">
+      <div class="card-header">
+        <h3 class="mb-0">Game Data</h3>
+      </div>
+      <div class="card-body">
+        <div class="row">
+
+          <!-- Import (Replace) -->
+          <div class="col-md-6 col-xl-4 mb-3">
+            <h4>Import Game Data</h4>
+            <p class="card-text">
+              Restore your library from an exported file.<br>
+              <strong>All existing data will be replaced.</strong>
+            </p>
+            <button class="btn btn-primary">
+              <span class="bi bi-cloud-arrow-up-fill"></span>
+              Import & Replace
+            </button>
+          </div>
+
+          <!-- Merge -->
+          <div class="col-md-6 col-xl-4 mb-3">
+            <h4>Merge Game Data</h4>
+            <p class="card-text">
+              Add games from an exported file to your existing library.<br>
+              No current data will be removed.
+            </p>
+            <button class="btn btn-primary">
+              <span class="bi bi-cloud-plus-fill"></span>
+              Import & Merge
+            </button>
+          </div>
+
+          <!-- Export -->
+          <div class="col-md-6 col-xl-4 mb-3">
+            <h4>Export Game Data</h4>
+            <p class="card-text">
+              Download your entire game library as a file for backup or transfer.
+            </p>
+            <button class="btn btn-primary">
+              <span class="bi bi-cloud-arrow-down-fill"></span>
+              Export Games
+            </button>
+          </div>
+
+          <!-- Delete -->
+          <div class="col-md-6 col-xl-4 mb-3">
+            <h4>Delete Game Data</h4>
+            <p class="card-text">
+              Permanently removes <strong>all games</strong> from your library.<br>
+              This action cannot be undone.
+            </p>
+            <button class="btn btn-danger">
+              <span class="bi-trash3-fill"></span>
+              Delete All Games
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </section>
 
 <!-- Toast Currency -->
