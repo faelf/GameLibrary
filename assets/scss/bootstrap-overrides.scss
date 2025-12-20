@@ -1,2 +1,27 @@
 // Import Bootstrap
 @import "../../node_modules/bootstrap/scss/bootstrap";
+
+@media (max-width: 992px) {
+  thead {
+    display: none;
+  }
+  tbody td,
+  tfoot td {
+    display: grid;
+    grid-template-columns: 15ch auto;
+  }
+
+  tbody td:first-child {
+    margin-top: 0.5rem;
+  }
+
+  tbody td:last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  tbody td::before {
+    content: attr(data-cell) ": ";
+    font-weight: 600;
+  }
+}
+
