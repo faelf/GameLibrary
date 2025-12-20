@@ -1,7 +1,7 @@
 class TNavbar extends HTMLElement {
   connectedCallback() {
     this.innerHTML = /* html */ `
-    <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-sm bg-body-tertiary">
       <div class="container">
         <a href="#" class="navbar-brand" data-page="home">Game Library</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
