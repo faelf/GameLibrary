@@ -19,6 +19,21 @@ export const settingsPage = {
       </div>
     </div>
   </section>
+
+<!-- Toast Currency -->
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="currency-toast" class="toast" role="alert">
+      <div class="toast-header">
+        <span class="bi bi-check-circle-fill text-success me-2"></span>
+        <strong class="me-auto">Success</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+      </div>
+      <div class="toast-body">
+        Currency saved successfully!
+      </div>
+    </div>
+  </div>
+
   `,
   setup() {
     const currency = document.getElementById("currency-select");
@@ -31,6 +46,11 @@ export const settingsPage = {
     currency.addEventListener("change", (e) => {
       localStorage.setItem("currency", e.target.value);
       console.log("Currency saved:", e.target.value);
+
+      // Show toast notification
+      const toastElement = document.getElementById("currency-toast");
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
     });
   },
 };
