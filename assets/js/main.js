@@ -5,6 +5,7 @@ import { gamesListPage } from "../pages/games-list.js";
 // Import components
 import "../components/t-navbar.js";
 import "../components/t-footer.js";
+import "../components/t-add-game.js";
 
 // Combine all pages into the pageContent object
 const pageContent = {
