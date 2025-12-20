@@ -1,5 +1,9 @@
+import { config } from "../data/config.js";
+
 class TAddGame extends HTMLElement {
   connectedCallback() {
+    const currency = config.getCurrency();
+
     this.innerHTML = /* html */ `
 
 <!-- Button trigger modal -->
@@ -64,7 +68,7 @@ class TAddGame extends HTMLElement {
             <div class="col-4 mb-3">
               <label for="game-price" class="form-label">Price</label>
               <div class="input-group">
-                <span class="input-group-text" id="basic-addon3">£</span>
+                <span class="input-group-text" id="basic-addon3">${currency}</span>
                 <input type="text" step="0.01" class="form-control" id="game-price" required>
               </div>
             </div>
