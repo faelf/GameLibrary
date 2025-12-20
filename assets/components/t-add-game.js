@@ -29,8 +29,8 @@ class TAddGame extends HTMLElement {
         <div class="modal-body">
           <div class="row">
             <div class="col-12 mb-3">
-              <label for="game-name" class="form-label">Game Title</label>
-              <input type="text" class="form-control" id="game-name" required>
+              <label for="game-title" class="form-label">Game Title</label>
+              <input type="text" class="form-control" id="game-title" required>
             </div>
             <div class="col-6 mb-3">
               <label class="form-label" for="platform">Platform</label>
@@ -77,7 +77,7 @@ class TAddGame extends HTMLElement {
 
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-success">
+          <button id="add-game-btn" type="button" class="btn btn-success">
             <span class="bi bi-plus-circle-fill"></span> Add Game
           </button>
           <button type="reset" class="btn btn-warning">
@@ -94,6 +94,28 @@ class TAddGame extends HTMLElement {
 </div>
 
    `;
+
+    const addGameBtn = document.getElementById("add-game-btn");
+
+    function addGame() {
+      const gameTitle = document.getElementById("game-title").value;
+      const platform = document.getElementById("platform").value;
+      const status = document.getElementById("status").value;
+      const year = document.getElementById("game-year").value;
+      const purchaseDate = document.getElementById("game-purchase-date").value;
+      const price = document.getElementById("game-price").value;
+
+      console.log("Form data:", {
+        name: gameTitle,
+        platform: platform,
+        status: status,
+        year: year,
+        purchase_date: purchaseDate,
+        price: price,
+      });
+    }
+
+    addGameBtn.addEventListener("click", addGame);
   }
 }
 
