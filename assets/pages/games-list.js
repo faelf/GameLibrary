@@ -1,3 +1,4 @@
+import { config } from "../data/config.js";
 import { games } from "../data/games.js";
 
 export const gamesListPage = {
@@ -24,6 +25,8 @@ export const gamesListPage = {
     const tbody = document.getElementById("games-list");
 
     function renderGameRow(game) {
+      const currency = config.getCurrency();
+
       const date = new Date(game.purchase_date);
       const formattedDate = date.toLocaleDateString("en-GB", {
         day: "numeric",
@@ -38,7 +41,10 @@ export const gamesListPage = {
         <td data-cell="Year">${game.year}</td>
         <td data-cell="Status">${game.status}</td>
         <td data-cell="Purchase Date">${formattedDate}</td>
-        <td data-cell="Price">£${parseFloat(game.price).toFixed(2)}</td>
+        <td data-cell="Price">
+          ${currency}
+          ${parseFloat(game.price).toFixed(2)}
+        </td>
         <td data-cell="Edit" class="text-lg-center">
           <button type="button" class="btn btn-sm btn-warning">
             <span class="bi bi-pencil-square"></span>
