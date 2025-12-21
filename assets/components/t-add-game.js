@@ -35,7 +35,7 @@ class TAddGame extends HTMLElement {
               <input type="text" class="form-control" id="game-title" required>
             </div>
             <!-- Game Platform -->
-            <div class="col-6 mb-3">
+            <div class="col-sm-6 col-xl-4 mb-3">
               <label class="form-label" for="game-platform">Platform</label>
               <select class="form-select" id="game-platform" name="game-platform" required>
                 <option value="" selected disabled>Select a platform</option>
@@ -55,7 +55,7 @@ class TAddGame extends HTMLElement {
               </select>
             </div>
             <!-- Game Status -->
-            <div class="col-6 mb-3">
+            <div class="col-sm-6 col-xl-4 mb-3">
               <label class="form-label" for="game-status">Status</label>
               <select class="form-select" id="game-status" name="game-status" required>
                 <option value="" selected disabled>Status</option>
@@ -64,26 +64,19 @@ class TAddGame extends HTMLElement {
                 <option value="Completed">Completed</option>
               </select>
             </div>
-            <!-- Game Year -->
-            <div class="col-4 mb-3">
-              <label for="game-year" class="form-label">Year</label>
-              <input type="text" class="form-control" id="game-year">
-            </div>
-            <!-- Game Purchase Date -->
-            <div class="col-4 mb-3">
-              <label for="game-purchase-date" class="form-label">Purchase Date</label>
-              <input type="date" class="form-control" id="game-purchase-date">
-            </div>
-            <!-- Game Price -->
-            <div class="col-4 mb-3">
-              <label for="game-price" class="form-label">Price</label>
-              <div class="input-group">
-                <span class="input-group-text">${currency}</span>
-                <input type="text" class="form-control" id="game-price" required>
-              </div>
+            <!-- Game Ownership Status -->
+            <div class="col-sm-6 col-xl-4 mb-3">
+              <label class="form-label" for="game-ownership-status">Ownership Status</label>
+              <select class="form-select" id="game-ownership-status" name="game-ownership-status" required>
+                <option value="" selected disabled>Select ownership status</option>
+                <option value="In Collection">In Collection</option>
+                <option value="Borrowed">Borrowed</option>
+                <option value="Lent Out">Lent to Someone</option>
+                <option value="Sold">Sold</option>
+              </select>
             </div>
             <!-- Game Region -->
-            <div class="col-4 mb-3">
+            <div class="col-sm-6 col-xl-4 mb-3">
               <label class="form-label" for="game-region">Region</label>
               <select class="form-select" id="game-region" name="game-region">
                 <option value="" selected disabled>Select region</option>
@@ -97,8 +90,26 @@ class TAddGame extends HTMLElement {
                 <option value="Region Free">Region Free</option>
               </select>
             </div>
+            <!-- Game Year -->
+            <div class="col-sm-6 col-md-4 mb-3">
+              <label for="game-year" class="form-label">Year</label>
+              <input type="text" class="form-control" id="game-year">
+            </div>
+            <!-- Game Purchase Date -->
+            <div class="col-sm-6 col-md-4 mb-3">
+              <label for="game-purchase-date" class="form-label">Purchase Date</label>
+              <input type="date" class="form-control" id="game-purchase-date">
+            </div>
+            <!-- Game Price -->
+            <div class="col-sm-6 col-md-4 mb-3">
+              <label for="game-price" class="form-label">Price</label>
+              <div class="input-group">
+                <span class="input-group-text">${currency}</span>
+                <input type="text" class="form-control" id="game-price" required>
+              </div>
+            </div>
             <!-- Game Format -->
-            <div class="col-4 mb-3">
+            <div class="col-sm-6 col-xl-4 mb-3">
               <label class="form-label" for="game-format">Format</label>
               <select class="form-select" id="game-format" name="game-format">
                 <option value="" selected disabled>Select a format</option>
@@ -107,7 +118,7 @@ class TAddGame extends HTMLElement {
               </select>
             </div>
             <!-- Game Condition -->
-            <div class="col-4 mb-3">
+            <div class="col-sm-6 col-xl-4 mb-3">
               <label class="form-label" for="game-condition">Condition</label>
               <select class="form-select" id="game-condition" name="game-condition">
                 <option value="" selected disabled>Select a condition</option>
@@ -164,6 +175,9 @@ class TAddGame extends HTMLElement {
       const gameNote = document.getElementById("game-note").value;
       const gameFormat = document.getElementById("game-format").value;
       const gameCondition = document.getElementById("game-condition").value;
+      const gameOwnershipStatus = document.getElementById(
+        "game-ownership-status"
+      ).value;
 
       // Create new game object
       const newGame = {
@@ -175,6 +189,7 @@ class TAddGame extends HTMLElement {
         condition: gameCondition,
         format: gameFormat,
         status: gameStatus,
+        ownershipStatus: gameOwnershipStatus,
         purchase_date: gamePurchaseDate,
         price: parseFloat(gamePrice).toFixed(2),
         note: gameNote,
