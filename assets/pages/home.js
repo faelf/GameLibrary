@@ -1,4 +1,7 @@
 import { config } from "../data/config.js";
+import { stats } from "../data/stats.js";
+
+const currency = config.getCurrency();
 
 export const homePage = {
   title: "Dashboard",
@@ -7,67 +10,98 @@ export const homePage = {
   <h2 id="greeting"></h2>
   <p class="lead">Welcome to your Game Collection App!</p>
 
-  <div class="row">
-    <div class="col-sm-6 col-xxl-3">
-      <div class="card text-white bg-primary mb-3">
-        <div class="card-body d-flex align-items-center justify-content-center">
-          <!-- Icon Column -->
-          <div class="me-3 display-3">
-            <span class="bi bi-dpad-fill"></span>
-          </div>
-          <!-- Text Column -->
-          <div>
-            <h5 class="card-title mb-1">Total Games</h5>
-            <p id="total-games" class="display-5 mb-0">0</p>
-          </div>
+<div class="row g-3">
+  <!-- Total Games -->
+  <div class="col-md-6 col-xxl-3">
+    <div class="card text-white bg-primary h-100">
+      <div class="card-body d-flex align-items-center">
+        <div class="me-3 display-3">
+          <span class="bi bi-dpad-fill"></span>
         </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-xxl-3">
-      <div class="card text-white bg-primary mb-3">
-        <div class="card-body d-flex align-items-center justify-content-center">
-          <!-- Icon Column -->
-          <div class="me-3 display-3">
-            <span class="bi bi-controller"></span>
-          </div>
-          <!-- Text Column -->
-          <div>
-            <h5 class="card-title mb-1">Games Completed</h5>
-            <p id="total-games" class="display-5 mb-0">0</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-xxl-3">
-      <div class="card text-white bg-success mb-3">
-        <div class="card-body d-flex align-items-center justify-content-center">
-          <div class="me-3 display-3">
-            <span class="bi bi-piggy-bank-fill"></span>
-          </div>
-          <div>
-            <h5 class="card-title mb-1">Total Spent</h5>
-            <p id="total-spent" class="display-5 mb-0">£0.00</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-sm-6 col-xxl-3">
-      <div class="card text-white bg-success mb-3">
-        <div class="card-body d-flex align-items-center justify-content-center">
-          <div class="me-3 display-3">
-            <span class="bi bi-nintendo-switch"></span>
-          </div>
-          <div>
-            <h5 class="card-title mb-1">Total Platforms</h5>
-            <p id="total-spent" class="display-5 mb-0">0</p>
-          </div>
+        <div class="text-center flex-grow-1">
+          <h5 class="card-title mb-1">Total Games</h5>
+          <p id="total-games" class="display-5 mb-0">0</p>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Games Completed -->
+  <div class="col-md-6 col-xxl-3">
+    <div class="card text-white bg-success h-100">
+      <div class="card-body d-flex align-items-center">
+        <div class="me-3 display-3">
+          <span class="bi bi-controller"></span>
+        </div>
+        <div class="text-center flex-grow-1">
+          <h5 class="card-title mb-1">Games Completed</h5>
+          <p id="completed-games" class="display-5 mb-0">0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Currently Playing -->
+  <div class="col-md-6 col-xxl-3">
+    <div class="card text-white bg-info h-100">
+      <div class="card-body d-flex align-items-center">
+        <div class="me-3 display-3">
+          <span class="bi bi-play-circle-fill"></span>
+        </div>
+        <div class="text-center flex-grow-1">
+          <h5 class="card-title mb-1">Currently Playing</h5>
+          <p id="currently-playing-games" class="display-5 mb-0">0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backlog -->
+  <div class="col-md-6 col-xxl-3">
+    <div class="card text-white bg-warning h-100">
+      <div class="card-body d-flex align-items-center">
+        <div class="me-3 display-3">
+          <span class="bi bi-clock-history"></span>
+        </div>
+        <div class="text-center flex-grow-1">
+          <h5 class="card-title mb-1">Backlog</h5>
+          <p id="backlog-games" class="display-5 mb-0">0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Total Spent -->
+  <div class="col-md-6 col-xxl-6">
+    <div class="card text-white bg-danger h-100">
+      <div class="card-body d-flex align-items-center">
+        <div class="me-3 display-3">
+          <span class="bi bi-piggy-bank-fill"></span>
+        </div>
+        <div class="text-center flex-grow-1">
+          <h5 class="card-title mb-1">Total Spent</h5>
+          <p id="total-spent" class="display-5 mb-0">£0.00</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Total Platforms -->
+  <div class="col-md-6 col-xxl-6">
+    <div class="card text-white bg-secondary h-100">
+      <div class="card-body d-flex align-items-center">
+        <div class="me-3 display-3">
+          <span class="bi bi-nintendo-switch"></span>
+        </div>
+        <div class="text-center flex-grow-1">
+          <h5 class="card-title mb-1">Total Platforms</h5>
+          <p id="total-platforms" class="display-5 mb-0">0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 </section>
 
@@ -76,5 +110,36 @@ export const homePage = {
     const greetingText = document.getElementById("greeting");
     const firstName = config.getFirstName();
     greetingText.innerText = `Hello, ${firstName}!`;
+
+    const totalGamesEl = document.getElementById("total-games");
+    const totalGames = stats.totalGames();
+    totalGamesEl.innerText = `${totalGames}`;
+
+    const totalSpentEl = document.getElementById("total-spent");
+    const totalSpent = stats.totalSpent();
+    const currency = config.getCurrency();
+    const locale = config.getLocale();
+    totalSpentEl.innerText = `${currency}${totalSpent.toLocaleString(locale, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+
+    const completedGamesTotal = stats.completedGames();
+    const completedGamesTotalEl = document.getElementById("completed-games");
+    completedGamesTotalEl.innerText = `${completedGamesTotal}`;
+
+    const currentlyPlayingGames = stats.currentlyPlaying();
+    const currentlyPlayingGamesEl = document.getElementById(
+      "currently-playing-games"
+    );
+    currentlyPlayingGamesEl.innerText = `${currentlyPlayingGames}`;
+
+    const backlogGamesEl = document.getElementById("backlog-games");
+    const backlogGames = stats.backlogGames();
+    backlogGamesEl.innerText = `${backlogGames}`;
+
+    const totalPlatformsEl = document.getElementById("total-platforms");
+    const totalPlatforms = stats.totalConsoles();
+    totalPlatformsEl.innerText = `${totalPlatforms}`;
   },
 };
