@@ -70,6 +70,7 @@ export const gamesListPage = {
     // Render a single game row
     function addGameRowToTable(game, tbody) {
       const currency = config.getCurrency();
+      const locale = config.getLocale();
       const formattedDate = formatPurchaseDate(game.purchase_date);
 
       tbody.innerHTML += /* html */ `
@@ -80,7 +81,10 @@ export const gamesListPage = {
         <td data-cell="Status">${game.status}</td>
         <td data-cell="Purchase Date">${formattedDate}</td>
         <td data-cell="Price">
-          ${currency}${parseFloat(game.price).toFixed(2)}
+          ${currency}${parseFloat(game.price).toLocaleString(locale, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })}
         </td>
         <td data-cell="Edit" class="text-lg-center">
           <button type="button" class="btn btn-sm btn-outline-warning"
