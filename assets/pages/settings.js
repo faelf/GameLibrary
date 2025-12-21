@@ -32,13 +32,18 @@ export const settingsPage = {
           <h3 class="mb-0">Currency</h3>
         </div>
         <div class="card-body">
-          <label for="currency-select" class="form-label">Select your preferred currency</label>
-          <select id="currency-select" class="form-select">
-            <option value="£">£ - British Pound</option>
-            <option value="$">$ - US Dollar</option>
-            <option value="€">€ - Euro</option>
-            <option value="R$">R$ - Brazilian Real</option>
-          </select>
+        <label for="currency-select" class="form-label">Select your preferred currency</label>
+          <div class="input-group mb-3">
+            <label class="input-group-text" for="currency-select" id="currenct-symbol">
+              <span class="bi bi-currency-exchange"></span>
+            </label>
+            <select id="currency-select" class="form-select">
+              <option value="£">£ - British Pound</option>
+              <option value="$">$ - US Dollar</option>
+              <option value="€">€ - Euro</option>
+              <option value="R$">R$ - Brazilian Real</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
