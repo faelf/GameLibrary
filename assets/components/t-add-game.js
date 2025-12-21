@@ -97,7 +97,6 @@ class TAddGame extends HTMLElement {
    `;
 
     // Loads games from local storage
-    const games = gamesStorage.load();
     const form = document.getElementById("add-game-form");
     const addGameBtn = document.getElementById("add-game-btn");
 
@@ -112,18 +111,21 @@ class TAddGame extends HTMLElement {
       // Create new game object
       const newGame = {
         id: Date.now(),
-        name: gameTitle, // String
-        platform: platform, // String
-        status: status, // String
-        year: year, // String
-        purchase_date: purchaseDate, // String
-        price: parseFloat(price).toFixed(2), // Float
+        name: gameTitle,
+        platform: platform,
+        status: status,
+        year: year,
+        purchase_date: purchaseDate,
+        price: parseFloat(price).toFixed(2),
       };
 
-      // Pushes new game to the array
+      // Load fresh games from localStorage
+      const games = gamesStorage.load();
+
+      // Push new game to the array
       games.push(newGame);
 
-      // Updates the array on Local Storage
+      // Save updated array to localStorage
       gamesStorage.save(games);
 
       // Close the modal
@@ -135,8 +137,8 @@ class TAddGame extends HTMLElement {
       // Clear the form
       form.reset();
 
-      // Refresh games list
-      window.dispatchEvent(new CustomEvent("game-added"));
+      // Reload page
+      window.location.reload();
     }
 
     addGameBtn.addEventListener("click", addGame);
