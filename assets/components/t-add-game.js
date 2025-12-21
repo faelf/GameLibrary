@@ -28,7 +28,7 @@ class TAddGame extends HTMLElement {
 
       <form id="add-game-form">
         <div class="modal-body">
-          <div class="row">
+          <div class="row text-start">
             <!-- Game Title -->
             <div class="col-12 mb-3">
               <label for="game-title" class="form-label">Game Title</label>
