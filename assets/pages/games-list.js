@@ -13,7 +13,7 @@ export const gamesListPage = {
       <table class="table table-striped table-hover align-middle">
         <thead class="sticky-top">
           <tr>
-            <th>Name</th>
+            <th>Title</th>
             <th>Platform</th>
             <th>Year</th>
             <th>Region</th>
