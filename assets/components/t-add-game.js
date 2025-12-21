@@ -123,6 +123,7 @@ class TAddGame extends HTMLElement {
               <select class="form-select" id="game-condition" name="game-condition">
                 <option value="" selected disabled>Select a condition</option>
                 <option value="Sealed">Sealed</option>
+                <option value="Collector's Edition">Collector's Edition</option>
                 <option value="CIB">Complete in Box (CIB)</option>
                 <option value="Box & Game">Box & Game</option>
                 <option value="Game & Manual">Game & Manual</option>
