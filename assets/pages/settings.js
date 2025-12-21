@@ -1,10 +1,11 @@
+import { exportGamesToCSV, importGamesFromCSV } from "./data-manager.js";
 import { gamesStorage } from "../data/games-storage.js";
 import { config } from "../data/config.js";
 
 export const settingsPage = {
   title: "Settings",
   html: /* html */ `
-<section class="m-2">
+<section class="container my-2">
   <h2>Settings</h2>
 
   <div class="row">
@@ -162,120 +163,42 @@ export const settingsPage = {
 
     firstNameBtn.addEventListener("click", updateFirstName);
 
-    // Export into CSV
-    function exportGamesToCSV() {
-      if (gamesData.length === 0) {
-        alert("No games to export!");
-        return;
+    // Export button
+    exportButton.addEventListener("click", function () {
+      const success = exportGamesToCSV();
+
+      if (success) {
+        toastBody.innerText = "Data exported successfully!";
+        const toast = new bootstrap.Toast(
+          document.getElementById("currency-toast")
+        );
+        toast.show();
       }
+    });
 
-      // Create CSV header
-      const headers = [
-        "id",
-        "name",
-        "platform",
-        "year",
-        "status",
-        "purchase_date",
-        "price",
-      ];
-      const csvRows = [headers.join(",")];
-
-      // Add each game as a CSV row
-      gamesData.forEach((game) => {
-        const row = [
-          game.id,
-          `"${game.name}"`, // Quote text fields to handle commas
-          game.platform,
-          game.year,
-          game.status,
-          game.purchase_date,
-          game.price,
-        ];
-        csvRows.push(row.join(","));
-      });
-
-      // Convert array of rows into a single CSV string
-      const csvString = csvRows.join("\n");
-
-      // Create a Blob and URL for download
-      const blob = new Blob([csvString], { type: "text/csv" });
-      const url = URL.createObjectURL(blob);
-
-      // Create a temporary link and click it to trigger download
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "games-library.csv";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-
-      // Release the object URL
-      URL.revokeObjectURL(url);
-
-      toastBody.innerText = "Data exported successfully!";
-      const toastElement = document.getElementById("currency-toast");
-      const toast = new bootstrap.Toast(toastElement);
-      toast.show();
-    }
-
-    // Import CSV
-    importBtn.addEventListener("click", () => {
+    // Import button
+    importBtn.addEventListener("click", async function () {
       const file = importInput.files[0];
+
       if (!file) {
         alert("Please select a CSV file first.");
         return;
       }
 
-      const reader = new FileReader();
+      try {
+        const count = await importGamesFromCSV(file);
 
-      reader.onload = function (e) {
-        const text = e.target.result;
-
-        // Split CSV into rows
-        const rows = text.trim().split("\n");
-
-        if (rows.length < 2) {
-          alert("CSV file is empty or invalid.");
-          return;
-        }
-
-        // Get headers
-        const headers = rows.shift().split(",");
-
-        // Parse rows into objects
-        const importedGames = rows.map((row) => {
-          const values = row.split(",");
-          const game = {};
-          headers.forEach((header, i) => {
-            let val = values[i];
-            if (val.startsWith('"') && val.endsWith('"')) {
-              val = val.slice(1, -1); // Remove quotes
-            }
-            // Convert numeric fields
-            if (header === "id" || header === "year") val = Number(val);
-            game[header] = val;
-          });
-          return game;
-        });
-
-        // Replace current library
-        gamesStorage.save(importedGames);
-
-        // Show toast notification
-        toastBody.innerText = `Imported ${importedGames.length} games successfully!`;
-        const toastElement = document.getElementById("currency-toast");
-        const toast = new bootstrap.Toast(toastElement);
+        toastBody.innerText = `Imported ${count} games successfully!`;
+        const toast = new bootstrap.Toast(
+          document.getElementById("currency-toast")
+        );
         toast.show();
 
-        // Reset file input
         importInput.value = "";
-      };
-
-      reader.readAsText(file);
+      } catch (error) {
+        alert(`Import failed: ${error.message}`);
+      }
     });
-
-    exportButton.addEventListener("click", exportGamesToCSV);
 
     // Delete Data
     deleteData.addEventListener("click", function () {
