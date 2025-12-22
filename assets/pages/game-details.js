@@ -44,22 +44,103 @@ export const gameDetailsPage = {
     container.innerHTML = /* html */ `
       <h2>${game.title}</h2>
   
-      <dl class="row">
-        <dt class="col-sm-6">Title:</dt><dd class="col-sm-6">${game.title}</dd>
-        <dt class="col-sm-6">Platform:</dt><dd class="col-sm-6">${game.platform}</dd>
-        <dt class="col-sm-6">Year:</dt><dd class="col-sm-6">${game.year || "N/A"}</dd>
-        <dt class="col-sm-6">Region:</dt><dd class="col-sm-6">${game.region || "N/A"}</dd>
-        <dt class="col-sm-6">Condition:</dt><dd class="col-sm-6">${game.condition || "N/A"}</dd>
-        <dt class="col-sm-6">Status:</dt><dd class="col-sm-6">${game.status || "N/A"}</dd>
-        <dt class="col-sm-6">Ownership:</dt><dd class="col-sm-6">${game.ownership || "N/A"}</dd>
-        <dt class="col-sm-6">Purchase Date:</dt><dd class="col-sm-6">${formattedDate || "N/A"}</dd>
-        <dt class="col-sm-6">Price:</dt><dd class="col-sm-6">${currency}${parseFloat(game.price || 0).toFixed(2)}</dd>
-        <dt class="col-sm-6">Note:</dt><dd class="col-sm-6">${game.note || "N/A"}</dd>
-      </dl>
+      <form class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+        <div class="row mb-3">
+          <div class="col-12 col-sm-4">
+            <label class="form-label">Title</label>
+          </div>
+          <div class="col-12 col-sm-8">
+            <input type="text" class="form-control" value="${game.title}" readonly>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-sm-4">
+            <label class="form-label">Platform</label>
+          </div>
+          <div class="col-12 col-sm-8">
+            <input type="text" class="form-control" value="${game.platform}" readonly>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-sm-4">
+            <label class="form-label">Year</label>
+          </div>
+          <div class="col-12 col-sm-8">
+            <input type="text" class="form-control" value="${game.year || "N/A"}" readonly>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-sm-4">
+            <label class="form-label">Region</label>
+          </div>
+          <div class="col-12 col-sm-8">
+            <input type="text" class="form-control" value="${game.region || "N/A"}" readonly>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-sm-4">
+            <label class="form-label">Condition</label>
+          </div>
+          <div class="col-12 col-sm-8">
+            <input type="text" class="form-control" value="${game.condition || "N/A"}" readonly>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-sm-4">
+            <label class="form-label">Status</label>
+          </div>
+          <div class="col-12 col-sm-8">
+            <input type="text" class="form-control" value="${game.status || "N/A"}" readonly>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-sm-4">
+            <label class="form-label">Ownership</label>
+          </div>
+          <div class="col-12 col-sm-8">
+            <input type="text" class="form-control" value="${game.ownership || "N/A"}" readonly>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-sm-4">
+            <label class="form-label">Purchase Date</label>
+          </div>
+          <div class="col-12 col-sm-8">
+            <input type="text" class="form-control" value="${formattedDate || "N/A"}" readonly>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-sm-4">
+            <label class="form-label">Price</label>
+          </div>
+          <div class="col-12 col-sm-8">
+            <input type="text" class="form-control" value="${currency}${parseFloat(game.price || 0).toFixed(2)}" readonly>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 col-sm-4">
+            <label class="form-label">Note</label>
+          </div>
+          <div class="col-12 col-sm-8">
+            <textarea class="form-control" rows="2" readonly>${game.note || "N/A"}</textarea>
+          </div>
+        </div>
+
+      </form>
+
 
       <div class="mb-3">
         <button class="btn btn-secondary" onclick="history.back()">
-          <span class="bi bi-arrow-left"></span> Back to List
+          <span class="bi bi-caret-left-fill"></span> Back to List
         </button>
       </div>
     `;
