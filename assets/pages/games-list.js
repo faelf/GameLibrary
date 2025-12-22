@@ -27,14 +27,9 @@ export const gamesListPage = {
           <tr>
             <th>Title</th>
             <th>Platform</th>
-            <th>Year</th>
             <th>Region</th>
-            <th>Condition</th>
             <th>Status</th>
             <th>Ownership</th>
-            <th>Purchase</th>
-            <th>Price</th>
-            <th>Note</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -125,17 +120,9 @@ export const gamesListPage = {
           </a>
         </td>
         <td data-cell="Platform">${game.platform || "Unkown"}</td>
-        <td data-cell="Year">${game.year || "Unkown"}</td>
         <td data-cell="Region">${game.region || "Unkown"}</td>
-        <td data-cell="Condition">${game.condition || "Unkown"}</td>
         <td data-cell="Status">${game.status || "Unkown"}</td>
         <td data-cell="Ownership">${game.ownership || "Unkown"}</td>
-        <td data-cell="Purchase Date">${formattedDate}</td>
-        <td data-cell="Price">${currency}${parseFloat(game.price).toLocaleString(locale, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}</td>
-        <td data-cell="Note">${game.note || " "}</td>
         <td data-cell="Delete" class="text-lg-center">
           <button type="button" class="btn btn-sm btn-danger"
                   data-delete-game
