@@ -1,5 +1,6 @@
 import { gamesStorage } from "../data/games-storage.js";
 import { config } from "../data/config.js";
+import { formatters } from "../utils/formatters.js";
 
 export const gameDetailsPage = {
   title: "Game Details",
@@ -27,19 +28,6 @@ export const gameDetailsPage = {
       `;
       return;
     }
-
-    // Format purchase date for display
-    function formatPurchaseDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      });
-    }
-
-    const formattedDate = formatPurchaseDate(game.purchase_date);
-    const currency = config.getCurrency();
 
     container.innerHTML = /* html */ `
       <h2>${game.title}</h2>
@@ -113,7 +101,7 @@ export const gameDetailsPage = {
             <label class="form-label">Purchase Date</label>
           </div>
           <div class="col-12 col-sm-8">
-            <input type="text" class="form-control" value="${formattedDate || "N/A"}" readonly>
+            <input type="date" class="form-control" value="${game.purchase_date || "N/A"}" readonly>
           </div>
         </div>
 
@@ -122,7 +110,10 @@ export const gameDetailsPage = {
             <label class="form-label">Price</label>
           </div>
           <div class="col-12 col-sm-8">
-            <input type="text" class="form-control" value="${currency}${parseFloat(game.price || 0).toFixed(2)}" readonly>
+            <div class="input-group">
+              <span class="input-group-text" id="basic-addon1">${config.getCurrency()}</span>
+              <input type="text" class="form-control" value="${formatters.price(game.price)}" readonly>
+            </div>
           </div>
         </div>
 
