@@ -9,7 +9,8 @@ export const settingsPage = {
   <h2>Settings</h2>
 
   <div class="row">
-    <div class="col-md-6">
+    <!-- Personal Info -->
+    <div class="col-lg-4">
       <div class="card mb-3">
         <div class="card-header">
           <h3 class="mb-0">Personal Information</h3>
@@ -27,7 +28,8 @@ export const settingsPage = {
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <!-- Currency -->
+    <div class="col-md-6 col-lg-4">
       <div class="card mb-3">
         <div class="card-header">
           <h3 class="mb-0">Currency</h3>
@@ -48,6 +50,22 @@ export const settingsPage = {
         </div>
       </div>
     </div>
+    <!-- Theme -->
+    <div class="col-md-6 col-lg-4">
+      <div class="card mb-3">
+        <div class="card-header">
+          <h3 class="mb-0">Theme</h3>
+        </div>
+        <div class="card-body">
+          <label for="theme-select" class="form-label">Select your preferred theme</label>
+          <select id="theme-select" class="form-select">
+            <option value="dark">Dark Theme</option>
+            <option value="light">Light Theme</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="card mb-3">
@@ -143,6 +161,26 @@ export const settingsPage = {
     const importInput = document.getElementById("import-data");
     const importBtn = document.getElementById("import-data-btn");
     let gamesData = gamesStorage.load();
+
+    // Theme Selection
+    const themeSelect = document.getElementById("theme-select");
+    const currentTheme = config.getTheme();
+
+    // Set initial theme on <html>
+    document.documentElement.setAttribute("data-bs-theme", currentTheme);
+    themeSelect.value = currentTheme;
+
+    themeSelect.addEventListener("change", (e) => {
+      const selectedTheme = e.target.value;
+
+      localStorage.setItem("theme", selectedTheme);
+      document.documentElement.setAttribute("data-bs-theme", selectedTheme);
+
+      toastBody.innerText = "Theme updated successfully!";
+      const toastElement = document.getElementById("currency-toast");
+      const toast = new bootstrap.Toast(toastElement);
+      toast.show();
+    });
 
     // Display First Name
     firstName.value = config.getFirstName();

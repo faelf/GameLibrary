@@ -20,4 +20,7 @@ export const config = {
   getFirstName() {
     return localStorage.getItem("first-name") || "you";
   },
+  getTheme() {
+    return localStorage.getItem("theme") || "dark";
+  },
 };
