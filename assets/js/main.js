@@ -2,6 +2,7 @@
 import { homePage } from "../pages/home.js";
 import { gamesListPage } from "../pages/games-list.js";
 import { settingsPage } from "../pages/settings.js";
+import { gameDetailsPage } from "../pages/game-details.js";
 
 // Import components
 import "../components/t-navbar.js";
@@ -13,6 +14,7 @@ const pageContent = {
   "dashboard-page": homePage,
   "games-list-page": gamesListPage,
   "settings-page": settingsPage,
+  "game-details-page": gameDetailsPage,
 };
 
 // Get a reference to the main content area where pages will be injected
@@ -25,7 +27,7 @@ const mainContentArea = document.getElementById("page-content");
   Calls the page's setup() function if it exists (for async operations like fetching data).
   Updates browser history/URL and document title.
 */
-async function updateMainContent(pageKey) {
+async function updateMainContent(pageKey, params = {}) {
   // Get page data from pageContent object
   const content = pageContent[pageKey];
 
@@ -35,11 +37,15 @@ async function updateMainContent(pageKey) {
 
     // Call the page's setup function if it exists (async)
     if (typeof content.setup === "function") {
-      await content.setup();
+      await content.setup(params.gameId);
     }
 
+    // Update URL with gameId if present
+    const url = params.gameId ? `#${pageKey}?id=${params.gameId}` : `#${pageKey}`;
+
     // Update browser history/URL without reloading the page
-    history.pushState(null, content.title, `#${pageKey}`);
+    history.pushState({ pageKey, params }, content.title, url);
+    document.title = content.title;
 
     // Update document title to match the page
     document.title = content.title;
@@ -53,7 +59,7 @@ async function updateMainContent(pageKey) {
   This event can be dispatched manually from components like the navbar.
 */
 document.addEventListener("navigate", (event) => {
-  updateMainContent(event.detail.page); // Load the page specified in the event
+  updateMainContent(event.detail.page, event.detail);
 });
 
 /* 
@@ -73,9 +79,7 @@ document.addEventListener("click", (event) => {
   event.preventDefault();
 
   // Dispatch a custom navigate event so updateMainContent runs
-  document.dispatchEvent(
-    new CustomEvent("navigate", { detail: { page: button.dataset.page } })
-  );
+  document.dispatchEvent(new CustomEvent("navigate", { detail: { page: button.dataset.page } }));
 });
 
 /* 
@@ -85,10 +89,14 @@ document.addEventListener("click", (event) => {
   based on the URL hash (e.g., #home) or defaults to 'home'.
 */
 window.addEventListener("load", () => {
-  // Get the page name from the URL hash (without the '#' symbol)
-  const initialPage = window.location.hash.substring(1) || "dashboard-page";
-  // Load the initial page
-  updateMainContent(initialPage);
+  const hash = window.location.hash.substring(1);
+  const [pageKey, query] = hash.split("?");
+  const params = {};
+  if (query) {
+    const urlParams = new URLSearchParams(query);
+    params.gameId = urlParams.get("id");
+  }
+  updateMainContent(pageKey || "dashboard-page", params);
 });
 
 /* 
@@ -97,9 +105,17 @@ window.addEventListener("load", () => {
   Runs when the user navigates using browser back/forward buttons.
   Updates the page content based on the current URL hash.
 */
-window.addEventListener("popstate", () => {
-  // Get page from hash or default
-  const currentPage = window.location.hash.substring(1) || "dashboard-page";
-  // Load the page
-  updateMainContent(currentPage);
+window.addEventListener("popstate", (event) => {
+  if (event.state) {
+    updateMainContent(event.state.pageKey, event.state.params);
+  } else {
+    const hash = window.location.hash.substring(1);
+    const [pageKey, query] = hash.split("?");
+    const params = {};
+    if (query) {
+      const urlParams = new URLSearchParams(query);
+      params.gameId = urlParams.get("id");
+    }
+    updateMainContent(pageKey || "dashboard-page", params);
+  }
 });

@@ -64,8 +64,30 @@ export const gamesListPage = {
         addGameRowToTable(game, tbody);
       });
 
+      // Attach click handlers to game title links
+      function setupViewGameLinks() {
+        const viewLinks = document.querySelectorAll("[data-view-game]");
+        viewLinks.forEach(function (link) {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const gameId = link.getAttribute("data-game-id");
+
+            // Dispatch navigate event with gameId
+            document.dispatchEvent(
+              new CustomEvent("navigate", {
+                detail: {
+                  page: "game-details-page",
+                  gameId: gameId,
+                },
+              })
+            );
+          });
+        });
+      }
+
       // Attach event listeners to delete buttons
       setupDeleteButtons();
+      setupViewGameLinks();
     }
 
     // Format purchase date for display
@@ -97,7 +119,11 @@ export const gamesListPage = {
 
       tbody.innerHTML += /* html */ `
       <tr>
-        <td data-cell="Title">${game.title || "Unkown"}</td>
+        <td data-cell="Title">
+          <a href="#" class="text-decoration-none" data-view-game data-game-id="${game.id}">
+            ${game.title}
+          </a>
+        </td>
         <td data-cell="Platform">${game.platform || "Unkown"}</td>
         <td data-cell="Year">${game.year || "Unkown"}</td>
         <td data-cell="Region">${game.region || "Unkown"}</td>
@@ -105,12 +131,10 @@ export const gamesListPage = {
         <td data-cell="Status">${game.status || "Unkown"}</td>
         <td data-cell="Ownership">${game.ownership || "Unkown"}</td>
         <td data-cell="Purchase Date">${formattedDate}</td>
-        <td data-cell="Price">
-          ${currency}${parseFloat(game.price).toLocaleString(locale, {
+        <td data-cell="Price">${currency}${parseFloat(game.price).toLocaleString(locale, {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
-      })}
-        </td>
+      })}</td>
         <td data-cell="Note">${game.note || " "}</td>
         <td data-cell="Delete" class="text-lg-center">
           <button type="button" class="btn btn-sm btn-danger"
