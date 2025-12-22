@@ -1,4 +1,5 @@
 import { config } from "../data/config.js";
+import { formatters } from "../utils/formatters.js";
 import { stats } from "../data/stats.js";
 
 const currency = config.getCurrency();
@@ -117,21 +118,14 @@ export const homePage = {
 
     const totalSpentEl = document.getElementById("total-spent");
     const totalSpent = stats.totalSpent();
-    const currency = config.getCurrency();
-    const locale = config.getLocale();
-    totalSpentEl.innerText = `${currency}${totalSpent.toLocaleString(locale, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })}`;
+    totalSpentEl.innerText = `${formatters.fullPrice(totalSpent)}`;
 
     const completedGamesTotal = stats.completedGames();
     const completedGamesTotalEl = document.getElementById("completed-games");
     completedGamesTotalEl.innerText = `${completedGamesTotal}`;
 
     const currentlyPlayingGames = stats.currentlyPlaying();
-    const currentlyPlayingGamesEl = document.getElementById(
-      "currently-playing-games"
-    );
+    const currentlyPlayingGamesEl = document.getElementById("currently-playing-games");
     currentlyPlayingGamesEl.innerText = `${currentlyPlayingGames}`;
 
     const backlogGamesEl = document.getElementById("backlog-games");
