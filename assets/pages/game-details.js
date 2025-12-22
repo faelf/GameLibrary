@@ -4,7 +4,7 @@ import { config } from "../data/config.js";
 export const gameDetailsPage = {
   title: "Game Details",
   html: /* html */ `
-  <section id="game-details-container" class="container mt-2">
+  <section id="game-details-container" class="mt-2">
     <!-- Game details will be loaded here -->
   </section>
   `,

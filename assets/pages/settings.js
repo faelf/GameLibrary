@@ -5,7 +5,7 @@ import { config } from "../data/config.js";
 export const settingsPage = {
   title: "Settings",
   html: /* html */ `
-<section class="container my-2">
+<section class="my-2">
   <h2>Settings</h2>
 
   <div class="row">
@@ -167,9 +167,7 @@ export const settingsPage = {
 
       if (success) {
         toastBody.innerText = "Data exported successfully!";
-        const toast = new bootstrap.Toast(
-          document.getElementById("currency-toast")
-        );
+        const toast = new bootstrap.Toast(document.getElementById("currency-toast"));
         toast.show();
       }
     });
@@ -187,9 +185,7 @@ export const settingsPage = {
         const count = await importGamesFromCSV(file);
 
         toastBody.innerText = `Imported ${count} games successfully!`;
-        const toast = new bootstrap.Toast(
-          document.getElementById("currency-toast")
-        );
+        const toast = new bootstrap.Toast(document.getElementById("currency-toast"));
         toast.show();
 
         importInput.value = "";
