@@ -1,3 +1,5 @@
+import { config } from "../data/config.js";
+
 // Import Pages
 import { pageContent } from "../pages/index.js";
 
@@ -78,6 +80,8 @@ document.addEventListener("click", (event) => {
   based on the URL hash (e.g., #home) or defaults to 'home'.
 */
 window.addEventListener("load", () => {
+  const currentTheme = config.getTheme();
+  document.documentElement.setAttribute("data-bs-theme", currentTheme);
   const hash = window.location.hash.substring(1);
   const [pageKey, query] = hash.split("?");
   const params = {};
