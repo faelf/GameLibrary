@@ -1,6 +1,7 @@
 import { exportGamesToCSV, importGamesFromCSV } from "../data/data-manager.js";
 import { gamesStorage } from "../data/games-storage.js";
 import { config } from "../data/config.js";
+import { toast } from "../utils/toast.js";
 
 export const settingsPage = {
   title: "Settings",
@@ -136,23 +137,9 @@ export const settingsPage = {
     </div>
   </div>
 </section>
-
-<!-- Toast Currency -->
-  <div class="toast-container position-fixed top-0 end-0 p-3">
-    <div id="currency-toast" class="toast" role="alert">
-      <div class="toast-header">
-        <span class="bi bi-check-circle-fill text-success me-2"></span>
-        <strong class="me-auto">Success</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-      </div>
-      <div class="toast-body" id="toast-body">
-      </div>
-    </div>
-  </div>
-
   `,
   setup() {
-    const toastBody = document.getElementById("toast-body");
+    // Get references to all interactive elements
     const currency = document.getElementById("currency-select");
     const firstName = document.getElementById("first-name");
     const firstNameBtn = document.getElementById("first-name-btn");
@@ -160,10 +147,9 @@ export const settingsPage = {
     const exportButton = document.getElementById("export-data");
     const importInput = document.getElementById("import-data");
     const importBtn = document.getElementById("import-data-btn");
-    let gamesData = gamesStorage.load();
-
-    // Theme Selection
     const themeSelect = document.getElementById("theme-select");
+    // Load settings
+    let gamesData = gamesStorage.load();
     const currentTheme = config.getTheme();
 
     // Set initial theme on <html>
@@ -176,10 +162,7 @@ export const settingsPage = {
       localStorage.setItem("theme", selectedTheme);
       document.documentElement.setAttribute("data-bs-theme", selectedTheme);
 
-      toastBody.innerText = "Theme updated successfully!";
-      const toastElement = document.getElementById("currency-toast");
-      const toast = new bootstrap.Toast(toastElement);
-      toast.show();
+      toast.success("Theme updated successfully!");
     });
 
     // Display First Name
@@ -190,11 +173,7 @@ export const settingsPage = {
       const firstNameInput = firstName.value;
       localStorage.setItem("first-name", firstNameInput);
 
-      // Show toast notification
-      toastBody.innerText = `Name updated successfully!`;
-      const toastElement = document.getElementById("currency-toast");
-      const toast = new bootstrap.Toast(toastElement);
-      toast.show();
+      toast.success("Name updated successfully!");
     }
 
     firstNameBtn.addEventListener("click", updateFirstName);
@@ -204,9 +183,7 @@ export const settingsPage = {
       const success = exportGamesToCSV();
 
       if (success) {
-        toastBody.innerText = "Data exported successfully!";
-        const toast = new bootstrap.Toast(document.getElementById("currency-toast"));
-        toast.show();
+        toast.success("Games exported successfully!");
       }
     });
 
@@ -215,55 +192,40 @@ export const settingsPage = {
       const file = importInput.files[0];
 
       if (!file) {
-        alert("Please select a CSV file first.");
+        toast.info("Please select a file to import.");
         return;
       }
 
       try {
         const count = await importGamesFromCSV(file);
 
-        toastBody.innerText = `Imported ${count} games successfully!`;
-        const toast = new bootstrap.Toast(document.getElementById("currency-toast"));
-        toast.show();
+        toast.success(`Successfully imported ${count} games!`);
 
         importInput.value = "";
       } catch (error) {
-        alert(`Import failed: ${error.message}`);
+        toast.error(error.message);
       }
     });
 
     // Delete Data
     deleteData.addEventListener("click", function () {
-      // Ask user to confirm deletion
-      const confirmed = confirm("Are you sure you want to delete all data?");
-      if (!confirmed) {
-        return;
-      }
-
-      // Show toast notification
-      toastBody.innerText = "Data deleted successfully!";
-      const toastElement = document.getElementById("currency-toast");
-      const toast = new bootstrap.Toast(toastElement);
-      toast.show();
+      toast.success(
+        "All game data deleted successfully!",
+        "Are you sure? This action cannot be undone."
+      );
 
       gamesData = [];
       gamesStorage.save(gamesData);
     });
 
     // Load current currency £ default
-    const currentCurrency = localStorage.getItem("currency") || "£";
+    const currentCurrency = config.getCurrency();
     currency.value = currentCurrency;
 
     // Save on change
     currency.addEventListener("change", (e) => {
       localStorage.setItem("currency", e.target.value);
-      console.log("Currency saved:", e.target.value);
-
-      // Show toast notification
-      toastBody.innerText = "Currency saved successfully!";
-      const toastElement = document.getElementById("currency-toast");
-      const toast = new bootstrap.Toast(toastElement);
-      toast.show();
+      toast.success("Currency updated successfully!");
     });
   },
 };
