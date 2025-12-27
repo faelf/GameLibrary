@@ -41,4 +41,4 @@ class TNavbar extends HTMLElement {
   }
 }
 
-customElements.define("t-navbar", TNavbar);
+customElements.define("ui-navbar", TNavbar);

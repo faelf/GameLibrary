@@ -14,4 +14,4 @@ class TFooter extends HTMLElement {
   }
 }
 
-customElements.define("t-footer", TFooter);
+customElements.define("ui-footer", TFooter);

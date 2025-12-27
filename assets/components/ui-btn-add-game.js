@@ -206,4 +206,4 @@ class TAddGame extends HTMLElement {
   }
 }
 
-customElements.define("t-add-game-btn", TAddGame);
+customElements.define("ui-btn-add-game", TAddGame);
