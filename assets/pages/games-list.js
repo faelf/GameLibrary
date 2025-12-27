@@ -17,7 +17,7 @@ export const gamesListPage = {
         </div>
       </div>
       <div class="col-12 col-md-3 text-md-end">
-        <t-add-game-btn></t-add-game-btn>
+        <ui-btn-add-game></ui-btn-add-game>
       </div>
     </div>
     <div id="games-container">
@@ -82,16 +82,6 @@ export const gamesListPage = {
       // Attach event listeners to delete buttons
       setupDeleteButtons();
       setupViewGameLinks();
-    }
-
-    // Format purchase date for display
-    function formatPurchaseDate(dateString) {
-      const date = new Date(dateString);
-      return date.toLocaleDateString("en-GB", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-      });
     }
 
     // Display empty state message
