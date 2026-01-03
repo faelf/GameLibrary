@@ -5,11 +5,9 @@ export const gamesListPage = {
   title: "Games List",
   html: /* html */ `
   <section class="m-2">
-    <div class="row g-2 align-items-center mb-3">
-      <div class="col-12 col-md-4">
-        <h2 class="mb-0">Games List</h2>
-      </div>
-      <div class="col-12 col-md-5">
+    <h2 class="mb-3">Games List</h2>
+    <div class="row g-2 mb-3">
+      <div class="col-8 col-sm-9">
         <div class="input-group">
           <span class="input-group-text">
             <span class="bi bi-search"></span>
@@ -17,7 +15,7 @@ export const gamesListPage = {
           <input type="text" class="form-control" placeholder="Search by title">
         </div>
       </div>
-      <div class="col-12 col-md-3 text-md-end">
+      <div class="col-4 col-sm-3 text-end">
         <ui-btn-add-game></ui-btn-add-game>
       </div>
     </div>
