@@ -145,7 +145,7 @@ export const gameDetailsPage = {
           </div>
           <div class="col-12 col-sm-8">
             <div class="input-group">
-              <span class="input-group-text" id="basic-addon1">${config.getCurrency()}</span>
+              <span class="input-group-text" id="price-currency"></span>
               <input id="game-price-input" type="number" class="form-control">
             </div>
           </div>
@@ -181,10 +181,7 @@ export const gameDetailsPage = {
   `,
 
   setup(gameId) {
-    const games = gamesStorage.load();
-    const game = games.find(function (g) {
-      return g.id === parseInt(gameId);
-    });
+    const game = gamesStorage.game(gameId);
 
     const container = document.getElementById("game-details-container");
     const gameTitleElement = document.getElementById("game-title");
@@ -198,6 +195,9 @@ export const gameDetailsPage = {
     const purchaseDateInput = document.getElementById("game-purchase-date-input");
     const priceInput = document.getElementById("game-price-input");
     const noteInput = document.getElementById("game-note-input");
+
+    const currencySymbol = document.getElementById("price-currency");
+    currencySymbol.textContent = config.getCurrency();
 
     if (game) {
       gameTitleElement.textContent = game.title;
