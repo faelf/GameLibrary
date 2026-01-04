@@ -320,7 +320,7 @@ export const form = {
           }
           break;
         case "input-group":
-          fieldWrapper = this.inputGroup(config, finalOptions.currency, fieldValue);
+          fieldWrapper = this.inputGroup(config, finalOptions.inputGroupText, fieldValue);
           break;
         case "textarea":
           fieldWrapper = this.textarea(config, finalOptions.rows, fieldValue);
