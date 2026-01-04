@@ -74,14 +74,13 @@ export class Router {
   handleClick(event) {
     // Get element
     const link = event.target.closest("[data-page-target]");
+    // Ignore clicks that are not links
+    if (!link) return;
+    event.preventDefault();
     // Get page key
     const linkKey = link.dataset.pageTarget;
     // Get ID for the page
     const linkId = parseInt(link.dataset.pageTargetId);
-
-    // Ignore clicks that are not links
-    if (!link) return;
-    event.preventDefault();
 
     // Passes the details to the event listener
     const detail = {
