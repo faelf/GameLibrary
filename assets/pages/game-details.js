@@ -1,4 +1,4 @@
-import { gamesStorage } from "../data/games-storage.js";
+import { storages } from "../utils/storages.js";
 import { config } from "../utils/config.js";
 import { formatters } from "../utils/formatters.js";
 
@@ -181,7 +181,7 @@ export const gameDetailsPage = {
   `,
 
   setup(gameId) {
-    const game = gamesStorage.game(gameId);
+    const game = storages.get(config.keys.games, gameId);
 
     const container = document.getElementById("game-details-container");
     const gameTitleElement = document.getElementById("game-title");
