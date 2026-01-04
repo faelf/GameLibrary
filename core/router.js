@@ -46,15 +46,15 @@ export class Router {
 
       // If the page has a setup function, call it (e.g., for async data fetching)
       if (typeof content.setup === "function") {
-        await content.setup(params.gameId);
+        await content.setup(params.pageId);
       }
 
-      // Construct the URL hash, including gameId if provided
+      // Construct the URL hash, including pageId if provided
       let url = "#" + pageKey; // Start with the page key
 
-      // If there is a gameId, add it as a query string
-      if (params.gameId) {
-        url = url + "?id=" + params.gameId;
+      // If there is a pageId, add it as a query string
+      if (params.pageId) {
+        url = url + "?id=" + params.pageId;
       }
 
       // Update browser history without reloading the page
@@ -67,24 +67,29 @@ export class Router {
 
   /**
    * Handle clicks on elements with a `data-page-target` attribute.
+   * If link has a data-page-target-id, it will collect the ID.
    * Dispatches a custom 'navigate' event.
    * @param {MouseEvent} event - The click event object.
    */
   handleClick(event) {
-    // Find the closest element with the data-page attribute
-    const button = event.target.closest("[data-page-target]");
-    // Ignore clicks outside navigational elements
-    if (!button) return;
+    // Get element
+    const link = event.target.closest("[data-page-target]");
+    // Get page key
+    const linkKey = link.dataset.pageTarget;
+    // Get ID for the page
+    const linkId = parseInt(link.dataset.pageTargetId);
 
-    // Prevent the default anchor behavior (page reload)
+    // Ignore clicks that are not links
+    if (!link) return;
     event.preventDefault();
 
-    // Dispatch a custom 'navigate' event with the target page
-    document.dispatchEvent(
-      new CustomEvent("navigate", {
-        detail: { page: button.dataset.pageTarget },
-      })
-    );
+    // Passes the details to the event listener
+    const detail = {
+      pageKey: linkKey,
+      pageId: linkId,
+    };
+
+    document.dispatchEvent(new CustomEvent("navigate", { detail }));
   }
 
   /**
@@ -93,7 +98,7 @@ export class Router {
    * @param {CustomEvent} event- The navigate event object.
    */
   handleNavigate(event) {
-    this.updateMainContent(event.detail.page, event.detail);
+    this.updateMainContent(event.detail.pageKey, event.detail);
   }
 
   /**
