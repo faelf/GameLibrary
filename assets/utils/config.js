@@ -1,6 +1,22 @@
+/**
+ * Configuration utility for managing application settings.
+ * Handles retrieval of user preferences from localStorage.
+ * @example config.getCurrency(); // returns the stored currency or default "£"
+ * @example config.getLocale(); // returns locale based on stored currency
+ * @example config.getFirstName(); // returns stored first name or default "you"
+ * @example config.getTheme(); // returns stored theme or default "dark"
+ */
 export const config = {
+  keys: {
+    games: "game-library",
+    currency: "currency",
+    user: {
+      firstName: "first-name",
+    },
+    theme: "theme",
+  },
   getCurrency() {
-    return localStorage.getItem("currency") || "£";
+    return localStorage.getItem(this.keys.currency) || "£";
   },
   getLocale() {
     const currency = this.getCurrency();
@@ -18,9 +34,9 @@ export const config = {
     }
   },
   getFirstName() {
-    return localStorage.getItem("first-name") || "you";
+    return localStorage.getItem(this.keys.user.firstName) || "you";
   },
   getTheme() {
-    return localStorage.getItem("theme") || "dark";
+    return localStorage.getItem(this.keys.theme) || "dark";
   },
 };
