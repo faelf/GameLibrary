@@ -24,20 +24,6 @@ class TNavbar extends HTMLElement {
       </div>
     </nav>
    `;
-
-    // Delegate click events for navigation
-    this.querySelector("nav").addEventListener("click", (event) => {
-      const button = event.target.closest("[data-page]");
-      if (button) {
-        const pageName = button.dataset.page;
-        const navigateEvent = new CustomEvent("navigate", {
-          bubbles: true,
-          composed: true,
-          detail: { page: pageName },
-        });
-        this.dispatchEvent(navigateEvent);
-      }
-    });
   }
 }
 
