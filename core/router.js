@@ -1,15 +1,27 @@
+/**
+ * Router class for handling SPA navigation and page updates.
+ * Manages click delegation, history navigation, and page content updates.
+ * @example
+ * const router = new Router(mainContentArea, pageContent);
+ * router.init();
+ */
 export class Router {
-  /* 
-    Constructor: Router
-    -------------------
-    Initializes the router with references to the main content area and the pages object.
-    Binds event handler methods to maintain the correct 'this' context.
-  */
+  /**
+   * Create a new Router.
+   * @param {HTMLElement} mainContentArea - The main element where pages will be rendered.
+   * @param {Object} pageContent - Object containing pages: { pageKey: { html, setup, title } }
+   */
   constructor(mainContentArea, pageContent) {
-    // Reference to the DOM element where page content will be injected
+    /** @typedef {HTMLElement} */
     this.mainContentArea = mainContentArea;
 
-    // Object containing all pages: { home: {...}, about: {...}, ... }
+    /**
+     * @typedef {Object} Page
+     * @property {string} html - HTML string that will be injected into the main content area
+     * @property {string} title - Page title shown in the browser tab
+     * @property {(gameId?: string) => Promise<void>|void} [setup]
+     *   Optional setup function called after the page HTML is rendered
+     */
     this.pageContent = pageContent;
 
     // Bind event handlers so 'this' refers to the router instance
@@ -18,13 +30,12 @@ export class Router {
     this.handlePopState = this.handlePopState.bind(this);
   }
 
-  /* 
-    Function: updateMainContent
-    ----------------------------
-    Updates the <main> content area with the HTML of the selected page.
-    Calls the page's setup() function if it exists (for async operations like fetching data).
-    Updates browser history/URL and document title.
-  */
+  /**
+   * Update the main content area with a page.
+   * @param {string} pageKey - The key of the page to display.
+   * @param {Object} [params={}] - Optional parameters (e.g., { gameId: 123 }).
+   * @returns {Promise<void>} - A promise that resolves when the content is updated.
+   */
   async updateMainContent(pageKey, params = {}) {
     // Get the page data from the pageContent object
     const content = this.pageContent[pageKey];
@@ -54,12 +65,11 @@ export class Router {
     }
   }
 
-  /* 
-    Event Handler: handleClick
-    --------------------------
-    Delegates click events on elements with a 'data-page' attribute.
-    Dispatches a 'navigate' event to update the page content.
-  */
+  /**
+   * Handle clicks on elements with a `data-page-target` attribute.
+   * Dispatches a custom 'navigate' event.
+   * @param {MouseEvent} event - The click event object.
+   */
   handleClick(event) {
     // Find the closest element with the data-page attribute
     const button = event.target.closest("[data-page-target]");
@@ -77,22 +87,20 @@ export class Router {
     );
   }
 
-  /* 
-    Event Handler: handleNavigate
-    -----------------------------
-    Called when a custom 'navigate' event is dispatched.
-    Updates the main content area to the requested page.
-  */
+  /**
+   * Handle custom 'navigate' events.
+   * Updates the main content area to the requested page.
+   * @param {CustomEvent} event- The navigate event object.
+   */
   handleNavigate(event) {
     this.updateMainContent(event.detail.page, event.detail);
   }
 
-  /* 
-    Event Handler: handlePopState
-    -----------------------------
-    Handles browser back/forward navigation.
-    Updates the main content area based on the current history state or URL hash.
-  */
+  /**
+   * Handle browser back/forward navigation.
+   * Updates the main content area based on the current history state or URL hash.
+   * @param {PopStateEvent} event - The popstate event object.
+   */
   handlePopState(event) {
     if (event.state) {
       // If state exists, update content based on stored pageKey and params
@@ -112,14 +120,12 @@ export class Router {
     }
   }
 
-  /* 
-    Function: init
-    ---------------
-    Sets up all necessary event listeners:
-      - Click delegation for navigation
-      - Custom 'navigate' events
-      - Browser back/forward navigation
-  */
+  /**
+   * Initialize the router by adding necessary event listeners.
+   * - Click delegation for navigation
+   * - Custom 'navigate' events
+   * - Browser back/forward navigation
+   */
   init() {
     document.addEventListener("click", this.handleClick);
     document.addEventListener("navigate", this.handleNavigate);
