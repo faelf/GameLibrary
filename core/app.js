@@ -2,8 +2,8 @@
   Import configuration, page definitions, and Web Components
 */
 import { config } from "../assets/utils/config.js";
-import { pageContent } from "../assets/pages/_index.js";
-import "../assets/components/_index.js";
+import { pageContent } from "../assets/pages/index.js";
+import "../assets/components/index.js";
 import { Router } from "./router.js";
 
 /* 
