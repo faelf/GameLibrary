@@ -1,4 +1,4 @@
-class ToastNotification extends HTMLElement {
+class UIToast extends HTMLElement {
   connectedCallback() {
     this.innerHTML = /* html */ `
     <div class="toast-container position-fixed top-0 end-0 p-3">
@@ -19,4 +19,4 @@ class ToastNotification extends HTMLElement {
   }
 }
 
-customElements.define("ui-toast", ToastNotification);
+customElements.define("ui-toast", UIToast);

@@ -1,4 +1,4 @@
-class TFooter extends HTMLElement {
+class UIFooter extends HTMLElement {
   connectedCallback() {
     const year = new Date().getFullYear();
 
@@ -14,4 +14,4 @@ class TFooter extends HTMLElement {
   }
 }
 
-customElements.define("ui-footer", TFooter);
+customElements.define("ui-footer", UIFooter);

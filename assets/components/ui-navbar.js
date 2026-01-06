@@ -1,4 +1,4 @@
-class TNavbar extends HTMLElement {
+class UINavbar extends HTMLElement {
   connectedCallback() {
     this.innerHTML = /* html */ `
     <nav class="navbar navbar-expand-sm bg-body-tertiary">
@@ -27,4 +27,4 @@ class TNavbar extends HTMLElement {
   }
 }
 
-customElements.define("ui-navbar", TNavbar);
+customElements.define("ui-navbar", UINavbar);

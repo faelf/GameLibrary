@@ -2,7 +2,7 @@ import { config } from "../utils/config.js";
 import { form } from "../utils/forms.js";
 import { gameSchema } from "../data/game-schema.js";
 
-class TAddGame extends HTMLElement {
+class UIAddGame extends HTMLElement {
   connectedCallback() {
     this.innerHTML = /* html */ `
     <!-- Button trigger modal -->
@@ -74,4 +74,4 @@ class TAddGame extends HTMLElement {
   }
 }
 
-customElements.define("ui-btn-add-game", TAddGame);
+customElements.define("ui-btn-add-game", UIAddGame);
