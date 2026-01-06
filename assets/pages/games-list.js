@@ -1,6 +1,6 @@
 import { config } from "../utils/config.js";
 import { storages } from "../utils/storages.js";
-import { addTableHeader, addTableRow } from "../utils/table.js";
+import { table } from "../utils/table.js";
 import { gameSchema } from "../data/game-schema.js";
 
 export const gamesListPage = {
@@ -21,11 +21,11 @@ export const gamesListPage = {
         <ui-btn-add-game></ui-btn-add-game>
       </div>
     </div>
-    <table class="table table-striped table-hover align-middle">
-      <thead id="games-table-head" class="sticky-top">
+    <table class="table table-striped table-borderless table-hover">
+      <thead id="games-table-head" class="sticky-top align-middle">
         <!-- Headers will be populated dynamically -->
       </thead>
-      <tbody id="games-table-body">
+      <tbody id="games-table-body" class="align-middle">
         <!-- Game rows will be populated dynamically -->
       </tbody>
     </table>
@@ -60,23 +60,18 @@ export const gamesListPage = {
       // Clear table and render all games
       tbody.innerHTML = "";
 
-      // Columns to be rendered
-      const tableHeaders = [
-        gameSchema.title.labelText,
-        gameSchema.platform.labelText,
-        gameSchema.region.labelText,
-        gameSchema.status.labelText,
-        gameSchema.ownership.labelText,
-        "Delete",
-      ];
-
       // Render table head
-      addTableHeader(thead, tableHeaders);
+      const tableColumns = {
+        title: gameSchema.title,
+        platform: gameSchema.platform,
+        region: gameSchema.region,
+        status: gameSchema.status,
+      };
+
+      table.addTHeader(thead, tableColumns);
 
       // Render table body
-      games.forEach((game) => {
-        addTableRow(tbody, tableHeaders, game);
-      });
+      table.addTBody(tbody, tableColumns, games);
     }
     // Initial render
     renderGames();
