@@ -1,92 +1,91 @@
-/**
- * Adds headers to a table head.
- * @param {HTMLElement} tableHead - thead element that will render the headers.
- * @param {Array} tableHeaders - The headers that will be rendered.
- */
-export function addTableHeader(tableHead, tableHeaders) {
-  const tr = document.createElement("tr");
-  tableHead.appendChild(tr);
-
-  tableHeaders.forEach((header) => {
-    const th = document.createElement("th");
-    th.textContent = header;
-    tr.appendChild(th);
-  });
-}
+import { formatters } from "./formatters.js";
 
 /**
- * Adds a row to a table body.
- * @param {HTMLElement} tableBody - Where the rows will be added.
- * @param {Array} tableHeaders - The headers to be displayed in small screens.
- * @param {Object} rowData - Info to be rendered in the table.
+ * Utility object for generating dynamic HTML table structures.
+ * Contains methods to programmatically build <thead> and <tbody> elements
+ * based on provided data and schema configurations.
+ * @namespace
  */
-export function addTableRow(tableBody, tableHeaders, rowData) {
-  const tr = document.createElement("tr");
-  tr.setAttribute("data-id", rowData.id);
-  tableBody.appendChild(tr);
+export const table = {
+  /**
+   * Generates and appends header cells to a table's <thead> element.
+   * @param { HTMLElement } theadId - The <thead> element where headers will be rendered.
+   * @param { Object } tableHeaders - The schema object containing column configurations (labels, keys).
+   */
+  addTHeader(theadId, tableHeaders) {
+    const tr = document.createElement("tr");
+    theadId.appendChild(tr);
 
-  tableHeaders.forEach((header) => {
-    const td = document.createElement("td");
-    td.setAttribute("data-cell", header);
+    Object.entries(tableHeaders).forEach(([key, value]) => {
+      console.log(key, value.labelText);
+      const th = document.createElement("th");
+      th.textContent = value.labelText;
+      tr.appendChild(th);
+    });
+  },
+  /**
+   * Populates a table body with rows based on an array of data.
+   * @param { HTMLElement } tbodyId - The <tbody> element where the rows will be added.
+   * @param { Object } tdColumns - The schema object used to map data keys to labels (and for mobile 'data-cell' attributes).
+   * @param { Array<Object> } tdData - An array of objects containing the data for each row.
+   * @param { Object } [ tdConfig ] - Optional configuration for specific column formatting.
+   * @param { string } [ tdConfig.hyperlink="title" ] - The data key to render as a clickable link.
+   * @param { string } [ tdConfig.hyperlinkTarget="game-details-page" ] - The navigation target for the link.
+   * @param { string } [ tdConfig.shortDate="purchaseDate" ] - The data key to format as a date.
+   * @param { string } [ tdConfig.currencySymbol="price" ] - The data key to format as currency.
+   */
+  addTBody(tbodyId, tdColumns, tdData, tdConfig = {}) {
+    const options = {
+      hyperlink: "title",
+      hyperlinkTarget: "game-details-page",
+      shortDate: "purchaseDate",
+      currencySymbol: "price",
+      ...tdConfig,
+    };
 
-    // Populate cells based on header type
-    switch (header) {
-      case "Title":
-        const a = document.createElement("a");
-        a.href = "#";
-        a.className = "text-decoration-none";
-        a.textContent = rowData.title;
-        // a.setAttribute("data-link", rowData.id);
-        a.dataset.pageTarget = "game-details-page";
-        a.dataset.pageTargetId = rowData.id;
-        td.appendChild(a);
-        break;
-
-      case "Delete":
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "btn btn-sm btn-danger";
-        button.setAttribute("data-delete-game", "");
-        button.innerHTML = `<span class="bi bi-trash3-fill"></span>`;
-        td.className = "text-lg-center";
-        td.appendChild(button);
-        break;
-
-      case "Status":
-        const statusSelect = document.createElement("select");
-        statusSelect.className = "form-select form-select-sm status-select";
-        statusSelect.setAttribute("data-field", "status");
-        statusSelect.setAttribute("data-id", rowData.id);
-        statusSelect.innerHTML = `
-          <option value="" disabled>Status</option>
-          <option value="Not started" ${rowData.status === "Not started" ? "selected" : ""}>Not started</option>
-          <option value="Playing" ${rowData.status === "Playing" ? "selected" : ""}>Playing</option>
-          <option value="Completed" ${rowData.status === "Completed" ? "selected" : ""}>Completed</option>
-        `;
-        td.appendChild(statusSelect);
-        break;
-
-      case "Ownership":
-        const ownershipSelect = document.createElement("select");
-        ownershipSelect.className = "form-select form-select-sm ownership-select";
-        ownershipSelect.setAttribute("data-field", "ownership");
-        ownershipSelect.setAttribute("data-id", rowData.id);
-        ownershipSelect.innerHTML = `
-          <option value="" disabled>Select ownership status</option>
-          <option value="In Collection" ${
-            rowData.ownership === "In Collection" ? "selected" : ""
-          }>In Collection</option>
-          <option value="Borrowed" ${rowData.ownership === "Borrowed" ? "selected" : ""}>Borrowed</option>
-          <option value="Lent Out" ${rowData.ownership === "Lent Out" ? "selected" : ""}>Lent to Someone</option>
-          <option value="Sold" ${rowData.ownership === "Sold" ? "selected" : ""}>Sold</option>
-        `;
-        td.appendChild(ownershipSelect);
-        break;
-
-      default:
-        td.textContent = rowData[header.toLowerCase()] || "Unknown";
+    // Check if tableData is actually an array before looping
+    if (!Array.isArray(tdData)) {
+      console.error("addTBody expects an Array of data, got:", tdData);
+      return;
     }
 
-    tr.appendChild(td);
-  });
-}
+    // Loop through rows in the data
+    tdData.forEach((rowData) => {
+      const tr = document.createElement("tr");
+      tr.setAttribute("data-id", rowData.id);
+
+      // Loop through columns for this specific row
+      Object.entries(tdColumns).forEach(([key, value]) => {
+        const td = document.createElement("td");
+        td.setAttribute("data-cell", value.labelText);
+
+        // Options
+        switch (key) {
+          case options.hyperlink:
+            const a = document.createElement("a");
+            a.href = "#";
+            a.dataset.pageTarget = options.hyperlinkTarget;
+            a.dataset.pageTargetId = rowData.id;
+            a.innerText = rowData[key];
+            td.appendChild(a);
+            break;
+
+          case options.shortDate:
+            td.innerText = formatters.longDate(rowData[key]);
+            break;
+
+          case options.currencySymbol:
+            td.innerText = formatters.fullPrice(rowData[key]);
+            break;
+
+          default:
+            td.innerText = rowData[key] !== undefined ? rowData[key] : "-";
+        }
+        tr.appendChild(td);
+      });
+
+      // Append the finished row to the body
+      tbodyId.appendChild(tr);
+    });
+  },
+};
