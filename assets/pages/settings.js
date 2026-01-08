@@ -1,4 +1,4 @@
-import { exportGamesToCSV, importGamesFromCSV } from "../data/data-manager.js";
+import { csv } from "../utils/csv.js";
 import { gamesStorage } from "../data/games-storage.js";
 import { config } from "../utils/config.js";
 import { toast } from "../utils/toast.js";
@@ -147,6 +147,8 @@ export const settingsPage = {
     const exportButton = document.getElementById("export-data");
     const importInput = document.getElementById("import-data");
     const importBtn = document.getElementById("import-data-btn");
+    const mergeInput = document.getElementById("merge-data");
+    const mergeBtn = document.getElementById("merge-data-btn");
     const themeSelect = document.getElementById("theme-select");
     // Load settings
     let gamesData = gamesStorage.load();
@@ -178,35 +180,6 @@ export const settingsPage = {
 
     firstNameBtn.addEventListener("click", updateFirstName);
 
-    // Export button
-    exportButton.addEventListener("click", function () {
-      const success = exportGamesToCSV();
-
-      if (success) {
-        toast.success("Games exported successfully!");
-      }
-    });
-
-    // Import button
-    importBtn.addEventListener("click", async function () {
-      const file = importInput.files[0];
-
-      if (!file) {
-        toast.info("Please select a file to import.");
-        return;
-      }
-
-      try {
-        const count = await importGamesFromCSV(file);
-
-        toast.success(`Successfully imported ${count} games!`);
-
-        importInput.value = "";
-      } catch (error) {
-        toast.error(error.message);
-      }
-    });
-
     // Delete Data
     deleteData.addEventListener("click", function () {
       toast.success("All game data deleted successfully!", "Are you sure? This action cannot be undone.");
@@ -218,6 +191,64 @@ export const settingsPage = {
     // Load current currency £ default
     const currentCurrency = config.getCurrency();
     currency.value = currentCurrency;
+
+    /**
+     * Configuration for CSV Export columns.
+     * Generated dynamically from the gameSchema.
+     */
+    const gameCSVHeaders = Object.entries(gameSchema).map(([key, config]) => ({
+      key,
+      label: config.labelText,
+    }));
+
+    // Export
+    exportButton.addEventListener("click", function () {
+      const success = csv.export(gamesData, gameCSVHeaders, "games.csv");
+
+      if (success) {
+        toast.success("Games exported successfully!");
+      }
+    });
+
+    // Import
+    importBtn.addEventListener("click", function () {
+      csv
+        .import(importInput, {
+          columns: gameCSVHeaders,
+          storageKey: config.keys.games,
+          transform: (game) => ({
+            ...game,
+            year: game.year ? Number(game.year) : "",
+            price: game.price ? Number(game.price) : 0,
+          }),
+        })
+        .then((data) => {
+          gamesData = data;
+          toast.success("Games imported successfully!");
+          importInput.value = "";
+        })
+        .catch((error) => toast.warning(error.message));
+    });
+
+    // Merge
+    mergeBtn.addEventListener("click", function () {
+      csv
+        .merge(mergeInput, {
+          columns: gameCSVHeaders,
+          storageKey: config.keys.games,
+          transform: (game) => ({
+            ...game,
+            year: game.year ? Number(game.year) : "",
+            price: game.price ? Number(game.price) : 0,
+          }),
+        })
+        .then((data) => {
+          gamesData = data;
+          toast.success("Games merged successfully!");
+          mergeInput.value = "";
+        })
+        .catch((error) => toast.warning(error.message));
+    });
 
     // Save on change
     currency.addEventListener("change", (e) => {
