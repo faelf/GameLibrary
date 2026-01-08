@@ -1,5 +1,6 @@
 import { csv } from "../utils/csv.js";
-import { gamesStorage } from "../data/games-storage.js";
+import { storages } from "../utils/storages.js";
+import { gameSchema } from "../data/game-schema.js";
 import { config } from "../utils/config.js";
 import { toast } from "../utils/toast.js";
 
@@ -151,7 +152,8 @@ export const settingsPage = {
     const mergeBtn = document.getElementById("merge-data-btn");
     const themeSelect = document.getElementById("theme-select");
     // Load settings
-    let gamesData = gamesStorage.load();
+    let gamesData = storages.load(config.keys.games);
+
     const currentTheme = config.getTheme();
 
     // Set initial theme on <html>
@@ -173,7 +175,7 @@ export const settingsPage = {
     // Save Personal Information
     function updateFirstName() {
       const firstNameInput = firstName.value;
-      localStorage.setItem("first-name", firstNameInput);
+      storages.save(config.keys.user.firstName, firstNameInput);
 
       toast.success("Name updated successfully!");
     }
@@ -182,10 +184,11 @@ export const settingsPage = {
 
     // Delete Data
     deleteData.addEventListener("click", function () {
+      // Toast will validate users input
       toast.success("All game data deleted successfully!", "Are you sure? This action cannot be undone.");
 
       gamesData = [];
-      gamesStorage.save(gamesData);
+      storages.save(config.keys.games, gamesData);
     });
 
     // Load current currency £ default
