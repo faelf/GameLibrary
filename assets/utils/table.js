@@ -17,7 +17,6 @@ export const table = {
     theadId.appendChild(tr);
 
     Object.entries(tableHeaders).forEach(([key, value]) => {
-      console.log(key, value.labelText);
       const th = document.createElement("th");
       th.textContent = value.labelText;
       tr.appendChild(th);
