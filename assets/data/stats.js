@@ -1,33 +1,42 @@
-import { gamesStorage } from "../data/games-storage.js";
+import { storages } from "../utils/storages.js";
+import { config } from "../utils/config.js";
 
 export const stats = {
+  data: storages.load(config.keys.games),
   totalGames() {
-    return gamesStorage.load().length;
-  },
-
-  totalSpent() {
-    return gamesStorage
-      .load()
-      .reduce((sum, game) => sum + Number(game.price || 0), 0);
+    let total = this.data.length;
+    console.log(`Games ${total}`);
+    return total;
   },
 
   completedGames() {
-    return gamesStorage.load().filter((game) => game.status === "Completed")
-      .length;
+    let completed = this.data.filter((game) => game.status === "Completed");
+    completed = completed.length;
+    return completed;
+  },
+
+  totalSpent() {
+    let spent = this.data.reduce((sum, game) => sum + Number(game.price || 0), 0);
+    return spent;
   },
 
   currentlyPlaying() {
-    return gamesStorage.load().filter((game) => game.status === "Playing")
-      .length;
+    let playing = this.data.filter((game) => game.status === "Playing");
+    playing = playing.length;
+    return playing;
   },
 
   backlogGames() {
-    return gamesStorage.load().filter((game) => game.status === "Not started")
-      .length;
+    let backlog = this.data.filter((game) => game.status === "Not started");
+    backlog = backlog.length;
+    return backlog;
   },
+
   totalConsoles() {
-    const games = gamesStorage.load();
-    const platforms = new Set(games.map((game) => game.platform));
-    return platforms.size;
+    let platforms = new Set(this.data.map((game) => game.platform));
+    platforms = platforms.size;
+    return platforms;
   },
 };
+
+console.log(stats.data);
