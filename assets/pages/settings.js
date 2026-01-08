@@ -163,7 +163,7 @@ export const settingsPage = {
     themeSelect.addEventListener("change", (e) => {
       const selectedTheme = e.target.value;
 
-      localStorage.setItem("theme", selectedTheme);
+      storages.save(config.keys.theme, selectedTheme);
       document.documentElement.setAttribute("data-bs-theme", selectedTheme);
 
       toast.success("Theme updated successfully!");
@@ -175,7 +175,7 @@ export const settingsPage = {
     // Save Personal Information
     function updateFirstName() {
       const firstNameInput = firstName.value;
-      storages.save(config.keys.user.firstName, firstNameInput);
+      storages.save(FirstNameKey, firstNameInput);
 
       toast.success("Name updated successfully!");
     }
@@ -255,7 +255,7 @@ export const settingsPage = {
 
     // Save on change
     currency.addEventListener("change", (e) => {
-      localStorage.setItem("currency", e.target.value);
+      storages.save(config.keys.currency, e.target.value);
       toast.success("Currency updated successfully!");
     });
   },
