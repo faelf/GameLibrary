@@ -6,7 +6,7 @@
 export const gamesStorage = {
   /**
    * Load all games from localStorage.
-   * @returns {Array<Object>} An array of game objects.
+   * @returns { Array<Object> } An array of game objects.
    * @example
    * const games = gamesStorage.load();
    */
@@ -21,7 +21,7 @@ export const gamesStorage = {
   },
   /**
    * Save an array of games to localStorage.
-   * @param {Array<Object>} games - The array of game objects to save.
+   * @param { Array<Object> } games - The array of game objects to save.
    * @example
    * gamesStorage.save([
    *   { id: 1, title: "Game 1", platform: "PC", year: 2020 },
@@ -33,8 +33,8 @@ export const gamesStorage = {
   },
   /**
    * Get a single game by its ID.
-   * @param {number} itemid - The ID of the game to retrieve.
-   * @returns {Object|undefined} The game object if found, otherwise undefined.
+   * @param { number } itemid - The ID of the game to retrieve.
+   * @returns { Object|undefined } The game object if found, otherwise undefined.
    * @example
    * const game = gamesStorage.game(1);
    */
