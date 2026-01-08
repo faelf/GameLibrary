@@ -176,7 +176,6 @@ export const settingsPage = {
     function updateFirstName() {
       const firstNameInput = firstName.value;
       storages.save(FirstNameKey, firstNameInput);
-
       toast.success("Name updated successfully!");
     }
 
