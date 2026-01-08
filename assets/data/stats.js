@@ -5,7 +5,6 @@ export const stats = {
   data: storages.load(config.keys.games),
   totalGames() {
     let total = this.data.length;
-    console.log(`Games ${total}`);
     return total;
   },
 
@@ -38,5 +37,3 @@ export const stats = {
     return platforms;
   },
 };
-
-console.log(stats.data);
