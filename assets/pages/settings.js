@@ -175,7 +175,7 @@ export const settingsPage = {
     // Save Personal Information
     function updateFirstName() {
       const firstNameInput = firstName.value;
-      storages.save(FirstNameKey, firstNameInput);
+      storages.save(config.keys.user.firstName, firstNameInput);
       toast.success("Name updated successfully!");
     }
 
@@ -193,6 +193,12 @@ export const settingsPage = {
     // Load current currency £ default
     const currentCurrency = config.getCurrency();
     currency.value = currentCurrency;
+
+    // Save on change
+    currency.addEventListener("change", (e) => {
+      storages.save(config.keys.currency, e.target.value);
+      toast.success("Currency updated successfully!");
+    });
 
     /**
      * Configuration for CSV Export columns.
@@ -250,12 +256,6 @@ export const settingsPage = {
           mergeInput.value = "";
         })
         .catch((error) => toast.warning(error.message));
-    });
-
-    // Save on change
-    currency.addEventListener("change", (e) => {
-      storages.save(config.keys.currency, e.target.value);
-      toast.success("Currency updated successfully!");
     });
   },
 };
