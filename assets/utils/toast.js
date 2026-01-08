@@ -2,11 +2,11 @@
  * @module utils/toast
  * Toast utility for displaying notifications.
  * Depends on Bootstrap's Toast component.
- * @param {string} bodyMessage - The main message to display in the toast.
+ * @param { string } bodyMessage - The main message to display in the toast.
  * @example toast.error("An error occurred.");
- * @param {string|null} confirmMessage - Optional confirmation message before showing the toast.
+ * @param { string|null } confirmMessage - Optional confirmation message before showing the toast.
  * @example toast.success("Operation completed successfully!", "Are you sure?");
- * @param {string} type - The type is passed implicitly by the calling method.
+ * @param { string } type - The type is passed implicitly by the calling method.
  */
 export const toast = {
   success(bodyMessage, confirmMessage = null) {
