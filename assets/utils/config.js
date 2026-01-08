@@ -11,12 +11,20 @@ export const config = {
     games: "game-library",
     currency: "currency",
     user: {
+      default: "You",
       firstName: "first-name",
     },
     theme: "theme",
   },
   getCurrency() {
-    return localStorage.getItem(this.keys.currency) || "£";
+    const value = localStorage.getItem(this.keys.currency);
+    if (!value) return "£";
+    try {
+      return JSON.parse(value);
+    } catch (e) {
+      console.log(e);
+      return value;
+    }
   },
   getLocale() {
     const currency = this.getCurrency();
@@ -34,9 +42,23 @@ export const config = {
     }
   },
   getFirstName() {
-    return localStorage.getItem(this.keys.user.firstName) || "you";
+    const value = localStorage.getItem(this.keys.user.firstName);
+    if (!value) return this.keys.user.default;
+    try {
+      return JSON.parse(value);
+    } catch (e) {
+      console.log(e);
+      return value;
+    }
   },
   getTheme() {
-    return localStorage.getItem(this.keys.theme) || "dark";
+    const value = localStorage.getItem(this.keys.theme);
+    if (!value) return "dark";
+    try {
+      return JSON.parse(value);
+    } catch (e) {
+      console.log(e);
+      return value;
+    }
   },
 };
