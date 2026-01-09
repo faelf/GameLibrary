@@ -29,15 +29,15 @@ export const table = {
    * @param { Array<Object> } tdData - An array of objects containing the data for each row.
    * @param { Object } [ tdConfig ] - Optional configuration for specific column formatting.
    * @param { string } [ tdConfig.hyperlink="title" ] - The data key to render as a clickable link.
-   * @param { string } [ tdConfig.hyperlinkTarget="game-details-page" ] - The navigation target for the link.
-   * @param { string } [ tdConfig.shortDate="purchaseDate" ] - The data key to format as a date.
+   * @param { string } [ tdConfig.hyperlinkTarget="page" ] - The navigation target for the link.
+   * @param { string } [ tdConfig.longDate="date" ] - The data key to format as a date.
    * @param { string } [ tdConfig.currencySymbol="price" ] - The data key to format as currency.
    */
   addTBody(tbodyId, tdColumns, tdData, tdConfig = {}) {
     const options = {
       hyperlink: "title",
-      hyperlinkTarget: "game-details-page",
-      shortDate: "purchaseDate",
+      hyperlinkTarget: "page",
+      longDate: "date",
       currencySymbol: "price",
       ...tdConfig,
     };
@@ -58,6 +58,14 @@ export const table = {
         const td = document.createElement("td");
         td.setAttribute("data-cell", value.labelText);
 
+        // Prepare the value for display
+        let displayValue = rowData[key];
+
+        // If the schema has a list (e.g. Select/Radio), map the Key to the Label
+        if (value.list && value.list[displayValue]) {
+          displayValue = value.list[displayValue];
+        }
+
         // Options
         switch (key) {
           case options.hyperlink:
@@ -65,12 +73,12 @@ export const table = {
             a.href = "#";
             a.dataset.pageTarget = options.hyperlinkTarget;
             a.dataset.pageTargetId = rowData.id;
-            a.innerText = rowData[key];
+            a.innerText = displayValue;
             td.appendChild(a);
             break;
 
-          case options.shortDate:
-            td.innerText = formatters.longDate(rowData[key]);
+          case options.longDate:
+            td.innerText = rowData[key] ? formatters.longDate(rowData[key]) : "-";
             break;
 
           case options.currencySymbol:
@@ -78,7 +86,7 @@ export const table = {
             break;
 
           default:
-            td.innerText = rowData[key] !== undefined ? rowData[key] : "-";
+            td.innerText = displayValue !== undefined ? displayValue : "-";
         }
         tr.appendChild(td);
       });
