@@ -67,7 +67,7 @@ export const gameSchema = {
     placeholder: "Select a region",
     list: {
       JP: "Japan",
-      US: "North America",
+      NA: "North America",
       EU: "Europe",
       UK: "UK",
       FR: "France",
