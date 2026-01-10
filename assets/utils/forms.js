@@ -16,7 +16,7 @@ export const form = {
   /**
    * Creates an input field using a configuration object.
    * @param { Object } config - The configuration object for this field.
-   * @param { string } [value] - Optional pre-filled value (useful for editing).
+   * @param { string } [ value ] - Optional pre-filled value (useful for editing).
    * @returns { HTMLDivElement } Wrapper containing the label and input.
    * @example
    * const titleField = document.getElementById("title-field");
@@ -49,7 +49,7 @@ export const form = {
    * Renders an input group (e.g. Price field with a "£" symbol).
    * @param { FieldConfig } config - The configuration object.
    * @param { string } groupText - The symbol/text to display (e.g., "£").
-   * @param { string|number } [value] - Optional pre-filled value.
+   * @param { string|number } [ value ] - Optional pre-filled value.
    * @returns { HTMLDivElement } Wrapper containing the label and input group.
    */
   inputGroup(config, groupText, value = "") {
@@ -112,7 +112,6 @@ export const form = {
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.textContent = placeholder || "Select an option...";
-    defaultOption.disabled = true;
 
     if (selectedValue === "" || selectedValue === null || selectedValue === undefined) {
       defaultOption.selected = true;
@@ -282,7 +281,7 @@ export const form = {
    * @param { string } containerId - The HTML ID of the row where inputs go.
    * @param { Object } schema - The schema object (e.g. gameSchema).
    * @param { Object } layoutMap - Object mapping field keys to column classes (e.g. { title: "col-12" }).
-   * @param { Object } [options] - Optional extras (like currency symbol).
+   * @param { Object } [ options ] - Optional extras (like currency symbol).
    */
   render(containerId, schema, layoutMap, options = {}, initialData = {}) {
     const formRow = document.getElementById(containerId);
