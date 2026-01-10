@@ -64,14 +64,27 @@ export const gamesListPage = {
       const tableColumns = {
         title: gameSchema.title,
         platform: gameSchema.platform,
+        year: gameSchema.year,
         region: gameSchema.region,
+        condition: gameSchema.condition,
         status: gameSchema.status,
+        price: gameSchema.price,
+        purchaseDate: gameSchema.purchaseDate,
+        ownership: gameSchema.ownership,
+        note: gameSchema.note,
+      };
+
+      const options = {
+        hyperlink: "title",
+        hyperlinkTarget: "game-details-page",
+        longDate: "purchaseDate",
+        currencySymbol: "price",
       };
 
       table.addTHeader(thead, tableColumns);
 
       // Render table body
-      table.addTBody(tbody, tableColumns, games);
+      table.addTBody(tbody, tableColumns, games, options);
     }
     // Initial render
     renderGames();
