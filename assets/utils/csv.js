@@ -150,7 +150,7 @@ export const csv = {
 
             // Generic ID generation: Ensure every item has an ID
             if (!obj.id) {
-              obj.id = crypto.randomUUID ? crypto.randomUUID() : Date.now() + Math.floor(Math.random() * 10000);
+              obj.id = Date.now() + Math.floor(Math.random() * 10000);
             }
 
             return obj;
