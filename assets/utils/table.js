@@ -29,18 +29,28 @@ export const table = {
    * @param { Array<Object> } tdData - An array of objects containing the data for each row.
    * @param { Object } [ tdConfig ] - Optional configuration for specific column formatting.
    * @param { string } [ tdConfig.hyperlink="title" ] - The data key to render as a clickable link.
-   * @param { string } [ tdConfig.hyperlinkTarget="page" ] - The navigation target for the link.
+   * @param { string } [ tdConfig.hyperlinkTarget="details-page" ] - The navigation target for the link.
    * @param { string } [ tdConfig.longDate="date" ] - The data key to format as a date.
    * @param { string } [ tdConfig.currencySymbol="price" ] - The data key to format as currency.
    */
   addTBody(tbodyId, tdColumns, tdData, tdConfig = {}) {
     const options = {
       hyperlink: "title",
-      hyperlinkTarget: "page",
+      hyperlinkTarget: "details-page",
       longDate: "date",
       currencySymbol: "price",
       ...tdConfig,
     };
+
+    // Normalize longDate to always be an array
+    if (!Array.isArray(options.longDate)) {
+      options.longDate = [options.longDate];
+    }
+
+    // Normalize currencySymbol to always be an array
+    if (!Array.isArray(options.currencySymbol)) {
+      options.currencySymbol = [options.currencySymbol];
+    }
 
     // Check if tableData is actually an array before looping
     if (!Array.isArray(tdData)) {
@@ -67,26 +77,19 @@ export const table = {
         }
 
         // Options
-        switch (key) {
-          case options.hyperlink:
-            const a = document.createElement("a");
-            a.href = "#";
-            a.dataset.pageTarget = options.hyperlinkTarget;
-            a.dataset.pageTargetId = rowData.id;
-            a.innerText = displayValue;
-            td.appendChild(a);
-            break;
-
-          case options.longDate:
-            td.innerText = rowData[key] ? formatters.longDate(rowData[key]) : "-";
-            break;
-
-          case options.currencySymbol:
-            td.innerText = formatters.fullPrice(rowData[key]);
-            break;
-
-          default:
-            td.innerText = displayValue !== undefined ? displayValue : "-";
+        if (key === options.hyperlink) {
+          const a = document.createElement("a");
+          a.href = "#";
+          a.dataset.pageTarget = options.hyperlinkTarget;
+          a.dataset.pageTargetId = rowData.id;
+          a.innerText = displayValue;
+          td.appendChild(a);
+        } else if (options.longDate.includes(key)) {
+          td.innerText = rowData[key] ? formatters.longDate(rowData[key]) : "-";
+        } else if (options.currencySymbol.includes(key)) {
+          td.innerText = formatters.fullPrice(rowData[key]);
+        } else {
+          td.innerText = displayValue !== undefined ? displayValue : "-";
         }
         tr.appendChild(td);
       });
