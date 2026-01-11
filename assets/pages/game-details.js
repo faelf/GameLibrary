@@ -29,14 +29,14 @@ export const gameDetailsPage = {
     const game = storages.get(config.keys.games, gameId);
     const layoutMap = {
       title: "col-12",
-      platform: "col-lg-4",
-      year: "col-lg-4",
-      region: "col-lg-4",
-      condition: "col-lg-6",
-      status: "col-lg-6",
-      price: "col-lg-6",
-      purchaseDate: "col-lg-6",
-      ownership: "col-lg-6",
+      platform: "col-md-4",
+      year: "col-md-4",
+      region: "col-md-4",
+      condition: "col-md-6 col-xl-3",
+      status: "col-md-6 col-xl-3",
+      price: "col-md-4 col-xl-2",
+      purchaseDate: "col-md-4 col-xl-2",
+      ownership: "col-md-4 col-xl-2",
       note: "col-12",
     };
 
