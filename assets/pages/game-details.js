@@ -21,6 +21,10 @@ export const gameDetailsPage = {
       <div id="game-collection-info-set" class="row"></div>
       <!-- Game Form Fields -->
     </fieldset>
+    <div class="col-12 text-end">
+      <button id="save-btn" type="button" class="btn btn-primary">💾 Save</button>
+      <button id="save-btn" type="reset" class="btn btn-warning">🗑️ Clear</button>
+    </div>
     </form>
   </section>
   `,
@@ -61,5 +65,34 @@ export const gameDetailsPage = {
 
     form.render("game-info-set", gameInfoSchema, layoutMap, options, game);
     form.render("game-collection-info-set", collectionInfoSchema, layoutMap, options, game);
+
+    const saveBtn = document.getElementById("save-btn");
+
+    saveBtn.addEventListener("click", function () {
+      const gameDataToSave = {};
+
+      // Get schema keys
+      Object.keys(gameSchema).forEach((key) => {
+        const config = gameSchema[key];
+        const inputElement = document.getElementById(config.inputId);
+
+        // skip if element not found
+        if (!inputElement) return;
+
+        // Extract Value based on Type
+        switch (config.inputType) {
+          case "number":
+            let num = inputElement.valueAsNumber || 0;
+            gameDataToSave[key] = num;
+            break;
+          default:
+            gameDataToSave[key] = inputElement.value;
+        }
+      });
+
+      gameDataToSave.id = gameId;
+
+      console.log("Success! Captured Data:", gameDataToSave);
+    });
   },
 };
