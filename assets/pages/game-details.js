@@ -91,8 +91,7 @@ export const gameDetailsPage = {
       });
 
       gameDataToSave.id = gameId;
-
-      console.log("Success! Captured Data:", gameDataToSave);
+      storages.update(config.keys.games, gameId, gameDataToSave);
     });
   },
 };
