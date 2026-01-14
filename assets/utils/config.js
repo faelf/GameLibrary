@@ -51,19 +51,8 @@ export const config = {
     }
   },
   getLocale() {
-    const currency = this.getCurrency();
-    switch (currency) {
-      case "£":
-        return "en-GB";
-      case "$":
-        return "en-US";
-      case "€":
-        return "fr-FR";
-      case "R$":
-        return "pt-BR";
-      default:
-        return "en-GB";
-    }
+    const code = this.getCountryCode();
+    return this.countrySettings[code].locale;
   },
   getFirstName() {
     const value = localStorage.getItem(this.keys.user.firstName);
