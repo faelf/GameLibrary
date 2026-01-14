@@ -41,14 +41,8 @@ export const config = {
     }
   },
   getCurrency() {
-    const value = localStorage.getItem(this.keys.currency);
-    if (!value) return "£";
-    try {
-      return JSON.parse(value);
-    } catch (e) {
-      console.log(e);
-      return value;
-    }
+    const code = this.getCountryCode();
+    return this.countrySettings[code].currency;
   },
   getLocale() {
     const code = this.getCountryCode();
