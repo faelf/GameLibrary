@@ -16,6 +16,30 @@ export const config = {
     },
     theme: "theme",
   },
+  countrySettings: {
+    UK: { label: "United Kingdom", locale: "en-GB", currency: "£", flag: "🇬🇧" },
+    US: { label: "United States", locale: "en-US", currency: "$", flag: "🇺🇸" },
+    FR: { label: "France", locale: "fr-FR", currency: "€", flag: "🇫🇷" },
+    DE: { label: "Germany", locale: "de-DE", currency: "€", flag: "🇩🇪" },
+    BR: { label: "Brazil", locale: "pt-BR", currency: "R$", flag: "🇧🇷" },
+  },
+  getCountryCode() {
+    const storedCode = localStorage.getItem("user-country");
+    if (storedCode) {
+      return storedCode;
+    } else {
+      return "UK";
+    }
+  },
+  setCountryCode(code) {
+    if (this.countrySettings[code]) {
+      localStorage.setItem("user-country", code);
+      return true;
+    } else {
+      console.error("Error: Invalid country code");
+      return false;
+    }
+  },
   getCurrency() {
     const value = localStorage.getItem(this.keys.currency);
     if (!value) return "£";

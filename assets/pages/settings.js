@@ -30,23 +30,24 @@ export const settingsPage = {
         </div>
       </div>
     </div>
-    <!-- Currency -->
+    <!-- Country -->
     <div class="col-md-6 col-lg-4">
       <div class="card mb-3">
         <div class="card-header">
-          <h3 class="mb-0">Currency</h3>
+          <h3 class="mb-0">Country</h3>
         </div>
         <div class="card-body">
-        <label for="currency-select" class="form-label">Select your preferred currency</label>
+        <label for="user-country" class="form-label">Select your country</label>
           <div class="input-group mb-3">
-            <label class="input-group-text" for="currency-select" id="currenct-symbol">
-              <span class="bi bi-currency-exchange"></span>
+            <label class="input-group-text" for="user-country">
+              <span id="country-flag">🌎</span>
             </label>
-            <select id="currency-select" class="form-select">
-              <option value="£">£ - British Pound</option>
-              <option value="$">$ - US Dollar</option>
-              <option value="€">€ - Euro</option>
-              <option value="R$">R$ - Brazilian Real</option>
+            <select id="user-country" class="form-select">
+              <option value="UK">United Kingdom</option>
+              <option value="US">United States</option>
+              <option value="DE">Germany</option>
+              <option value="FR">France</option>
+              <option value="BR">Brazil</option>
             </select>
           </div>
         </div>
@@ -141,7 +142,6 @@ export const settingsPage = {
   `,
   setup() {
     // Get references to all interactive elements
-    const currency = document.getElementById("currency-select");
     const firstName = document.getElementById("first-name");
     const firstNameBtn = document.getElementById("first-name-btn");
     const deleteData = document.getElementById("delete-data");
@@ -190,14 +190,18 @@ export const settingsPage = {
       storages.save(config.keys.games, gamesData);
     });
 
-    // Load current currency £ default
-    const currentCurrency = config.getCurrency();
-    currency.value = currentCurrency;
+    const flagSpan = document.getElementById("country-flag");
 
-    // Save on change
-    currency.addEventListener("change", (e) => {
-      storages.save(config.keys.currency, e.target.value);
-      toast.success("Currency updated successfully!");
+    const userCountryInput = document.getElementById("user-country");
+    const currentCountry = config.getCountryCode();
+    userCountryInput.value = currentCountry;
+    flagSpan.textContent = config.countrySettings[currentCountry].flag;
+
+    userCountryInput.addEventListener("change", (e) => {
+      const updatedCountry = userCountryInput.value;
+      flagSpan.textContent = config.countrySettings[updatedCountry].flag;
+      config.setCountryCode(updatedCountry);
+      toast.success("Country updated");
     });
 
     /**
