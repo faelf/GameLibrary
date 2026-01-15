@@ -147,80 +147,87 @@ export const settingsPage = {
 </section>
   `,
   setup() {
-    // Get references to all interactive elements
-    const firstName = document.getElementById("first-name");
-    const firstNameBtn = document.getElementById("first-name-btn");
-    const deleteData = document.getElementById("delete-data");
-    const exportButton = document.getElementById("export-data");
-    const importInput = document.getElementById("import-data");
-    const importBtn = document.getElementById("import-data-btn");
-    const mergeInput = document.getElementById("merge-data");
-    const mergeBtn = document.getElementById("merge-data-btn");
-    const themeSelect = document.getElementById("theme-select");
-    // Load settings
+    // --- Data Loading (General) ----------------------------------------
     let gamesData = storages.load(config.keys.games);
 
-    const currentTheme = config.getTheme();
+    // --- Theme Settings ------------------------------------------------
+    const themeSelect = document.getElementById("theme-select");
 
-    // Set initial theme on <html>
+    // Init: Apply saved theme
+    const currentTheme = config.getTheme();
     document.documentElement.setAttribute("data-bs-theme", currentTheme);
     themeSelect.value = currentTheme;
 
+    // Action: Change theme
     themeSelect.addEventListener("change", (e) => {
-      const selectedTheme = e.target.value;
-
-      storages.save(config.keys.theme, selectedTheme);
-      document.documentElement.setAttribute("data-bs-theme", selectedTheme);
-
+      const newTheme = e.target.value;
+      storages.save(config.keys.theme, newTheme);
+      document.documentElement.setAttribute("data-bs-theme", newTheme);
       toast.success("Theme updated successfully!");
     });
 
-    // Display First Name
-    firstName.value = config.getFirstName();
+    // --- Personal Information (First Name) -----------------------------
+    const firstNameInput = document.getElementById("first-name");
+    const firstNameBtn = document.getElementById("first-name-btn");
 
-    // Save Personal Information
-    function updateFirstName() {
-      const firstNameInput = firstName.value;
-      storages.save(config.keys.user.firstName, firstNameInput);
+    // Init: Load saved name
+    firstNameInput.value = config.getFirstName();
+
+    // Action: Save name
+    firstNameBtn.addEventListener("click", () => {
+      const nameValue = firstNameInput.value;
+      storages.save(config.keys.user.firstName, nameValue);
       toast.success("Name updated successfully!");
-    }
-
-    firstNameBtn.addEventListener("click", updateFirstName);
-
-    // Delete Data
-    deleteData.addEventListener("click", function () {
-      // Toast will validate users input
-      toast.success("All game data deleted successfully!", "Are you sure? This action cannot be undone.");
-
-      gamesData = [];
-      storages.save(config.keys.games, gamesData);
     });
 
-    // Update Country
+    // --- Regional Settings (Country & Flag) ----------------------------
+    const countryInput = document.getElementById("user-country");
     const flagSpan = document.getElementById("country-flag");
-    const userCountryInput = document.getElementById("user-country");
-    userCountryInput.value = config.getCountryCode();
-    flagSpan.textContent = config.getCountryFlag();
 
-    userCountryInput.addEventListener("change", (e) => {
-      const updatedCountry = e.target.value;
-      const updatedFlag = countrySchema[updatedCountry].flag;
-      flagSpan.textContent = updatedFlag;
-      config.setCountryCode(updatedCountry);
+    // Init: Load saved country
+    countryInput.value = config.getCountryCode();
+    flagSpan.textContent = config.getCountryFlag(); // Assuming this helper exists
+
+    // Action: Change country
+    countryInput.addEventListener("change", (e) => {
+      const newCountry = e.target.value;
+
+      // Update UI immediately
+      flagSpan.textContent = countrySchema[newCountry].flag;
+
+      // Save to config
+      config.setCountryCode(newCountry);
       toast.success("Country updated");
     });
 
-    /**
-     * Configuration for CSV Export columns.
-     * Generated dynamically from the gameSchema.
-     */
+    // --- Shared Configuration ---------------------------------------------
+    // Define CSV Columns based on your schema
     const gameCSVHeaders = Object.entries(gameSchema).map(([key, config]) => ({
       key,
       label: config.labelText,
     }));
 
-    // Export
-    exportButton.addEventListener("click", function () {
+    // Helper: Format incoming data (Used by both Import & Merge)
+    const formatGameData = (game) => ({
+      ...game,
+      year: game.year ? Number(game.year) : "",
+      price: game.price ? Number(game.price) : 0,
+    });
+
+    // --- Delete Data ---------------------------------------------------
+    const deleteBtn = document.getElementById("delete-data");
+
+    deleteBtn.addEventListener("click", () => {
+      gamesData = [];
+      storages.save(config.keys.games, gamesData);
+
+      toast.success("All game data deleted successfully!", "Are you sure? This action cannot be undone.");
+    });
+
+    // --- Export Data ---------------------------------------------------
+    const exportBtn = document.getElementById("export-data");
+
+    exportBtn.addEventListener("click", () => {
       const success = csv.export(gamesData, gameCSVHeaders, "games.csv");
 
       if (success) {
@@ -228,42 +235,40 @@ export const settingsPage = {
       }
     });
 
-    // Import
-    importBtn.addEventListener("click", function () {
+    // --- Import Data (Overwrite) ---------------------------------------
+    const importInput = document.getElementById("import-data");
+    const importBtn = document.getElementById("import-data-btn");
+
+    importBtn.addEventListener("click", () => {
       csv
         .import(importInput, {
           columns: gameCSVHeaders,
           storageKey: config.keys.games,
-          transform: (game) => ({
-            ...game,
-            year: game.year ? Number(game.year) : "",
-            price: game.price ? Number(game.price) : 0,
-          }),
+          transform: formatGameData,
         })
         .then((data) => {
           gamesData = data;
-          toast.success("Games imported successfully!");
           importInput.value = "";
+          toast.success("Games imported successfully!");
         })
         .catch((error) => toast.warning(error.message));
     });
 
-    // Merge
-    mergeBtn.addEventListener("click", function () {
+    // --- Merge Data (Append) -------------------------------------------
+    const mergeInput = document.getElementById("merge-data");
+    const mergeBtn = document.getElementById("merge-data-btn");
+
+    mergeBtn.addEventListener("click", () => {
       csv
         .merge(mergeInput, {
           columns: gameCSVHeaders,
           storageKey: config.keys.games,
-          transform: (game) => ({
-            ...game,
-            year: game.year ? Number(game.year) : "",
-            price: game.price ? Number(game.price) : 0,
-          }),
+          transform: formatGameData,
         })
         .then((data) => {
           gamesData = data;
-          toast.success("Games merged successfully!");
           mergeInput.value = "";
+          toast.success("Games merged successfully!");
         })
         .catch((error) => toast.warning(error.message));
     });
