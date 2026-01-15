@@ -1,3 +1,5 @@
+import { countrySchema } from "../data/country-schema.js";
+
 /**
  * Configuration utility for managing application settings.
  * Handles retrieval of user preferences from localStorage.
@@ -16,13 +18,6 @@ export const config = {
     },
     theme: "theme",
   },
-  countrySettings: {
-    UK: { label: "United Kingdom", locale: "en-GB", currency: "£", flag: "🇬🇧" },
-    US: { label: "United States", locale: "en-US", currency: "$", flag: "🇺🇸" },
-    FR: { label: "France", locale: "fr-FR", currency: "€", flag: "🇫🇷" },
-    DE: { label: "Germany", locale: "de-DE", currency: "€", flag: "🇩🇪" },
-    BR: { label: "Brazil", locale: "pt-BR", currency: "R$", flag: "🇧🇷" },
-  },
   getCountryCode() {
     const storedCode = localStorage.getItem("user-country");
     if (storedCode) {
@@ -31,8 +26,12 @@ export const config = {
       return "UK";
     }
   },
+  getCountryFlag() {
+    const code = this.getCountryCode();
+    return countrySchema[code].flag;
+  },
   setCountryCode(code) {
-    if (this.countrySettings[code]) {
+    if (countrySchema[code]) {
       localStorage.setItem("user-country", code);
       return true;
     } else {
@@ -42,11 +41,11 @@ export const config = {
   },
   getCurrency() {
     const code = this.getCountryCode();
-    return this.countrySettings[code].currency;
+    return countrySchema[code].currency;
   },
   getLocale() {
     const code = this.getCountryCode();
-    return this.countrySettings[code].locale;
+    return countrySchema[code].locale;
   },
   getFirstName() {
     const value = localStorage.getItem(this.keys.user.firstName);
