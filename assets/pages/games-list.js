@@ -14,7 +14,7 @@ export const gamesListPage = {
           <span class="input-group-text">
             <span class="bi bi-search"></span>
           </span>
-          <input type="text" class="form-control" placeholder="Search by title">
+          <input id="search-input" type="text" class="form-control" placeholder="Search by title">
         </div>
       </div>
       <div class="col-4 col-sm-3 text-end">
