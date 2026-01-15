@@ -22,7 +22,7 @@ export const settingsPage = {
         <div class="card-body">
           <form id="user-info-form" class="mb-3">
             <label for="first-name" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="first-name">
+            <input type="text" class="form-control" id="first-name" autocomplete="off">
             <div class="form-text mb-3">It will be displayed in the dashboard.</div>
             <button id="first-name-btn" type="button" class="btn btn-primary">
               <span class="bi bi-floppy-fill"></span>Save
