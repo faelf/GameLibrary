@@ -1,6 +1,7 @@
 import { csv } from "../utils/csv.js";
 import { storages } from "../utils/storages.js";
 import { gameSchema } from "../data/game-schema.js";
+import { countrySchema } from "../data/country-schema.js";
 import { config } from "../utils/config.js";
 import { toast } from "../utils/toast.js";
 
@@ -195,16 +196,16 @@ export const settingsPage = {
       storages.save(config.keys.games, gamesData);
     });
 
+    // Update Country
     const flagSpan = document.getElementById("country-flag");
-
     const userCountryInput = document.getElementById("user-country");
-    const currentCountry = config.getCountryCode();
-    userCountryInput.value = currentCountry;
-    flagSpan.textContent = config.countrySettings[currentCountry].flag;
+    userCountryInput.value = config.getCountryCode();
+    flagSpan.textContent = config.getCountryFlag();
 
     userCountryInput.addEventListener("change", (e) => {
-      const updatedCountry = userCountryInput.value;
-      flagSpan.textContent = config.countrySettings[updatedCountry].flag;
+      const updatedCountry = e.target.value;
+      const updatedFlag = countrySchema[updatedCountry].flag;
+      flagSpan.textContent = updatedFlag;
       config.setCountryCode(updatedCountry);
       toast.success("Country updated");
     });
