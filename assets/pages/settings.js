@@ -39,7 +39,7 @@ export const settingsPage = {
         <div class="card-body">
           <form id="user-country-form">
             <label for="user-country" class="form-label">Select your country</label>
-            <div class="input-group mb-3">
+            <div class="input-group">
               <label class="input-group-text" for="user-country">
                 <span id="country-flag">🌎</span>
               </label>
@@ -50,8 +50,8 @@ export const settingsPage = {
                 <option value="FR">France</option>
                 <option value="BR">Brazil</option>
               </select>
-              <div class="form-text mb-3">It will change how prices are shown in the page.</div>
             </div>
+            <div class="form-text mb-3">It will change how prices are shown in the page.</div>
           </form>
         </div>
       </div>
@@ -90,13 +90,13 @@ export const settingsPage = {
             Restore your library from an exported file.<br>
             <strong>All existing data will be replaced.</strong>
           </p>
-          <div class="input-group">
+          <form id="csv-import-form" class="input-group">
             <input id="import-data" type="file" class="form-control" aria-label="Upload">
             <button class="btn btn-primary" type="button" id="import-data-btn">
               <span class="bi bi-cloud-arrow-up-fill"></span>
               Import & Replace
             </button>
-          </div>
+          </form>
         </div>
 
         <!-- Merge -->
@@ -106,13 +106,13 @@ export const settingsPage = {
             Add games from an exported file to your existing library.<br>
             No current data will be removed.
           </p>
-          <div class="input-group">
+          <form id="csv-merge-form" class="input-group">
             <input id="merge-data" type="file" class="form-control" aria-label="Upload">
             <button class="btn btn-primary" type="button" id="merge-data-btn">
               <span class="bi bi-cloud-plus-fill"></span>
               Import & Merge
             </button>
-          </div>
+          </form>
         </div>
 
         <!-- Export -->
@@ -121,7 +121,7 @@ export const settingsPage = {
           <p class="card-text">
             Download your entire game library as a file for backup or transfer.
           </p>
-          <button id="export-data" class="btn btn-primary">
+          <button type="button" id="export-data" class="btn btn-primary">
             <span class="bi bi-cloud-arrow-down-fill"></span>
             Export Games
           </button>
@@ -134,7 +134,7 @@ export const settingsPage = {
             Permanently removes <strong>all games</strong> from your library.<br>
             This action cannot be undone.
           </p>
-          <button class="btn btn-danger" id="delete-data">
+          <button type="button" class="btn btn-danger" id="delete-data">
             <span class="bi-trash3-fill"></span>
             Delete All Games
           </button>
