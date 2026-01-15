@@ -31,9 +31,14 @@ export const form = {
 
     const input = document.createElement("input");
     input.id = inputId;
+    input.name = inputId;
     input.type = inputType || "text";
-    input.placeholder = placeholder;
     input.className = "form-control";
+
+    // Only add placeholder if it's NOT a date input
+    if (inputType !== "date" && placeholder) {
+      input.placeholder = placeholder;
+    }
 
     // Handle value if provided
     if (value !== null && value !== undefined) {
