@@ -80,6 +80,7 @@ export const table = {
         if (key === options.hyperlink) {
           const a = document.createElement("a");
           a.href = "#";
+          a.className = "text-decoration-none";
           a.dataset.pageTarget = options.hyperlinkTarget;
           a.dataset.pageTargetId = rowData.id;
           a.innerText = displayValue;
