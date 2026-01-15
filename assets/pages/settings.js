@@ -19,14 +19,14 @@ export const settingsPage = {
         </div>
 
         <div class="card-body">
-          <div class="mb-3">
+          <form id="user-info-form" class="mb-3">
             <label for="first-name" class="form-label">First Name</label>
             <input type="text" class="form-control" id="first-name">
             <div class="form-text mb-3">It will be displayed in the dashboard.</div>
             <button id="first-name-btn" type="button" class="btn btn-primary">
               <span class="bi bi-floppy-fill"></span>Save
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -37,19 +37,22 @@ export const settingsPage = {
           <h3 class="mb-0">Country</h3>
         </div>
         <div class="card-body">
-        <label for="user-country" class="form-label">Select your country</label>
-          <div class="input-group mb-3">
-            <label class="input-group-text" for="user-country">
-              <span id="country-flag">🌎</span>
-            </label>
-            <select id="user-country" class="form-select">
-              <option value="UK">United Kingdom</option>
-              <option value="US">United States</option>
-              <option value="DE">Germany</option>
-              <option value="FR">France</option>
-              <option value="BR">Brazil</option>
-            </select>
-          </div>
+          <form id="user-country-form">
+            <label for="user-country" class="form-label">Select your country</label>
+            <div class="input-group mb-3">
+              <label class="input-group-text" for="user-country">
+                <span id="country-flag">🌎</span>
+              </label>
+              <select id="user-country" class="form-select">
+                <option value="UK">United Kingdom</option>
+                <option value="US">United States</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+                <option value="BR">Brazil</option>
+              </select>
+              <div class="form-text mb-3">It will change how prices are shown in the page.</div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -60,11 +63,13 @@ export const settingsPage = {
           <h3 class="mb-0">Theme</h3>
         </div>
         <div class="card-body">
-          <label for="theme-select" class="form-label">Select your preferred theme</label>
-          <select id="theme-select" class="form-select">
-            <option value="dark">Dark Theme</option>
-            <option value="light">Light Theme</option>
-          </select>
+          <form id="user-theme-form">
+            <label for="theme-select" class="form-label">Select your preferred theme</label>
+            <select id="theme-select" class="form-select">
+              <option value="dark">Dark Theme</option>
+              <option value="light">Light Theme</option>
+            </select>
+          </form>
         </div>
       </div>
     </div>
