@@ -26,7 +26,6 @@ class UIAddGame extends HTMLElement {
 
           <form id="add-game-form">
             <div class="modal-body">
-              <div id="test"></div>
               <div id="form-row" class="row text-start">
                 <!-- Form is added here -->
               </div>
