@@ -69,27 +69,7 @@ export const gameDetailsPage = {
     const saveBtn = document.getElementById("save-btn");
 
     saveBtn.addEventListener("click", function () {
-      const gameDataToSave = {};
-
-      // Get schema keys
-      Object.keys(gameSchema).forEach((key) => {
-        const config = gameSchema[key];
-        const inputElement = document.getElementById(config.inputId);
-
-        // skip if element not found
-        if (!inputElement) return;
-
-        // Extract Value based on Type
-        switch (config.inputType) {
-          case "number":
-            let num = inputElement.valueAsNumber || 0;
-            gameDataToSave[key] = num;
-            break;
-          default:
-            gameDataToSave[key] = inputElement.value;
-        }
-      });
-
+      const gameDataToSave = form.getFormData(gameSchema);
       gameDataToSave.id = gameId;
       storages.update(config.keys.games, gameId, gameDataToSave);
     });
