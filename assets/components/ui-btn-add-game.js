@@ -1,6 +1,7 @@
 import { config } from "../utils/config.js";
 import { form } from "../utils/forms.js";
 import { gameSchema } from "../data/game-schema.js";
+import { storages } from "../utils/storages.js";
 
 class UIAddGame extends HTMLElement {
   connectedCallback() {
@@ -70,6 +71,18 @@ class UIAddGame extends HTMLElement {
     };
 
     form.render("form-row", gameSchema, layoutMap, options);
+
+    const modalElement = document.getElementById("add-game");
+    const addBtn = document.getElementById("add-game-btn");
+
+    addBtn.addEventListener("click", function () {
+      const newGame = form.getFormData(gameSchema);
+      newGame.id = Date.now();
+      storages.add(config.keys.games, newGame);
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      document.dispatchEvent(new CustomEvent("game-added"));
+      if (modal) modal.hide();
+    });
   }
 }
 

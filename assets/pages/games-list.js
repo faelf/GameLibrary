@@ -58,6 +58,7 @@ export const gamesListPage = {
       }
 
       // Clear table and render all games
+      thead.innerHTML = "";
       tbody.innerHTML = "";
 
       // Render table head
@@ -86,6 +87,11 @@ export const gamesListPage = {
       // Render table body
       table.addTBody(tbody, tableColumns, games, options);
     }
+
+    document.addEventListener("game-added", () => {
+      renderGames();
+    });
+
     // Initial render
     renderGames();
   },

@@ -344,43 +344,22 @@ export const form = {
       }
     });
   },
+  getFormData(schema) {
+    const data = {};
+
+    Object.keys(schema).forEach((key) => {
+      const config = schema[key];
+      const inputElement = document.getElementById(config.inputId);
+      if (!inputElement) return;
+      switch (config.inputType) {
+        case "number":
+          data[key] = inputElement.valueAsNumber || 0;
+          break;
+        default:
+          data[key] = inputElement.value;
+      }
+    });
+
+    return data;
+  },
 };
-
-/**
- * loops through the schema, finds the inputs by ID, and returns an object of values.
- */
-export function collectFormData(schema) {
-  const data = {};
-
-  Object.entries(schema).forEach(([key, config]) => {
-    const element = document.getElementById(config.inputId);
-
-    if (!element) {
-      console.warn(`Cannot find input with ID: ${config.inputId}`);
-      return;
-    }
-
-    let value;
-
-    // 1. Handle Checkboxes
-    if (config.component === "checkbox") {
-      value = element.checked;
-    }
-    // 2. Handle Numbers (HTML inputs return strings by default)
-    else if (config.type === "number" || config.inputType === "number") {
-      value = element.value === "" ? 0 : parseFloat(element.value);
-    }
-    // 3. Handle Standard Text/Select
-    else {
-      value = element.value;
-    }
-
-    data[key] = value;
-  });
-
-  // Add ID and Date automatically
-  data.id = crypto.randomUUID();
-  data.createdAt = new Date().toISOString();
-
-  return data;
-}
