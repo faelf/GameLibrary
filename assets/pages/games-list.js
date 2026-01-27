@@ -2,6 +2,7 @@ import { config } from "../utils/config.js";
 import { storages } from "../utils/storages.js";
 import { table } from "../utils/table.js";
 import { gameSchema } from "../data/game-schema.js";
+import { pagination } from "../utils/pagination.js";
 
 export const gamesListPage = {
   title: "Games List",
@@ -29,21 +30,32 @@ export const gamesListPage = {
         <!-- Game rows will be populated dynamically -->
       </tbody>
     </table>
+    <nav id="pagination-controls" class="mt-3" aria-label="Game list navigation"></nav>
     <div id="empty-table">
     </div>
   </section>
   `,
 
   setup() {
+    // Variable that controls the page navigation
+    let currentPage = 1;
+
+    const handlePageChange = pagination.createPageHandler((newPage) => (currentPage = newPage), renderGames);
+
     /**
      * Renders the games list table or an empty state message.
-     * @returns Table headers and rows or empty state.
      */
     function renderGames() {
       const emptyTable = document.getElementById("empty-table");
       const thead = document.getElementById("games-table-head");
       const games = storages.load(config.keys.games);
       const tbody = document.getElementById("games-table-body");
+
+      // Clear table content before re-rendering
+      thead.innerHTML = "";
+      tbody.innerHTML = "";
+      emptyTable.innerHTML = "";
+      document.getElementById("pagination-controls").innerHTML = "";
 
       // Show empty state if no games exist
       if (games.length === 0) {
@@ -57,10 +69,6 @@ export const gamesListPage = {
         return;
       }
 
-      // Clear table and render all games
-      thead.innerHTML = "";
-      tbody.innerHTML = "";
-
       // Render table head
       const tableColumns = {
         title: gameSchema.title,
@@ -72,24 +80,40 @@ export const gamesListPage = {
         price: gameSchema.price,
         purchaseDate: gameSchema.purchaseDate,
         ownership: gameSchema.ownership,
-        note: gameSchema.note,
       };
+      table.addTHeader(thead, tableColumns);
 
+      // Pagination logic
+      // It will slice the games array into pages
+      const paginatedGames = pagination.paginateItems({
+        items: games,
+        currentPage, // currentPage: currentPage
+      });
+
+      // Render table body with the sliced games array
       const options = {
         hyperlink: "title",
         hyperlinkTarget: "game-details-page",
         longDate: "purchaseDate",
         currencySymbol: "price",
       };
+      table.addTBody(tbody, tableColumns, paginatedGames, options);
 
-      table.addTHeader(thead, tableColumns);
-
-      // Render table body
-      table.addTBody(tbody, tableColumns, games, options);
+      // Render pagination controls
+      pagination.render({
+        containerId: "pagination-controls",
+        totalItems: games.length,
+        currentPage,
+        onPageChange: handlePageChange,
+      });
     }
 
     document.addEventListener("game-added", () => {
-      renderGames();
+      const lastPage = {
+        totalItems: storages.load(config.keys.games).length,
+      };
+      // Makes the current page the last
+      handlePageChange(pagination.getLastPage(lastPage));
     });
 
     // Initial render
