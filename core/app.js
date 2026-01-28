@@ -19,7 +19,11 @@ const mainContentArea = document.getElementById("page-content");
   - Pass the main content area and pages object to the Router
   - Call init() to attach all necessary event listeners
 */
-const router = new Router(mainContentArea, pageContent);
+const router = new Router({
+  mainContentArea,
+  pageContent,
+  landingPage: "dashboard-page",
+});
 router.init();
 
 /* 
@@ -33,20 +37,7 @@ function initialLoad() {
   // Get current theme from config and apply it to the html tag
   const currentTheme = config.getTheme();
   document.documentElement.setAttribute("data-bs-theme", currentTheme);
-
-  // Parse the URL hash to determine which page to show
-  const hash = window.location.hash.substring(1); // Remove leading '#'
-  const [pageKey, query] = hash.split("?"); // Separate page key and query string
-  const params = {};
-
-  // If query parameters exist, extract them (e.g., ?id=123)
-  if (query) {
-    const urlParams = new URLSearchParams(query);
-    params.gameId = urlParams.get("id");
-  }
-
-  // Show the page from the hash, or default to 'dashboard-page' if none
-  router.updateMainContent(pageKey || "dashboard-page", params);
+  router.loadCurrentPage();
 }
 
 window.addEventListener("load", initialLoad);

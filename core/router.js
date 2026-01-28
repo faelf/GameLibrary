@@ -1,30 +1,47 @@
 /**
+ * @typedef {Object} RouterConfig
+ * @property {HTMLElement} mainContentArea - Element where pages are rendered
+ * @property {Object.<string, PageDefinition>} pageContent - Pages map
+ * @property {string} [landingPage="home"] - Initial page
+ */
+
+/**
+ * @typedef {Object} PageDefinition
+ * @property {string} title - Page title shown in the browser tab
+ * @property {string} html - HTML string injected into the main content area
+ * @property {() => Promise<void>|void} [setup] - Optional setup function called after the page HTML is rendered
+ */
+
+/**
  * Router class for handling SPA navigation and page updates.
  * Manages click delegation, history navigation, and page content updates.
+ *
  * @example
- * const router = new Router(mainContentArea, pageContent);
+ * const router = new Router({
+ *   mainContentArea: document.querySelector("main"),
+ *   pageContent,
+ *   landingPage: "home"
+ * });
  * router.init();
  */
 export class Router {
   /**
-   * Create a new Router.
-   * @param {HTMLElement} mainContentArea - The main element where pages will be rendered.
-   * @param {Object} pageContent - Object containing pages: { pageKey: { html, setup, title } }
+   * Creates a new Router instance.
+   * @param {RouterConfig} config
    */
-  constructor(mainContentArea, pageContent) {
-    /** @typedef {HTMLElement} */
+  constructor(config) {
+    const { mainContentArea, pageContent, landingPage = "home" } = config;
+
+    /** @type {HTMLElement} */
     this.mainContentArea = mainContentArea;
 
-    /**
-     * @typedef {Object} Page
-     * @property {string} html - HTML string that will be injected into the main content area
-     * @property {string} title - Page title shown in the browser tab
-     * @property {(gameId?: string) => Promise<void>|void} [setup]
-     *   Optional setup function called after the page HTML is rendered
-     */
+    /** @type {Record<string, PageDefinition>} */
     this.pageContent = pageContent;
 
-    // Bind event handlers so 'this' refers to the router instance
+    /** @type {string} */
+    this.landingPage = landingPage;
+
+    // Bind event handlers
     this.handleClick = this.handleClick.bind(this);
     this.handleNavigate = this.handleNavigate.bind(this);
     this.handlePopState = this.handlePopState.bind(this);
@@ -33,68 +50,75 @@ export class Router {
   /**
    * Update the main content area with a page.
    * @param {string} pageKey - The key of the page to display.
-   * @param {Object} [params={}] - Optional parameters (e.g., { gameId: 123 }).
-   * @returns {Promise<void>} - A promise that resolves when the content is updated.
+   * @param {{ pageId?: string }} [params]
+   * @returns {Promise<void>}
    */
   async updateMainContent(pageKey, params = {}) {
-    // Get the page data from the pageContent object
+    /** @type {PageDefinition|undefined} */
     const content = this.pageContent[pageKey];
+    if (!content) return;
 
-    if (content) {
-      // Replace all existing HTML in the main content area with the new page's HTML
-      this.mainContentArea.innerHTML = content.html;
+    this.mainContentArea.innerHTML = content.html;
 
-      // If the page has a setup function, call it (e.g., for async data fetching)
-      if (typeof content.setup === "function") {
-        await content.setup(params.pageId);
-      }
-
-      // Construct the URL hash, including pageId if provided
-      let url = "#" + pageKey; // Start with the page key
-
-      // If there is a pageId, add it as a query string
-      if (params.pageId) {
-        url = url + "?id=" + params.pageId;
-      }
-
-      // Update browser history without reloading the page
-      history.pushState({ pageKey, params }, content.title, url);
-
-      // Update the browser tab title
-      document.title = content.title;
+    if (typeof content.setup === "function") {
+      await content.setup(params.pageId);
     }
+
+    let url = `#${pageKey}`;
+    if (params.pageId) {
+      url += `?id=${params.pageId}`;
+    }
+
+    history.pushState({ pageKey, params }, content.title, url);
+    document.title = content.title;
+  }
+
+  /**
+   * Parses the current URL hash and loads the corresponding page.
+   * Used for initial load and popstate fallback.
+   */
+  loadCurrentPage() {
+    const hash = window.location.hash.substring(1);
+    const [pageKey, query] = hash.split("?");
+
+    /** @type {{ pageId?: string }} */
+    const params = {};
+
+    if (query) {
+      const urlParams = new URLSearchParams(query);
+      params.pageId = urlParams.get("id") ?? undefined;
+    }
+
+    this.updateMainContent(pageKey || this.landingPage, params);
   }
 
   /**
    * Handle clicks on elements with a `data-page-target` attribute.
-   * If link has a data-page-target-id, it will collect the ID.
-   * Dispatches a custom 'navigate' event.
-   * @param {MouseEvent} event - The click event object.
+   * @param {MouseEvent} event
    */
   handleClick(event) {
-    // Get element
-    const link = event.target.closest("[data-page-target]");
-    // Ignore clicks that are not links
+    const target = /** @type {HTMLElement} */ (event.target);
+    const link = target.closest("[data-page-target]");
     if (!link) return;
+
     event.preventDefault();
-    // Get page key
-    const linkKey = link.dataset.pageTarget;
-    // Get ID for the page
-    const linkId = parseInt(link.dataset.pageTargetId);
 
-    // Passes the details to the event listener
-    const detail = {
-      pageKey: linkKey,
-      pageId: linkId,
-    };
+    const pageKey = link.dataset.pageTarget;
+    if (!pageKey) return;
 
-    document.dispatchEvent(new CustomEvent("navigate", { detail }));
+    // Always a string now
+    const pageId = link.dataset.pageTargetId?.toString();
+
+    document.dispatchEvent(
+      new CustomEvent("navigate", {
+        detail: { pageKey, pageId },
+      }),
+    );
   }
 
   /**
    * Handle custom 'navigate' events.
-   * Updates the main content area to the requested page.
-   * @param {CustomEvent} event- The navigate event object.
+   * @param {CustomEvent<{ pageKey: string, pageId?: string }>} event
    */
   handleNavigate(event) {
     this.updateMainContent(event.detail.pageKey, event.detail);
@@ -102,33 +126,18 @@ export class Router {
 
   /**
    * Handle browser back/forward navigation.
-   * Updates the main content area based on the current history state or URL hash.
-   * @param {PopStateEvent} event - The popstate event object.
+   * @param {PopStateEvent} event
    */
   handlePopState(event) {
     if (event.state) {
-      // If state exists, update content based on stored pageKey and params
       this.updateMainContent(event.state.pageKey, event.state.params);
     } else {
-      // If no state, fallback: parse URL hash for pageKey and params
-      const hash = window.location.hash.substring(1);
-      const [pageKey, query] = hash.split("?");
-      const params = {};
-      if (query) {
-        const urlParams = new URLSearchParams(query);
-        params.gameId = urlParams.get("id");
-      }
-
-      // Show the page from the hash or default to 'dashboard-page'
-      this.updateMainContent(pageKey || "dashboard-page", params);
+      this.loadCurrentPage();
     }
   }
 
   /**
    * Initialize the router by adding necessary event listeners.
-   * - Click delegation for navigation
-   * - Custom 'navigate' events
-   * - Browser back/forward navigation
    */
   init() {
     document.addEventListener("click", this.handleClick);
