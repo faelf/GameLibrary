@@ -9,14 +9,16 @@ import { formatters } from "./formatters.js";
 export const table = {
   /**
    * Generates and appends header cells to a table's <thead> element.
-   * @param { HTMLElement } theadId - The <thead> element where headers will be rendered.
-   * @param { Object } tableHeaders - The schema object containing column configurations (labels, keys).
+   * @param { Object } theadConfig - Configuration object for the table header.
+   * @param { HTMLElement } theadElement - The <thead> element where headers will be rendered.
+   * @param { Object } thColumns - The schema object containing column configurations (labels, keys).
    */
-  addTHeader(theadId, tableHeaders) {
+  addTHeader(theadConfig) {
+    const { theadElement, thColumns } = theadConfig;
     const tr = document.createElement("tr");
-    theadId.appendChild(tr);
+    theadElement.appendChild(tr);
 
-    Object.entries(tableHeaders).forEach(([key, value]) => {
+    Object.entries(thColumns).forEach(([key, value]) => {
       const th = document.createElement("th");
       th.textContent = value.labelText;
       tr.appendChild(th);
@@ -24,7 +26,8 @@ export const table = {
   },
   /**
    * Populates a table body with rows based on an array of data.
-   * @param { HTMLElement } tbodyId - The <tbody> element where the rows will be added.
+   * @param { Object } tbodyConfig - Configuration object for the table body.
+   * @param { HTMLElement } tbodyElement - The <tbody> element where the rows will be added.
    * @param { Object } tdColumns - The schema object used to map data keys to labels (and for mobile 'data-cell' attributes).
    * @param { Array<Object> } tdData - An array of objects containing the data for each row.
    * @param { Object } [ tdConfig ] - Optional configuration for specific column formatting.
@@ -33,7 +36,8 @@ export const table = {
    * @param { string } [ tdConfig.longDate="date" ] - The data key to format as a date.
    * @param { string } [ tdConfig.currencySymbol="price" ] - The data key to format as currency.
    */
-  addTBody(tbodyId, tdColumns, tdData, tdConfig = {}) {
+  addTBody(tbodyConfig) {
+    const { tbodyElement, tdColumns, tdData, tdConfig = {} } = tbodyConfig;
     const options = {
       hyperlink: "title",
       hyperlinkTarget: "details-page",
@@ -96,7 +100,7 @@ export const table = {
       });
 
       // Append the finished row to the body
-      tbodyId.appendChild(tr);
+      tbodyElement.appendChild(tr);
     });
   },
 };
