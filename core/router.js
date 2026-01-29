@@ -48,6 +48,29 @@ export class Router {
   }
 
   /**
+   * Highlights the active link(s) in the navigation menu
+   * @param {string} activePageKey
+   */
+  updateActiveLinks(activePageKey) {
+    const links = document.querySelectorAll("[data-page-target]");
+
+    const activeLinkElement = Array.from(links).find((l) => l.dataset.pageTarget === activePageKey);
+
+    const activeGroup = activeLinkElement?.dataset.activeGroup;
+
+    links.forEach((link) => {
+      const isExactMatch = link.dataset.pageTarget === activePageKey;
+      const isGroupMatch = activeGroup && link.dataset.activeGroup === activeGroup;
+
+      if (isExactMatch || isGroupMatch) {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+  }
+
+  /**
    * Update the main content area with a page.
    * @param {string} pageKey - The key of the page to display.
    * @param {{ pageId?: string }} [params]
@@ -56,9 +79,14 @@ export class Router {
   async updateMainContent(pageKey, params = {}) {
     /** @type {PageDefinition|undefined} */
     const content = this.pageContent[pageKey];
+
     if (!content) return;
 
+    // Replace all existing HTML in the main content area with the new page's HTML
     this.mainContentArea.innerHTML = content.html;
+
+    // Adds active class to current page
+    this.updateActiveLinks(pageKey);
 
     if (typeof content.setup === "function") {
       await content.setup(params.pageId);
