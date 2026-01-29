@@ -3,6 +3,7 @@
  * @property {HTMLElement} mainContentArea - Element where pages are rendered
  * @property {Object.<string, PageDefinition>} pageContent - Pages map
  * @property {string} [landingPage="home"] - Initial page
+ * @property {string} [baseHtmlPath] - "assets/templates/"
  */
 
 /**
@@ -18,9 +19,15 @@
  *
  * @example
  * const router = new Router({
- *   mainContentArea: document.querySelector("main"),
- *   pageContent,
- *   landingPage: "home"
+ *   mainContentArea: document.getElementById("page-content"),
+ *   pageContent: {
+ *      "home": {
+ *         title: "Home - Welcome",
+ *         html: "home.html",
+ *         setup(): void,
+ *    };
+ *   landingPage: "home",
+ *   baseHtmlPath = "assets/templates/",
  * });
  * router.init();
  */
@@ -30,7 +37,12 @@ export class Router {
    * @param {RouterConfig} config
    */
   constructor(config) {
-    const { mainContentArea, pageContent, landingPage = "home" } = config;
+    const {
+      mainContentArea,
+      pageContent,
+      landingPage = "home",
+      baseHtmlPath = "assets/html/",
+    } = config;
 
     /** @type {HTMLElement} */
     this.mainContentArea = mainContentArea;
@@ -40,6 +52,9 @@ export class Router {
 
     /** @type {string} */
     this.landingPage = landingPage;
+
+    /** @type {string} */
+    this.baseHtmlPath = baseHtmlPath;
 
     // Bind event handlers
     this.handleClick = this.handleClick.bind(this);
@@ -54,13 +69,16 @@ export class Router {
   updateActiveLinks(activePageKey) {
     const links = document.querySelectorAll("[data-page-target]");
 
-    const activeLinkElement = Array.from(links).find((l) => l.dataset.pageTarget === activePageKey);
+    const activeLinkElement = Array.from(links).find(
+      (l) => l.dataset.pageTarget === activePageKey,
+    );
 
     const activeGroup = activeLinkElement?.dataset.activeGroup;
 
     links.forEach((link) => {
       const isExactMatch = link.dataset.pageTarget === activePageKey;
-      const isGroupMatch = activeGroup && link.dataset.activeGroup === activeGroup;
+      const isGroupMatch =
+        activeGroup && link.dataset.activeGroup === activeGroup;
 
       if (isExactMatch || isGroupMatch) {
         link.classList.add("active");
@@ -77,28 +95,44 @@ export class Router {
    * @returns {Promise<void>}
    */
   async updateMainContent(pageKey, params = {}) {
-    /** @type {PageDefinition|undefined} */
     const content = this.pageContent[pageKey];
-
     if (!content) return;
 
-    // Replace all existing HTML in the main content area with the new page's HTML
-    this.mainContentArea.innerHTML = content.html;
+    let html;
 
-    // Adds active class to current page
-    this.updateActiveLinks(pageKey);
+    // If html is a file
+    if (content.html.endsWith(".html")) {
+      // Get path to the html file
+      const fullPath = (this.baseHtmlPath || "") + content.html;
+      try {
+        // Get the html content
+        const response = await fetch(fullPath);
+        if (!response.ok) throw new Error(`Failed to load ${fullPath}`);
+        // Save the html content
+        html = await response.text();
+      } catch (err) {
+        html = `<p style="color:red;">Error loading page: ${err.message}</p>`;
+      }
+    } else {
+      html = content.html; // static string
+    }
 
+    // Inject HTML
+    this.mainContentArea.innerHTML = html;
+
+    // Call setup
     if (typeof content.setup === "function") {
       await content.setup(params.pageId);
     }
 
+    // Update history
     let url = `#${pageKey}`;
-    if (params.pageId) {
-      url += `?id=${params.pageId}`;
-    }
-
+    if (params.pageId != null) url += `?id=${params.pageId}`;
     history.pushState({ pageKey, params }, content.title, url);
     document.title = content.title;
+
+    // Update active links
+    this.updateActiveLinks(pageKey);
   }
 
   /**
