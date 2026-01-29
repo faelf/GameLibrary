@@ -283,12 +283,15 @@ export const form = {
   },
   /**
    * Renders a form dynamically into a container.
-   * @param { string } containerId - The HTML ID of the row where inputs go.
-   * @param { Object } schema - The schema object (e.g. gameSchema).
-   * @param { Object } layoutMap - Object mapping field keys to column classes (e.g. { title: "col-12" }).
-   * @param { Object } [ options ] - Optional extras (like currency symbol).
+   * @param { Object } formConfig - Configuration object for the form.
+   * @param { string } formConfig.containerId - The HTML ID of the row where inputs go.
+   * @param { Object } formConfig.schema - The schema object (e.g. gameSchema).
+   * @param { Object } formConfig.layoutMap - Object mapping field keys to column classes (e.g. { title: "col-12" }).
+   * @param { Object } [ formConfig.options ] - Optional extras (like currency symbol).
+   * @param { Object } [ formConfig.initialData ] - Optional initial data to populate fields.
    */
-  render(containerId, schema, layoutMap, options = {}, initialData = {}) {
+  render(formConfig) {
+    const { containerId, schema, layoutMap, options = {}, initialData = {} } = formConfig;
     const formRow = document.getElementById(containerId);
 
     if (!formRow) {
