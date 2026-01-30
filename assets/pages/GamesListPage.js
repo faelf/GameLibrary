@@ -4,38 +4,9 @@ import { table } from "../utils/table.js";
 import { gameSchema } from "../data/game-schema.js";
 import { pagination } from "../utils/pagination.js";
 
-export const gamesListPage = {
+export const GamesListPage = {
   title: "Games List",
-  html: /* html */ `
-  <section class="m-2">
-    <h2 class="mb-3">Games List</h2>
-    <div class="row g-2 mb-3">
-      <div class="col-8 col-sm-9">
-        <div class="input-group">
-          <span class="input-group-text">
-            <span class="bi bi-search"></span>
-          </span>
-          <input id="search-input" type="text" class="form-control" placeholder="Search by title">
-        </div>
-      </div>
-      <div class="col-4 col-sm-3 text-end">
-        <ui-btn-add-game></ui-btn-add-game>
-      </div>
-    </div>
-    <table class="table table-striped table-borderless table-hover">
-      <thead id="games-table-head" class="sticky-top align-middle">
-        <!-- Headers will be populated dynamically -->
-      </thead>
-      <tbody id="games-table-body" class="align-middle">
-        <!-- Game rows will be populated dynamically -->
-      </tbody>
-    </table>
-    <nav id="pagination-controls" class="mt-3" aria-label="Game list navigation"></nav>
-    <div id="empty-table">
-    </div>
-  </section>
-  `,
-
+  html: "games-list.html",
   setup() {
     // Variable that controls the page navigation
     let currentPage = 1;
@@ -46,7 +17,10 @@ export const gamesListPage = {
       renderGames();
     });
 
-    const handlePageChange = pagination.createPageHandler((newPage) => (currentPage = newPage), renderGames);
+    const handlePageChange = pagination.createPageHandler(
+      (newPage) => (currentPage = newPage),
+      renderGames,
+    );
 
     /**
      * Renders the games list table or an empty state message.
@@ -77,7 +51,9 @@ export const gamesListPage = {
 
       // Filter games based on search input
       const searchTerm = searchInput.value.toLowerCase();
-      const filteredGames = games.filter((game) => game.title.toLowerCase().includes(searchTerm));
+      const filteredGames = games.filter((game) =>
+        game.title.toLowerCase().includes(searchTerm),
+      );
 
       if (filteredGames.length === 0) {
         emptyTable.innerHTML = /* html */ `

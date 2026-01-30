@@ -1,13 +1,13 @@
 // Import pages
-import { homePage } from "./home.js";
-import { gamesListPage } from "./games-list.js";
-import { settingsPage } from "./settings.js";
-import { gameDetailsPage } from "./game-details.js";
+import { HomePage } from "./HomePage.js";
+import { GamesListPage } from "./GamesListPage.js";
+import { SettingsPage } from "./SettingsPage.js";
+import { GameDetailsPage } from "./GameDetailsPage.js";
 
 // Combine all pages into the pageContent object
 export const pageContent = {
-  "dashboard-page": homePage,
-  "games-list-page": gamesListPage,
-  "settings-page": settingsPage,
-  "game-details-page": gameDetailsPage,
+  "dashboard-page": HomePage,
+  "games-list-page": GamesListPage,
+  "settings-page": SettingsPage,
+  "game-details-page": GameDetailsPage,
 };

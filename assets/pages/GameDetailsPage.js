@@ -3,32 +3,9 @@ import { config } from "../utils/config.js";
 import { form } from "../utils/forms.js";
 import { storages } from "../utils/storages.js";
 
-export const gameDetailsPage = {
+export const GameDetailsPage = {
   title: "Game Details",
-  html: /* html */ `
-  <section id="game-details-container" class="mt-2">
-    <h2 class="mb-3">
-      Game Details
-    </h2>
-    <form id="game-edit-form" class="row">
-    <fieldset>
-      <legend>Game Info</legend>
-      <div id="game-info-set" class="row"></div>
-      <!-- Game Form Fields -->
-    </fieldset>
-    <fieldset>
-      <legend>Collection Info</legend>
-      <div id="game-collection-info-set" class="row"></div>
-      <!-- Game Form Fields -->
-    </fieldset>
-    <div class="col-12 text-end">
-      <button id="save-btn" type="button" class="btn btn-primary">💾 Save</button>
-      <button id="save-btn" type="reset" class="btn btn-warning">🗑️ Clear</button>
-    </div>
-    </form>
-  </section>
-  `,
-
+  html: "game-details.html",
   setup(gameId) {
     const game = storages.get(config.keys.games, gameId);
     const layoutMap = {
@@ -63,8 +40,21 @@ export const gameDetailsPage = {
       }
     });
 
-    form.render("game-info-set", gameInfoSchema, layoutMap, options, game);
-    form.render("game-collection-info-set", collectionInfoSchema, layoutMap, options, game);
+    form.render({
+      containerId: "game-info-set",
+      schema: gameInfoSchema,
+      layoutMap,
+      options,
+      initialData: game,
+    });
+
+    form.render({
+      containerId: "game-collection-info-set",
+      schema: collectionInfoSchema,
+      layoutMap,
+      options,
+      initialData: game,
+    });
 
     const saveBtn = document.getElementById("save-btn");
 
