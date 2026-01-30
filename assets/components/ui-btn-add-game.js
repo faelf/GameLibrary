@@ -19,13 +19,14 @@ class UIAddGame extends HTMLElement {
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
-          <div class="modal-header">
+          <div class="modal-header p-2 px-3">
             <h2 class="modal-title">
               <span class="bi bi-controller"></span> Add Game
             </h2>
           </div>
 
           <form id="add-game-form">
+          
             <div class="modal-body">
               <div id="form-row" class="row text-start">
                 <!-- Form is added here -->
@@ -70,7 +71,12 @@ class UIAddGame extends HTMLElement {
       inputGroupText: currency,
     };
 
-    form.render("form-row", gameSchema, layoutMap, options);
+    form.render({
+      containerId: "form-row",
+      schema: gameSchema,
+      layoutMap,
+      options,
+    });
 
     const modalElement = document.getElementById("add-game");
     const addBtn = document.getElementById("add-game-btn");
