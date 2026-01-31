@@ -85,7 +85,7 @@
             <input id="import-data" type="file" class="form-control" aria-label="Upload">
             <button class="btn btn-primary" type="button" id="import-data-btn">
               <span class="bi bi-cloud-arrow-up-fill"></span>
-              Import & Replace
+              Import
             </button>
           </form>
         </div>
@@ -101,7 +101,7 @@
             <input id="merge-data" type="file" class="form-control" aria-label="Upload">
             <button class="btn btn-primary" type="button" id="merge-data-btn">
               <span class="bi bi-cloud-plus-fill"></span>
-              Import & Merge
+              Merge
             </button>
           </form>
         </div>
@@ -109,13 +109,18 @@
         <!-- Export -->
         <div class="col-md-6 col-xl-6 mb-3">
           <h4>Export Game Data</h4>
-          <p class="card-text">
-            Download your entire game library as a file for backup or transfer.
-          </p>
-          <button type="button" id="export-data" class="btn btn-primary">
-            <span class="bi bi-cloud-arrow-down-fill"></span>
-            Export Games
-          </button>
+          <p>Download your entire game library as a file for backup or transfer.</p>
+          <form id="export-form" class="input-group">
+            <select class="form-select" id="export-options">
+              <option value="" disabled selected>Select a file format</option>
+              <option value="json">JSON</option>
+              <option value="csv">CSV</option>
+            </select>
+            <button class="btn btn-primary">
+              <span class="bi bi-cloud-arrow-down-fill"></span>
+              Export
+            </button>
+          </form>
         </div>
 
         <!-- Delete -->
