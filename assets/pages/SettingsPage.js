@@ -1,4 +1,5 @@
 import { csv } from "../utils/csv.js";
+import { jsonFile } from "../utils/json.js";
 import { storages } from "../utils/storages.js";
 import { gameSchema } from "../data/game-schema.js";
 import { countrySchema } from "../data/country-schema.js";
@@ -101,8 +102,15 @@ export const SettingsPage = {
 
       switch (selectedFormat) {
         case "json":
-          // To be added
-          toast.success("JSON created.");
+          const json = jsonFile.export({
+            data: gamesData,
+            fileName: "games",
+          });
+          if (json) {
+            toast.success("JSON created.");
+          } else {
+            toast.info("No data to be exported.");
+          }
           break;
         case "csv":
           const file = csv.export(gamesData, gameCSVHeaders, "games.csv");
