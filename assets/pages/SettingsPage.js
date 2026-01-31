@@ -127,22 +127,38 @@ export const SettingsPage = {
     });
 
     // --- Import Data (Overwrite) ---------------------------------------
-    const importInput = document.getElementById("import-data");
-    const importBtn = document.getElementById("import-data-btn");
+    const importForm = document.getElementById("import-form");
 
-    importBtn.addEventListener("click", () => {
-      csv
-        .import(importInput, {
-          columns: gameCSVHeaders,
-          storageKey: config.keys.games,
-          transform: formatGameData,
-        })
-        .then((data) => {
-          gamesData = data;
-          importInput.value = "";
+    importForm.addEventListener("submit", (event) => {
+      const importInput = document.getElementById("import-data");
+      // Prevent form submission
+      event.preventDefault();
+
+      // Collect user format selection
+      const importFormat = document.getElementById("import-options").value;
+
+      switch (importFormat) {
+        case "json":
           toast.success("Games imported successfully!");
-        })
-        .catch((error) => toast.warning(error.message));
+          break;
+        case "csv":
+          csv
+            .import(importInput, {
+              columns: gameCSVHeaders,
+              storageKey: config.keys.games,
+              transform: formatGameData,
+            })
+            .then((data) => {
+              gamesData = data;
+              importInput.value = "";
+              toast.success("Games imported successfully!");
+            })
+            .catch((error) => toast.warning(error.message));
+          break;
+        // If nothing is selected
+        default:
+          toast.info("Please select a format");
+      }
     });
 
     // --- Merge Data (Append) -------------------------------------------
