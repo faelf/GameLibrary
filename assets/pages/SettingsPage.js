@@ -63,6 +63,20 @@ export const SettingsPage = {
       toast.success("Country updated");
     });
 
+    // --- Delete Data ---------------------------------------------------
+    const deleteBtn = document.getElementById("delete-data");
+
+    deleteBtn.addEventListener("click", () => {
+      // Toast will return user confirmation
+      toast.success(
+        "All game data deleted successfully!",
+        "Are you sure? This action cannot be undone.",
+      );
+
+      gamesData = [];
+      storages.save(config.keys.games, gamesData);
+    });
+
     // --- Shared Configuration ---------------------------------------------
     // Define CSV Columns based on your schema
     const gameCSVHeaders = Object.entries(gameSchema).map(([key, config]) => ({
@@ -75,19 +89,6 @@ export const SettingsPage = {
       ...game,
       year: game.year ? Number(game.year) : "",
       price: game.price ? Number(game.price) : 0,
-    });
-
-    // --- Delete Data ---------------------------------------------------
-    const deleteBtn = document.getElementById("delete-data");
-
-    deleteBtn.addEventListener("click", () => {
-      gamesData = [];
-      storages.save(config.keys.games, gamesData);
-
-      toast.success(
-        "All game data deleted successfully!",
-        "Are you sure? This action cannot be undone.",
-      );
     });
 
     // --- Export Data ---------------------------------------------------
