@@ -83,17 +83,38 @@ export const SettingsPage = {
       gamesData = [];
       storages.save(config.keys.games, gamesData);
 
-      toast.success("All game data deleted successfully!", "Are you sure? This action cannot be undone.");
+      toast.success(
+        "All game data deleted successfully!",
+        "Are you sure? This action cannot be undone.",
+      );
     });
 
     // --- Export Data ---------------------------------------------------
-    const exportBtn = document.getElementById("export-data");
+    const exportForm = document.getElementById("export-form");
 
-    exportBtn.addEventListener("click", () => {
-      const success = csv.export(gamesData, gameCSVHeaders, "games.csv");
+    exportForm.addEventListener("submit", (event) => {
+      // Prevent form submission
+      event.preventDefault();
 
-      if (success) {
-        toast.success("Games exported successfully!");
+      // Collect user format selection
+      const selectedFormat = document.getElementById("export-options").value;
+
+      switch (selectedFormat) {
+        case "json":
+          // To be added
+          toast.success("JSON created.");
+          break;
+        case "csv":
+          const file = csv.export(gamesData, gameCSVHeaders, "games.csv");
+          if (file) {
+            toast.success("CSV created.");
+          } else {
+            toast.info("No data to be exported.");
+          }
+          break;
+        // If nothing is selected
+        default:
+          toast.info("Please select a format");
       }
     });
 
