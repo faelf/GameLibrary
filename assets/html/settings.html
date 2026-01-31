@@ -1,142 +1,144 @@
 <section class="my-2">
-  <h2>Settings</h2>
+  <h2 class="display-2">Settings</h2>
 
-  <div class="row">
-    <!-- Personal Info -->
-    <div class="col-lg-4">
-      <div class="card mb-3">
-        <div class="card-header">
-          <h3 class="mb-0">Personal Information</h3>
-        </div>
-
-        <div class="card-body">
-          <form id="user-info-form" class="mb-3">
-            <label for="first-name" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="first-name" autocomplete="off">
-            <div class="form-text mb-3">It will be displayed in the dashboard.</div>
-            <button id="first-name-btn" type="button" class="btn btn-primary">
-              <span class="bi bi-floppy-fill"></span>Save
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- Country -->
-    <div class="col-md-6 col-lg-4">
-      <div class="card mb-3">
-        <div class="card-header">
-          <h3 class="mb-0">Country</h3>
-        </div>
-        <div class="card-body">
-          <form id="user-country-form">
-            <label for="user-country" class="form-label">Select your country</label>
-            <div class="input-group">
-              <label class="input-group-text" for="user-country">
-                <span id="country-flag">🌎</span>
-              </label>
-              <select id="user-country" class="form-select">
-                <option value="UK">United Kingdom</option>
-                <option value="US">United States</option>
-                <option value="DE">Germany</option>
-                <option value="FR">France</option>
-                <option value="BR">Brazil</option>
-              </select>
-            </div>
-            <div class="form-text mb-3">It will change how prices are shown in the page.</div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- Theme -->
-    <div class="col-md-6 col-lg-4">
-      <div class="card mb-3">
-        <div class="card-header">
-          <h3 class="mb-0">Theme</h3>
-        </div>
-        <div class="card-body">
-          <form id="user-theme-form">
-            <label for="theme-select" class="form-label">Select your preferred theme</label>
-            <select id="theme-select" class="form-select">
-              <option value="dark">Dark Theme</option>
-              <option value="light">Light Theme</option>
-            </select>
-          </form>
-        </div>
-      </div>
+  <!-- User Settings -->
+  <div class="row mb-3">
+    <div class="col-md-6 mb-3">
+      <h3>User Settings</h3>
+      <p>More features to come.</p>
     </div>
 
+    <!-- User Prefered Settings -->
+    <div class="col-md-6 mb-3">
+      <!-- User Info Form -->
+      <form id="user-info-form" class="mb-3">
+        <label for="first-name" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="first-name" autocomplete="off">
+        <div class="form-text mb-3">It will be displayed in the dashboard.</div>
+        <button id="first-name-btn" type="button" class="btn btn-primary">
+          <span class="bi bi-floppy-fill"></span>Save
+        </button>
+      </form>
+
+      <!-- Country Form -->
+      <form id="user-country-form">
+        <label for="user-country" class="form-label">Select your country</label>
+        <div class="input-group">
+          <label class="input-group-text" for="user-country">
+            <span id="country-flag">🌎</span>
+          </label>
+          <select id="user-country" class="form-select">
+            <option value="UK">United Kingdom</option>
+            <option value="US">United States</option>
+            <option value="DE">Germany</option>
+            <option value="FR">France</option>
+            <option value="BR">Brazil</option>
+          </select>
+        </div>
+        <div class="form-text mb-3">It will change how prices are shown in the page.</div>
+      </form>
+
+      <!-- Theme Form -->
+      <form id="user-theme-form">
+        <label for="theme-select" class="form-label">Page Theme</label>
+        <select id="theme-select" class="form-select">
+          <option value="dark">Dark Theme</option>
+          <option value="light">Light Theme</option>
+        </select>
+      </form>
+    </div> <!-- User Prefered Settings Ends -->
+  </div> <!-- User Settings Row Ends -->
+
+  <!-- Import (Replace) -->
+  <div class="row mb-3">
+    <div class="col-md-6 mb-3">
+      <h3>Import Game Data</h3>
+      <p class="card-text">
+        Restore your library from an exported file.<br>
+        <strong>All existing data will be replaced.</strong>
+      </p>
+    </div>
+    <form id="import-form" class="col-md-6">
+
+      <label for="import-options" class="form-label">Import file format</label>
+      <select class="form-select mb-3" id="import-options">
+        <option value="" disabled selected>Select a file format</option>
+        <option value="json">JSON</option>
+        <option value="csv">CSV</option>
+      </select>
+
+      <input id="import-data" type="file" class="form-control mb-3" aria-label="Upload">
+
+      <button class="btn btn-primary">
+        <span class="bi bi-cloud-arrow-up-fill"></span>
+        Import
+      </button>
+
+    </form>
+  </div> <!-- Import (Replace) Ends -->
+
+  <!-- Merge -->
+  <div class="row mb-3">
+    <div class="col-md-6 mb-3">
+      <h3>Merge Game Data</h3>
+      <p class="card-text">Add games from an exported file to your existing library.<br>
+        No current data will be removed.
+      </p>
+    </div>
+    <form id="csv-merge-form" class="col-md-6">
+
+      <label for="merge-options" class="form-label">Merge file format</label>
+      <select class="form-select mb-3" id="merge-options">
+        <option value="" disabled selected>Select a file format</option>
+        <option value="json">JSON</option>
+        <option value="csv">CSV</option>
+      </select>
+
+      <input id="merge-data" type="file" class="form-control mb-3" aria-label="Upload">
+
+      <button class="btn btn-primary mb-3" type="button" id="merge-data-btn">
+        <span class="bi bi-cloud-plus-fill"></span> Merge
+      </button>
+    </form>
   </div>
 
-  <div class="card mb-3">
-    <div class="card-header">
-      <h3 class="mb-0">Game Data</h3>
+  <!-- Export -->
+  <div class="row mb-3">
+    <div class="col-md-6 mb-3">
+      <h3>Export Game Data</h3>
+      <p>Download your entire game library as a file for backup or transfer.</p>
     </div>
-    <div class="card-body">
-      <div class="row">
-
-        <!-- Import (Replace) -->
-        <div class="col-md-12 col-xl-6 mb-3">
-          <h4>Import Game Data</h4>
-          <p class="card-text">
-            Restore your library from an exported file.<br>
-            <strong>All existing data will be replaced.</strong>
-          </p>
-          <form id="csv-import-form" class="input-group">
-            <input id="import-data" type="file" class="form-control" aria-label="Upload">
-            <button class="btn btn-primary" type="button" id="import-data-btn">
-              <span class="bi bi-cloud-arrow-up-fill"></span>
-              Import
-            </button>
-          </form>
-        </div>
-
-        <!-- Merge -->
-        <div class="col-md-12 col-xl-6 mb-3">
-          <h4>Merge Game Data</h4>
-          <p class="card-text">
-            Add games from an exported file to your existing library.<br>
-            No current data will be removed.
-          </p>
-          <form id="csv-merge-form" class="input-group">
-            <input id="merge-data" type="file" class="form-control" aria-label="Upload">
-            <button class="btn btn-primary" type="button" id="merge-data-btn">
-              <span class="bi bi-cloud-plus-fill"></span>
-              Merge
-            </button>
-          </form>
-        </div>
-
-        <!-- Export -->
-        <div class="col-md-6 col-xl-6 mb-3">
-          <h4>Export Game Data</h4>
-          <p>Download your entire game library as a file for backup or transfer.</p>
-          <form id="export-form" class="input-group">
-            <select class="form-select" id="export-options">
-              <option value="" disabled selected>Select a file format</option>
-              <option value="json">JSON</option>
-              <option value="csv">CSV</option>
-            </select>
-            <button class="btn btn-primary">
-              <span class="bi bi-cloud-arrow-down-fill"></span>
-              Export
-            </button>
-          </form>
-        </div>
-
-        <!-- Delete -->
-        <div class="col-md-6 col-xl-6 mb-3">
-          <h4>Delete Game Data</h4>
-          <p class="card-text">
-            Permanently removes <strong>all games</strong> from your library.<br>
-            This action cannot be undone.
-          </p>
-          <button type="button" class="btn btn-danger" id="delete-data">
-            <span class="bi-trash3-fill"></span>
-            Delete All Games
-          </button>
-        </div>
-
-      </div>
+    <div class="col-md-6 mb-3">
+      <form id="export-form" class="col-md-6">
+        <label for="export-options" class="form-label">Export file format</label>
+        <select class="form-select mb-3" id="export-options">
+          <option value="" disabled selected>Select a file format</option>
+          <option value="json">JSON</option>
+          <option value="csv">CSV</option>
+        </select>
+        <button class="btn btn-primary">
+          <span class="bi bi-cloud-arrow-down-fill"></span>
+          Export
+        </button>
+      </form>
     </div>
   </div>
+
+  <!-- Delete -->
+  <div class="row mb-3">
+    <div class="col-md-6 mb-3">
+      <h3>Delete Game Data</h3>
+      <p class="card-text">
+        Permanently removes <strong>all games</strong> from your library.<br>
+        This action cannot be undone.
+      </p>
+    </div>
+    <div class="col-md-6 mb-3">
+      <button type="button" class="btn btn-danger" id="delete-data">
+        <span class="bi-trash3-fill"></span>
+        Delete All Games
+      </button>
+    </div>
+  </div> <!-- Delete Ends -->
+
 </section>
