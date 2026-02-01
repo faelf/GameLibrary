@@ -99,7 +99,7 @@ export const form = {
    * @returns { HTMLDivElement } The wrapper containing the label and select menu.
    * @example
    * // Example: Creating a platform selector and defaulting to 'switch'
-   * const platformWrapper = gameForm.select(gameInfo.platform, "switch");
+   * const platformWrapper = form.select(gameInfo.platform, "switch");
    * document.getElementById("my-form").appendChild(platformWrapper);
    */
   select(config, selectedValue = "") {
@@ -118,7 +118,11 @@ export const form = {
     defaultOption.value = "";
     defaultOption.textContent = placeholder || "Select an option...";
 
-    if (selectedValue === "" || selectedValue === null || selectedValue === undefined) {
+    if (
+      selectedValue === "" ||
+      selectedValue === null ||
+      selectedValue === undefined
+    ) {
       defaultOption.selected = true;
     }
 
@@ -248,7 +252,9 @@ export const form = {
 
     // 2. Safety: Ensure we have an array of strings for comparison
     // This handles null/undefined safely and fixes "1" vs 1 mismatch
-    const safeValues = Array.isArray(checkedValues) ? checkedValues.map(String) : [];
+    const safeValues = Array.isArray(checkedValues)
+      ? checkedValues.map(String)
+      : [];
 
     // 3. Loop through the options
     if (list) {
@@ -291,7 +297,13 @@ export const form = {
    * @param { Object } [ formConfig.initialData ] - Optional initial data to populate fields.
    */
   render(formConfig) {
-    const { containerId, schema, layoutMap, options = {}, initialData = {} } = formConfig;
+    const {
+      containerId,
+      schema,
+      layoutMap,
+      options = {},
+      initialData = {},
+    } = formConfig;
     const formRow = document.getElementById(containerId);
 
     if (!formRow) {
@@ -310,7 +322,8 @@ export const form = {
     Object.entries(schema).forEach(([key, config]) => {
       let fieldWrapper;
 
-      const fieldValue = initialData[key] !== undefined ? initialData[key] : "";
+      const fieldValue =
+        initialData[key] !== undefined ? initialData[key] : "";
 
       switch (config.component) {
         case "select":
@@ -327,7 +340,11 @@ export const form = {
           }
           break;
         case "input-group":
-          fieldWrapper = this.inputGroup(config, finalOptions.inputGroupText, fieldValue);
+          fieldWrapper = this.inputGroup(
+            config,
+            finalOptions.inputGroupText,
+            fieldValue,
+          );
           break;
         case "textarea":
           fieldWrapper = this.textarea(config, finalOptions.rows, fieldValue);
