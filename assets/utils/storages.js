@@ -120,7 +120,7 @@ export const storages = {
    * @param {string} key - The key in localStorage to check.
    * @param {number|string} itemId - The ID of the item to check.
    * @returns {boolean} True if the item exists, false otherwise.
-   * * @example
+   * @example
    * const exists = storages.exists("games", 1);
    */
   exists(key, itemId) {
