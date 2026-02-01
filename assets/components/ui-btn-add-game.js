@@ -7,8 +7,8 @@ class UIAddGame extends HTMLElement {
   connectedCallback() {
     this.innerHTML = /* html */ `
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-game">
-      <span class="bi bi-plus-circle-fill"></span> Game
+    <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#add-game">
+      <span class="bi bi-plus-circle-fill"></span> ADD GAME
     </button>
 
     <!-- Modal -->
@@ -28,7 +28,7 @@ class UIAddGame extends HTMLElement {
           <form id="add-game-form">
           
             <div class="modal-body">
-              <div id="form-row" class="row text-start">
+              <div id="form-row" class="row">
                 <!-- Form is added here -->
               </div>
             </div>

@@ -8,6 +8,21 @@ export const GamesListPage = {
   title: "Games List",
   html: "games-list.html",
   setup() {
+    // Display items settings
+    const displayItems = document.getElementById("display-items");
+    let itemsPerPage = 10;
+
+    displayItems.addEventListener("change", (e) => {
+      const value = e.target.value;
+      if (value === "all") {
+        itemsPerPage = storages.load(config.keys.games).length;
+      } else {
+        itemsPerPage = Number(value);
+      }
+      currentPage = 1;
+      renderGames();
+    });
+
     // Variable that controls the page navigation
     let currentPage = 1;
 
@@ -89,6 +104,7 @@ export const GamesListPage = {
       const paginatedGames = pagination.paginateItems({
         items: filteredGames,
         currentPage, // currentPage: currentPage
+        itemsPerPage,
       });
 
       // Render table body with the sliced games array
@@ -108,6 +124,7 @@ export const GamesListPage = {
       pagination.render({
         containerId: "pagination-controls",
         totalItems: filteredGames.length,
+        itemsPerPage,
         currentPage,
         onPageChange: handlePageChange,
       });

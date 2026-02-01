@@ -1,7 +1,7 @@
 <section class="m-2">
   <h2 class="mb-3">Games List</h2>
   <div class="row g-2 mb-3">
-    <div class="col-8 col-sm-9">
+    <div class="col-md-6">
       <div class="input-group">
         <span class="input-group-text">
           <span class="bi bi-search"></span>
@@ -9,7 +9,19 @@
         <input id="search-input" type="text" class="form-control" placeholder="Search by title">
       </div>
     </div>
-    <div class="col-4 col-sm-3 text-end">
+    <div class="col-sm-6 col-md-3">
+      <div class="input-group mb-3">
+        <span class="input-group-text">Display</span>
+        <select class="form-select" id="display-items">
+          <option value="10">10 games</option>
+          <option value="15">15 games</option>
+          <option value="20">20 games</option>
+          <option value="25">25 games</option>
+          <option value="all">All</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
       <ui-btn-add-game></ui-btn-add-game>
     </div>
   </div>
