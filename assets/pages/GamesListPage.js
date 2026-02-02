@@ -3,35 +3,28 @@ import { storages } from "../utils/storages.js";
 import { table } from "../utils/table.js";
 import { gameSchema } from "../data/game-schema.js";
 import { pagination } from "../utils/pagination.js";
+import { toast } from "../utils/toast.js";
 
 export const GamesListPage = {
   title: "Games List",
   html: "games-list.html",
   setup() {
-    // Display items settings
+    // --- 1. DOM Elements ---
     const displayItems = document.getElementById("display-items");
+    const searchInput = document.getElementById("search-input");
+    const tbody = document.getElementById("games-table-body");
+    const thead = document.getElementById("games-table-head");
+    const emptyTable = document.getElementById("empty-table");
+    const paginationContainer = document.getElementById("pagination-controls");
+
+    // --- 2. State Variables ---
     let itemsPerPage = 10;
-
-    displayItems.addEventListener("change", (e) => {
-      const value = e.target.value;
-      if (value === "all") {
-        itemsPerPage = storages.load(config.keys.games).length;
-      } else {
-        itemsPerPage = Number(value);
-      }
-      currentPage = 1;
-      renderGames();
-    });
-
-    // Variable that controls the page navigation
     let currentPage = 1;
 
-    const searchInput = document.getElementById("search-input");
-    searchInput.addEventListener("input", () => {
-      currentPage = 1;
-      renderGames();
-    });
+    // --- 3. Core Functions ---
 
+    // Pagination Handler
+    // Defined here so it can be used by renderGames and event listeners
     const handlePageChange = pagination.createPageHandler(
       (newPage) => (currentPage = newPage),
       renderGames,
@@ -39,20 +32,18 @@ export const GamesListPage = {
 
     /**
      * Renders the games list table or an empty state message.
+     * Handles filtering, pagination, and table generation.
      */
     function renderGames() {
-      const emptyTable = document.getElementById("empty-table");
-      const thead = document.getElementById("games-table-head");
       const games = storages.load(config.keys.games);
-      const tbody = document.getElementById("games-table-body");
 
-      // Clear table content before re-rendering
+      // Clear UI before re-rendering
       thead.innerHTML = "";
       tbody.innerHTML = "";
       emptyTable.innerHTML = "";
-      document.getElementById("pagination-controls").innerHTML = "";
+      paginationContainer.innerHTML = "";
 
-      // Show empty state if no games exist
+      // 1. Empty State Check
       if (games.length === 0) {
         emptyTable.innerHTML = /* html */ `
           <div class="text-center py-5">
@@ -64,12 +55,13 @@ export const GamesListPage = {
         return;
       }
 
-      // Filter games based on search input
+      // 2. Filter Data
       const searchTerm = searchInput.value.toLowerCase();
       const filteredGames = games.filter((game) =>
         game.title.toLowerCase().includes(searchTerm),
       );
 
+      // 3. No Search Results Check
       if (filteredGames.length === 0) {
         emptyTable.innerHTML = /* html */ `
           <div class="text-center py-5">
@@ -81,7 +73,7 @@ export const GamesListPage = {
         return;
       }
 
-      // Render table head
+      // 4. Render Table Header
       const tableColumns = {
         title: gameSchema.title,
         platform: gameSchema.platform,
@@ -92,22 +84,22 @@ export const GamesListPage = {
         price: gameSchema.price,
         purchaseDate: gameSchema.purchaseDate,
         ownership: gameSchema.ownership,
+        deleteBtn: { labelText: "Delete" },
       };
 
-      table.addTHeader({
+      table.addTHead({
         theadElement: thead,
         thColumns: tableColumns,
       });
 
-      // Pagination logic
-      // It will slice the games array into pages
+      // 5. Paginate Data
       const paginatedGames = pagination.paginateItems({
         items: filteredGames,
-        currentPage, // currentPage: currentPage
+        currentPage,
         itemsPerPage,
       });
 
-      // Render table body with the sliced games array
+      // 6. Render Table Body
       table.addTBody({
         tbodyElement: tbody,
         tdColumns: tableColumns,
@@ -117,10 +109,11 @@ export const GamesListPage = {
           hyperlinkTarget: "game-details-page",
           longDate: "purchaseDate",
           currencySymbol: "price",
+          deleteBtn: true,
         },
       });
 
-      // Render pagination controls
+      // 7. Render Pagination Controls
       pagination.render({
         containerId: "pagination-controls",
         totalItems: filteredGames.length,
@@ -130,15 +123,52 @@ export const GamesListPage = {
       });
     }
 
+    // --- 4. Event Listeners ---
+
+    // Items Per Page Selection
+    displayItems.addEventListener("change", (e) => {
+      const value = e.target.value;
+      if (value === "all") {
+        itemsPerPage = storages.load(config.keys.games).length;
+      } else {
+        itemsPerPage = Number(value);
+      }
+      currentPage = 1;
+      renderGames();
+    });
+
+    // Search Input Filter
+    searchInput.addEventListener("input", () => {
+      currentPage = 1;
+      renderGames();
+    });
+
+    // Table Actions (Delete)
+    tbody.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-delete-item]");
+      if (btn) {
+        const id = btn.closest("tr").dataset.id;
+        if (
+          toast.success(
+            "Game deleted.",
+            "Are you sure you want to delete this game?",
+          )
+        ) {
+          storages.remove(config.keys.games, id);
+          renderGames();
+        }
+      }
+    });
+
+    // Global Events (Game Added)
     document.addEventListener("game-added", () => {
       const lastPage = {
         totalItems: storages.load(config.keys.games).length,
       };
-      // Makes the current page the last
       handlePageChange(pagination.getLastPage(lastPage));
     });
 
-    // Initial render
+    // --- 5. Initialisation ---
     renderGames();
   },
 };
