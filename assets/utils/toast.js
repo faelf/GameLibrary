@@ -2,29 +2,16 @@
  * @module utils/toast
  * Toast utility for displaying notifications.
  * Depends on Bootstrap's Toast component.
- * @param { string } bodyMessage - The main message to display in the toast.
- * @example toast.error("An error occurred.");
- * @param { string|null } confirmMessage - Optional confirmation message before showing the toast.
- * @example toast.success("Operation completed successfully!", "Are you sure?");
- * @param { string } type - The type is passed implicitly by the calling method.
  */
 export const toast = {
-  success(bodyMessage, confirmMessage = null) {
-    this._show(bodyMessage, confirmMessage, "success");
-  },
-
-  error(bodyMessage, confirmMessage = null) {
-    this._show(bodyMessage, confirmMessage, "error");
-  },
-
-  warning(bodyMessage, confirmMessage = null) {
-    this._show(bodyMessage, confirmMessage, "warning");
-  },
-
-  info(bodyMessage, confirmMessage = null) {
-    this._show(bodyMessage, confirmMessage, "info");
-  },
-
+  /**
+   * Internal method to configure and show the toast.
+   * @param {string} bodyMessage - The main message to display.
+   * @param {string|null} confirmMessage - Optional confirmation message.
+   * @param {string} type - The type of toast ('success', 'error', 'warning', 'info').
+   * @returns {boolean} True if shown (and confirmed if applicable), false otherwise.
+   * @private
+   */
   _show(bodyMessage, confirmMessage, type) {
     const config = {
       success: {
@@ -48,7 +35,7 @@ export const toast = {
     // If confirmMessage exists, ask for confirmation
     if (confirmMessage) {
       const confirmed = confirm(confirmMessage);
-      if (!confirmed) return;
+      if (!confirmed) return false;
     }
 
     const toastElement = document.getElementById("app-toast");
@@ -63,5 +50,45 @@ export const toast = {
 
     const toast = new bootstrap.Toast(toastElement);
     toast.show();
+    return true;
+  },
+  /**
+   * Displays a success toast.
+   * @param {string} bodyMessage - The message to display.
+   * @param {string|null} [confirmMessage=null] - Optional confirmation prompt.
+   * @returns {boolean} True if confirmed/shown, false if cancelled.
+   */
+  success(bodyMessage, confirmMessage = null) {
+    return this._show(bodyMessage, confirmMessage, "success");
+  },
+
+  /**
+   * Displays an error toast.
+   * @param {string} bodyMessage - The message to display.
+   * @param {string|null} [confirmMessage=null] - Optional confirmation prompt.
+   * @returns {boolean} True if confirmed/shown, false if cancelled.
+   */
+  error(bodyMessage, confirmMessage = null) {
+    return this._show(bodyMessage, confirmMessage, "error");
+  },
+
+  /**
+   * Displays a warning toast.
+   * @param {string} bodyMessage - The message to display.
+   * @param {string|null} [confirmMessage=null] - Optional confirmation prompt.
+   * @returns {boolean} True if confirmed/shown, false if cancelled.
+   */
+  warning(bodyMessage, confirmMessage = null) {
+    return this._show(bodyMessage, confirmMessage, "warning");
+  },
+
+  /**
+   * Displays an info toast.
+   * @param {string} bodyMessage - The message to display.
+   * @param {string|null} [confirmMessage=null] - Optional confirmation prompt.
+   * @returns {boolean} True if confirmed/shown, false if cancelled.
+   */
+  info(bodyMessage, confirmMessage = null) {
+    return this._show(bodyMessage, confirmMessage, "info");
   },
 };
