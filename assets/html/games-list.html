@@ -1,6 +1,10 @@
 <section class="m-2">
-  <h2 class="mb-3">Games List</h2>
+
+  <h2 class="display-2">Games List</h2>
+
+  <!-- Options -->
   <div class="row g-2 mb-3">
+    <!-- Search Input -->
     <div class="col-md-6">
       <div class="input-group">
         <span class="input-group-text">
@@ -9,6 +13,8 @@
         <input id="search-input" type="text" class="form-control" placeholder="Search by title">
       </div>
     </div>
+
+    <!-- Display Input -->
     <div class="col-sm-6 col-md-3">
       <div class="input-group mb-3">
         <span class="input-group-text">Display</span>
@@ -20,11 +26,15 @@
           <option value="all">All</option>
         </select>
       </div>
-    </div>
+    </div> <!-- Options End -->
+
+    <!-- Add Game Button -->
     <div class="col-sm-6 col-md-3">
       <ui-btn-add-game></ui-btn-add-game>
     </div>
   </div>
+
+  <!-- Table with games data -->
   <table class="table table-striped table-borderless table-hover">
     <thead id="games-table-head" class="sticky-top align-middle">
       <!-- Headers will be populated dynamically -->
@@ -33,7 +43,15 @@
       <!-- Game rows will be populated dynamically -->
     </tbody>
   </table>
-  <nav id="pagination-controls" class="mt-3" aria-label="Game list navigation"></nav>
+
+  <!-- Pagination Links -->
+  <nav id="pagination-controls" class="mt-3" aria-label="Game list navigation">
+    <!-- Injected via JavaScript -->
+  </nav>
+
+  <!-- If there is no games -->
   <div id="empty-table">
+    <!-- Injected via JavaScript -->
   </div>
+
 </section>
