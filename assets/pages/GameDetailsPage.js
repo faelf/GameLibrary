@@ -8,6 +8,12 @@ export const GameDetailsPage = {
   html: "game-details.html",
   setup(gameId) {
     const game = storages.get(config.keys.games, gameId);
+
+    // Make sure the price is displayed 0.00
+    if (game && game.price !== undefined) {
+      game.price = Number(game.price).toFixed(2);
+    }
+
     const layoutMap = {
       title: "col-12",
       platform: "col-md-4",
