@@ -13,7 +13,7 @@ export const table = {
    * @param { HTMLElement } theadElement - The <thead> element where headers will be rendered.
    * @param { Object } thColumns - The schema object containing column configurations (labels, keys).
    */
-  addTHeader(theadConfig) {
+  addTHead(theadConfig) {
     const { theadElement, thColumns } = theadConfig;
     const tr = document.createElement("tr");
     theadElement.appendChild(tr);
@@ -43,15 +43,16 @@ export const table = {
       hyperlinkTarget: "details-page",
       longDate: "date",
       currencySymbol: "price",
+      deleteBtn: false,
       ...tdConfig,
     };
 
-    // Normalize longDate to always be an array
+    // Normalise longDate to always be an array
     if (!Array.isArray(options.longDate)) {
       options.longDate = [options.longDate];
     }
 
-    // Normalize currencySymbol to always be an array
+    // Normalise currencySymbol to always be an array
     if (!Array.isArray(options.currencySymbol)) {
       options.currencySymbol = [options.currencySymbol];
     }
@@ -81,20 +82,35 @@ export const table = {
         }
 
         // Options
-        if (key === options.hyperlink) {
-          const a = document.createElement("a");
-          a.href = "#";
-          a.className = "text-decoration-none";
-          a.dataset.pageTarget = options.hyperlinkTarget;
-          a.dataset.pageTargetId = rowData.id;
-          a.innerText = displayValue;
-          td.appendChild(a);
-        } else if (options.longDate.includes(key)) {
-          td.innerText = rowData[key] ? formatters.longDate(rowData[key]) : "-";
-        } else if (options.currencySymbol.includes(key)) {
-          td.innerText = formatters.fullPrice(rowData[key]);
-        } else {
-          td.innerText = displayValue !== undefined ? displayValue : "-";
+        // Using switch(true) allows to check multiple boolean conditions
+        switch (true) {
+          case key === options.hyperlink:
+            const a = document.createElement("a");
+            a.href = "#";
+            a.className = "text-decoration-none";
+            a.dataset.pageTarget = options.hyperlinkTarget;
+            a.dataset.pageTargetId = rowData.id;
+            a.innerText = displayValue;
+            td.appendChild(a);
+            break;
+          case key === "deleteBtn" && options[key] === true:
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "btn btn-danger btn-sm";
+            deleteBtn.dataset.deleteItem = "";
+            deleteBtn.innerHTML = /* html */ `<span class="bi bi-trash"></span>`;
+            td.appendChild(deleteBtn);
+            td.className = "text-lg-center";
+            break;
+          case options.longDate.includes(key):
+            td.innerText = rowData[key]
+              ? formatters.longDate(rowData[key])
+              : "-";
+            break;
+          case options.currencySymbol.includes(key):
+            td.innerText = formatters.fullPrice(rowData[key]);
+            break;
+          default:
+            td.innerText = displayValue !== undefined ? displayValue : "-";
         }
         tr.appendChild(td);
       });
