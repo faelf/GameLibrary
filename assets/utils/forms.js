@@ -370,13 +370,23 @@ export const form = {
     Object.keys(schema).forEach((key) => {
       const config = schema[key];
       const inputElement = document.getElementById(config.inputId);
-      if (!inputElement) return;
-      switch (config.inputType) {
-        case "number":
+
+      switch (true) {
+        case config.component === "radio":
+          const checked = document.querySelector(
+            `input[name="${config.inputId}"]:checked`,
+          );
+          data[key] = checked ? checked.value : "";
+          break;
+        case inputElement && inputElement.type === "checkbox":
+          data[key] = inputElement.checked;
+          break;
+        case inputElement && config.inputType === "number":
           data[key] = inputElement.valueAsNumber || 0;
           break;
-        default:
+        case !!inputElement:
           data[key] = inputElement.value;
+          break;
       }
     });
 
