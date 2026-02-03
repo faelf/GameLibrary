@@ -2,12 +2,18 @@ import { gameSchema } from "../data/game-schema.js";
 import { config } from "../utils/config.js";
 import { form } from "../utils/forms.js";
 import { storages } from "../utils/storages.js";
+import { toast } from "../utils/toast.js";
 
 export const GameDetailsPage = {
   title: "Game Details",
   html: "game-details.html",
   setup(gameId) {
     const game = storages.get(config.keys.games, gameId);
+
+    if (!game) {
+      toast.error("Game not found");
+      return;
+    }
 
     // Make sure the price is displayed 0.00
     if (game && game.price !== undefined) {
@@ -16,14 +22,14 @@ export const GameDetailsPage = {
 
     const layoutMap = {
       title: "col-12",
-      platform: "col-md-4",
-      year: "col-md-4",
-      region: "col-md-4",
-      condition: "col-md-6 col-xl-3",
-      status: "col-md-6 col-xl-3",
-      price: "col-md-4 col-xl-2",
-      purchaseDate: "col-md-4 col-xl-2",
-      ownership: "col-md-4 col-xl-2",
+      platform: "col-sm-6",
+      year: "col-sm-6",
+      region: "col-sm-6",
+      condition: "col-sm-6",
+      status: "col-sm-6",
+      price: "col-sm-6",
+      purchaseDate: "col-sm-6",
+      ownership: "col-sm-6",
       note: "col-12",
     };
 
@@ -62,12 +68,23 @@ export const GameDetailsPage = {
       initialData: game,
     });
 
-    const saveBtn = document.getElementById("save-btn");
+    const editForm = document.getElementById("game-edit-form");
 
-    saveBtn.addEventListener("click", function () {
+    editForm.addEventListener("submit", function (event) {
+      event.preventDefault();
       const gameDataToSave = form.getFormData(gameSchema);
-      gameDataToSave.id = gameId;
+
+      // Ensure numeric values are stored as numbers, not strings
+      gameDataToSave.year = gameDataToSave.year
+        ? Number(gameDataToSave.year)
+        : "";
+      gameDataToSave.price = gameDataToSave.price
+        ? Number(gameDataToSave.price)
+        : 0;
+
+      gameDataToSave.id = Number(gameId);
       storages.update(config.keys.games, gameId, gameDataToSave);
+      toast.success("Game details updated successfully!");
     });
   },
 };
