@@ -67,7 +67,7 @@ export const storages = {
     const numericId = Number(itemId);
 
     return items.find(function (item) {
-      return item.id === numericId;
+      return item.id == numericId;
     });
   },
 
@@ -85,7 +85,7 @@ export const storages = {
     const items = this.load(key);
     const numericId = Number(itemId);
     const itemIndex = items.findIndex(function (item) {
-      return item.id === numericId;
+      return item.id == numericId;
     });
     if (itemIndex === -1) {
       return false;
@@ -109,7 +109,7 @@ export const storages = {
   remove(key, itemId) {
     const numericId = Number(itemId);
     const filteredItems = this.load(key).filter(function (item) {
-      return item.id !== numericId;
+      return item.id != numericId;
     });
     this.save(key, filteredItems);
   },
