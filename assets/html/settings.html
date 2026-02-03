@@ -1,15 +1,15 @@
-<section class="col-lg-8 my-2 mx-auto">
-  <h2 class="display-2">Settings</h2>
+<section class="col-md-10 col-xl-8 my-2 mx-auto p-2">
+  <h2 class="display-3">Settings</h2>
 
   <!-- User Settings -->
   <div class="row mb-3">
-    <div class="col-md-6 mb-3">
+    <div class="col-sm-6 mb-3">
       <h3>User Settings</h3>
       <p>More features to come.</p>
     </div>
 
     <!-- User Prefered Settings -->
-    <div class="col-md-6 mb-3">
+    <div class="col-sm-6 mb-3">
       <!-- User Info Form -->
       <form id="user-info-form" class="mb-3">
         <label for="first-name" class="form-label">First Name</label>
@@ -51,14 +51,14 @@
 
   <!-- Import (Replace) -->
   <div class="row mb-3">
-    <div class="col-md-6 mb-3">
+    <div class="col-sm-6 mb-3">
       <h3>Import Game Data</h3>
       <p class="card-text">
         Restore your library from an exported file.<br>
         <strong>All existing data will be replaced.</strong>
       </p>
     </div>
-    <form id="import-form" class="col-md-6">
+    <form id="import-form" class="col-sm-6">
 
       <label for="import-options" class="form-label">Import file format</label>
       <select class="form-select mb-3" id="import-options">
@@ -79,13 +79,13 @@
 
   <!-- Merge -->
   <div class="row mb-3">
-    <div class="col-md-6 mb-3">
+    <div class="col-sm-6 mb-3">
       <h3>Merge Game Data</h3>
       <p class="card-text">Add games from an exported file to your existing library.<br>
         No current data will be removed.
       </p>
     </div>
-    <form id="csv-merge-form" class="col-md-6">
+    <form id="csv-merge-form" class="col-sm-6">
 
       <label for="merge-options" class="form-label">Merge file format</label>
       <select class="form-select mb-3" id="merge-options">
@@ -104,12 +104,12 @@
 
   <!-- Export -->
   <div class="row mb-3">
-    <div class="col-md-6 mb-3">
+    <div class="col-sm-6 mb-3">
       <h3>Export Game Data</h3>
       <p>Download your entire game library as a file for backup or transfer.</p>
     </div>
-    <div class="col-md-6 mb-3">
-      <form id="export-form" class="col-md-6">
+    <div class="col-sm-6 mb-3">
+      <form id="export-form" class="col-sm-6">
         <label for="export-options" class="form-label">Export file format</label>
         <select class="form-select mb-3" id="export-options">
           <option value="" disabled selected>Select a file format</option>
@@ -126,14 +126,14 @@
 
   <!-- Delete -->
   <div class="row mb-3">
-    <div class="col-md-6 mb-3">
+    <div class="col-sm-6 mb-3">
       <h3>Delete Game Data</h3>
       <p class="card-text">
         Permanently removes <strong>all games</strong> from your library.<br>
         This action cannot be undone.
       </p>
     </div>
-    <div class="col-md-6 mb-3">
+    <div class="col-sm-6 mb-3">
       <button type="button" class="btn btn-danger" id="delete-data">
         <span class="bi-trash3-fill"></span>
         Delete All Games
