@@ -9,7 +9,7 @@ export const GamesListPage = {
   title: "Games List",
   html: "games-list.html",
   setup() {
-    // --- 1. DOM Elements ---
+    // --- DOM Elements ---
     const displayItems = document.getElementById("display-items");
     const searchInput = document.getElementById("search-input");
     const tbody = document.getElementById("games-table-body");
@@ -17,11 +17,11 @@ export const GamesListPage = {
     const emptyTable = document.getElementById("empty-table");
     const paginationContainer = document.getElementById("pagination-controls");
 
-    // --- 2. State Variables ---
+    // --- State Variables ---
     let itemsPerPage = 10;
     let currentPage = 1;
 
-    // --- 3. Core Functions ---
+    // --- Core Functions ---
 
     // Pagination Handler
     // Defined here so it can be used by renderGames and event listeners
@@ -43,7 +43,7 @@ export const GamesListPage = {
       emptyTable.innerHTML = "";
       paginationContainer.innerHTML = "";
 
-      // 1. Empty State Check
+      // Empty State Check (If there is no games)
       if (games.length === 0) {
         emptyTable.innerHTML = /* html */ `
           <div class="text-center py-5">
@@ -55,13 +55,13 @@ export const GamesListPage = {
         return;
       }
 
-      // 2. Filter Data
+      // Search
       const searchTerm = searchInput.value.toLowerCase();
       const filteredGames = games.filter((game) =>
         game.title.toLowerCase().includes(searchTerm),
       );
 
-      // 3. No Search Results Check
+      // No Search Results Check
       if (filteredGames.length === 0) {
         emptyTable.innerHTML = /* html */ `
           <div class="text-center py-5">
@@ -73,38 +73,28 @@ export const GamesListPage = {
         return;
       }
 
-      // 4. Render Table Header
-      const tableColumns = {
-        title: gameSchema.title,
-        platform: gameSchema.platform,
-        year: gameSchema.year,
-        region: gameSchema.region,
-        condition: gameSchema.condition,
-        status: gameSchema.status,
-        price: gameSchema.price,
-        purchaseDate: gameSchema.purchaseDate,
-        ownership: gameSchema.ownership,
-        deleteBtn: { labelText: "Delete" },
-      };
-
-      table.addTHead({
-        theadElement: thead,
-        thColumns: tableColumns,
-      });
-
-      // 5. Paginate Data
-      const paginatedGames = pagination.paginateItems({
-        items: filteredGames,
-        currentPage,
-        itemsPerPage,
-      });
-
-      // 6. Render Table Body
-      table.addTBody({
-        tbodyElement: tbody,
-        tdColumns: tableColumns,
-        tdData: paginatedGames,
-        tdConfig: {
+      // Render the table with the paginated pages
+      table.render({
+        thead: "games-table-head",
+        tbody: "games-table-body",
+        columns: {
+          title: gameSchema.title,
+          platform: gameSchema.platform,
+          year: gameSchema.year,
+          region: gameSchema.region,
+          condition: gameSchema.condition,
+          status: gameSchema.status,
+          price: gameSchema.price,
+          purchaseDate: gameSchema.purchaseDate,
+          ownership: gameSchema.ownership,
+          deleteBtn: { labelText: "Delete" },
+        },
+        data: pagination.paginateItems({
+          items: filteredGames,
+          currentPage,
+          itemsPerPage,
+        }),
+        options: {
           hyperlink: "title",
           hyperlinkTarget: "game-details-page",
           longDate: "purchaseDate",
@@ -113,7 +103,7 @@ export const GamesListPage = {
         },
       });
 
-      // 7. Render Pagination Controls
+      // Render Pagination Controls
       pagination.render({
         containerId: "pagination-controls",
         totalItems: filteredGames.length,
@@ -123,7 +113,7 @@ export const GamesListPage = {
       });
     }
 
-    // --- 4. Event Listeners ---
+    // --- Event Listeners ---
 
     // Items Per Page Selection
     displayItems.addEventListener("change", (e) => {
@@ -168,7 +158,7 @@ export const GamesListPage = {
       handlePageChange(pagination.getLastPage(lastPage));
     });
 
-    // --- 5. Initialisation ---
+    // --- Initialisation ---
     renderGames();
   },
 };

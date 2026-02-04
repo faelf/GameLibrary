@@ -8,115 +8,105 @@ import { formatters } from "./formatters.js";
  */
 export const table = {
   /**
-   * Generates and appends header cells to a table's <thead> element.
-   * @param { Object } theadConfig - Configuration object for the table header.
-   * @param { HTMLElement } theadElement - The <thead> element where headers will be rendered.
-   * @param { Object } thColumns - The schema object containing column configurations (labels, keys).
+   * Renders the table header and body.
+   * @param { Object } config
+   * @param { HTMLElement|string } config.thead - The <thead> element or its ID.
+   * @param { HTMLElement|string } config.tbody - The <tbody> element or its ID.
+   * @param { Object } config.columns - The schema object for columns.
+   * @param { Array<Object> } config.data - The array of data objects.
+   * @param { Object } [config.options] - Optional configuration (hyperlinks, formatting).
    */
-  addTHead(theadConfig) {
-    const { theadElement, thColumns } = theadConfig;
-    const tr = document.createElement("tr");
-    theadElement.appendChild(tr);
+  render(config) {
+    let { thead, tbody } = config;
+    const { columns, data, options = {} } = config;
 
-    Object.entries(thColumns).forEach(([key, value]) => {
-      const th = document.createElement("th");
-      th.textContent = value.labelText;
-      tr.appendChild(th);
-    });
-  },
-  /**
-   * Populates a table body with rows based on an array of data.
-   * @param { Object } tbodyConfig - Configuration object for the table body.
-   * @param { HTMLElement } tbodyElement - The <tbody> element where the rows will be added.
-   * @param { Object } tdColumns - The schema object used to map data keys to labels (and for mobile 'data-cell' attributes).
-   * @param { Array<Object> } tdData - An array of objects containing the data for each row.
-   * @param { Object } [ tdConfig ] - Optional configuration for specific column formatting.
-   * @param { string } [ tdConfig.hyperlink="title" ] - The data key to render as a clickable link.
-   * @param { string } [ tdConfig.hyperlinkTarget="details-page" ] - The navigation target for the link.
-   * @param { string } [ tdConfig.longDate="date" ] - The data key to format as a date.
-   * @param { string } [ tdConfig.currencySymbol="price" ] - The data key to format as currency.
-   */
-  addTBody(tbodyConfig) {
-    const { tbodyElement, tdColumns, tdData, tdConfig = {} } = tbodyConfig;
-    const options = {
-      hyperlink: "title",
-      hyperlinkTarget: "details-page",
-      longDate: "date",
-      currencySymbol: "price",
-      deleteBtn: false,
-      ...tdConfig,
-    };
+    if (typeof thead === "string") thead = document.getElementById(thead);
+    if (typeof tbody === "string") tbody = document.getElementById(tbody);
 
-    // Normalise longDate to always be an array
-    if (!Array.isArray(options.longDate)) {
-      options.longDate = [options.longDate];
-    }
-
-    // Normalise currencySymbol to always be an array
-    if (!Array.isArray(options.currencySymbol)) {
-      options.currencySymbol = [options.currencySymbol];
-    }
-
-    // Check if tableData is actually an array before looping
-    if (!Array.isArray(tdData)) {
-      console.error("addTBody expects an Array of data, got:", tdData);
-      return;
-    }
-
-    // Loop through rows in the data
-    tdData.forEach((rowData) => {
+    // Create the thead
+    if (thead) {
+      thead.innerHTML = "";
       const tr = document.createElement("tr");
-      tr.setAttribute("data-id", rowData.id);
+      thead.appendChild(tr);
 
-      // Loop through columns for this specific row
-      Object.entries(tdColumns).forEach(([key, value]) => {
-        const td = document.createElement("td");
-        td.setAttribute("data-cell", value.labelText);
-
-        // Prepare the value for display
-        let displayValue = rowData[key];
-
-        // If the schema has a list (e.g. Select/Radio), map the Key to the Label
-        if (value.list && value.list[displayValue]) {
-          displayValue = value.list[displayValue];
-        }
-
-        // Options
-        // Using switch(true) allows to check multiple boolean conditions
-        switch (true) {
-          case key === options.hyperlink:
-            const a = document.createElement("a");
-            a.href = "#";
-            a.className = "text-decoration-none";
-            a.dataset.pageTarget = options.hyperlinkTarget;
-            a.dataset.pageTargetId = rowData.id;
-            a.innerText = displayValue;
-            td.appendChild(a);
-            break;
-          case key === "deleteBtn" && options[key] === true:
-            const deleteBtn = document.createElement("button");
-            deleteBtn.className = "btn btn-danger btn-sm";
-            deleteBtn.dataset.deleteItem = "";
-            deleteBtn.innerHTML = /* html */ `<span class="bi bi-trash"></span>`;
-            td.appendChild(deleteBtn);
-            td.className = "text-lg-center";
-            break;
-          case options.longDate.includes(key):
-            td.innerText = rowData[key]
-              ? formatters.longDate(rowData[key])
-              : "-";
-            break;
-          case options.currencySymbol.includes(key):
-            td.innerText = formatters.fullPrice(rowData[key]);
-            break;
-          default:
-            td.innerText = displayValue !== undefined ? displayValue : "-";
-        }
-        tr.appendChild(td);
+      Object.entries(columns).forEach(([key, value]) => {
+        const th = document.createElement("th");
+        th.textContent = value.labelText;
+        tr.appendChild(th);
       });
+    }
 
-      // Append the finished row to the body
-      tbodyElement.appendChild(tr);
-    });
+    // Create the tbody
+    if (tbody) {
+      tbody.innerHTML = "";
+
+      const settings = {
+        hyperlink: "title",
+        hyperlinkTarget: "details-page",
+        longDate: "date",
+        currencySymbol: "price",
+        deleteBtn: false,
+        ...options,
+      };
+
+      if (!Array.isArray(settings.longDate)) {
+        settings.longDate = [settings.longDate];
+      }
+      if (!Array.isArray(settings.currencySymbol)) {
+        settings.currencySymbol = [settings.currencySymbol];
+      }
+
+      if (!Array.isArray(data)) {
+        console.error("table.render expects an Array of data, got:", data);
+        return;
+      }
+
+      data.forEach((rowData) => {
+        const tr = document.createElement("tr");
+        tr.setAttribute("data-id", rowData.id);
+
+        Object.entries(columns).forEach(([key, value]) => {
+          const td = document.createElement("td");
+          td.setAttribute("data-cell", value.labelText);
+
+          let displayValue = rowData[key];
+          if (value.list && value.list[displayValue]) {
+            displayValue = value.list[displayValue];
+          }
+
+          switch (true) {
+            case key === settings.hyperlink:
+              const a = document.createElement("a");
+              a.href = "#";
+              a.className = "text-decoration-none";
+              a.dataset.pageTarget = settings.hyperlinkTarget;
+              a.dataset.pageTargetId = rowData.id;
+              a.innerText = displayValue;
+              td.appendChild(a);
+              break;
+            case key === "deleteBtn" && settings[key] === true:
+              const deleteBtn = document.createElement("button");
+              deleteBtn.className = "btn btn-danger btn-sm";
+              deleteBtn.dataset.deleteItem = "";
+              deleteBtn.innerHTML = /* html */ `<span class="bi bi-trash"></span>`;
+              td.appendChild(deleteBtn);
+              td.className = "text-lg-center";
+              break;
+            case settings.longDate.includes(key):
+              td.innerText = rowData[key]
+                ? formatters.longDate(rowData[key])
+                : "-";
+              break;
+            case settings.currencySymbol.includes(key):
+              td.innerText = formatters.fullPrice(rowData[key]);
+              break;
+            default:
+              td.innerText = displayValue !== undefined ? displayValue : "-";
+          }
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    }
   },
 };
