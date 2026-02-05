@@ -6,7 +6,7 @@ class UIFooter extends HTMLElement {
     <footer class="bg-body-tertiary">
       <div class="container d-flex align-items-center justify-content-center">
         <div class="m-4">
-          <strong>Rafael Ferreira</strong> &copy; ${year}
+          <strong>Rafael Ferreira &copy; ${year}</strong>
         </div>
       </div>
     </footer>
