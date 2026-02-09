@@ -1,3 +1,4 @@
 node_modules/
 my-games.js
 .vscode/
+firebaseConfig.js
