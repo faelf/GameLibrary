@@ -45,7 +45,7 @@ export const storages = {
   add(key, item) {
     const items = this.load(key);
     const newItem = {
-      id: Date.now() + Math.floor(Math.random() * 1000),
+      id: String(Date.now() + Math.floor(Math.random() * 1000)),
       ...item,
     };
     items.push(newItem);
@@ -57,17 +57,16 @@ export const storages = {
    * Get a single item from storage by key and item ID.
    *
    * @param {string} key - The key in localStorage to load from.
-   * @param {number|string} itemId - The ID of the item to retrieve.
+   * @param {string} itemId - The ID of the item to retrieve.
    * @returns {Object|undefined} The item object if found, otherwise undefined.
    * @example
-   * const game = storages.get("games", 1);
+   * const game = storages.get("games", "1709823456789");
    */
   get(key, itemId) {
     const items = this.load(key);
-    const numericId = Number(itemId);
 
     return items.find(function (item) {
-      return item.id == numericId;
+      return item.id == itemId;
     });
   },
 
@@ -75,17 +74,16 @@ export const storages = {
    * Update an existing item in storage by key and item ID.
    *
    * @param {string} key - The key in localStorage to update.
-   * @param {number|string} itemId - The ID of the item to update.
+   * @param {string} itemId - The ID of the item to update.
    * @param {Object} updates - An object containing properties to update.
    * @returns {boolean} True if the item was found and updated, false if not found.
    * @example
-   * const updated = storages.update("games", 1, { status: "Completed" });
+   * const updated = storages.update("games", "1709823456789", { status: "Completed" });
    */
   update(key, itemId, updates) {
     const items = this.load(key);
-    const numericId = Number(itemId);
     const itemIndex = items.findIndex(function (item) {
-      return item.id == numericId;
+      return item.id == itemId;
     });
     if (itemIndex === -1) {
       return false;
@@ -102,14 +100,13 @@ export const storages = {
    * Remove an item from storage by key and item ID.
    *
    * @param {string} key - The key in localStorage to remove from.
-   * @param {number} itemId - The ID of the item to remove.
+   * @param {string} itemId - The ID of the item to remove.
    * @example
-   * storages.remove("games", 2);
+   * storages.remove("games", "1709823456789");
    */
   remove(key, itemId) {
-    const numericId = Number(itemId);
     const filteredItems = this.load(key).filter(function (item) {
-      return item.id != numericId;
+      return item.id != itemId;
     });
     this.save(key, filteredItems);
   },
@@ -118,10 +115,10 @@ export const storages = {
    * Check if an item exists in storage by key and item ID.
    *
    * @param {string} key - The key in localStorage to check.
-   * @param {number|string} itemId - The ID of the item to check.
+   * @param {string} itemId - The ID of the item to check.
    * @returns {boolean} True if the item exists, false otherwise.
    * @example
-   * const exists = storages.exists("games", 1);
+   * const exists = storages.exists("games", "1709823456789");
    */
   exists(key, itemId) {
     return Boolean(this.get(key, itemId));
