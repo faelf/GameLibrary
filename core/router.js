@@ -168,8 +168,7 @@ export class Router {
     const pageKey = link.dataset.pageTarget;
     if (!pageKey) return;
 
-    // Always a string now
-    const pageId = link.dataset.pageTargetId?.toString();
+    const pageId = link.dataset.pageTargetId;
 
     document.dispatchEvent(
       new CustomEvent("navigate", {
