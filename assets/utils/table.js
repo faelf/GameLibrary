@@ -8,6 +8,31 @@ import { formatters } from "./formatters.js";
  */
 export const table = {
   /**
+   * Generates a skeleton loader HTML string for a table.
+   * @param {Object} [config] - Configuration config.
+   * @param {number} [config.rows=5] - Number of rows to generate.
+   * @param {number} [config.cols=10] - Number of columns per row.
+   * @returns {string} The HTML string representing the skeleton rows.
+   */
+  skeleton({ rows = 5, cols = 10 } = {}) {
+    return Array.from(
+      { length: rows },
+      () => `
+      <tr>
+        ${Array.from(
+          { length: cols },
+          () => `
+            <td class="placeholder-wave p-2">
+              <span class="placeholder col-12 bg-primary rounded"></span>
+            </td>
+          `,
+        ).join("")}
+      </tr>
+    `,
+    ).join("");
+  },
+
+  /**
    * Renders the table header and body.
    * @param { Object } config
    * @param { HTMLElement|string } config.thead - The <thead> element or its ID.
