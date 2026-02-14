@@ -1,84 +1,79 @@
 /**
- * @typedef {Object} RouterConfig
- * @property {HTMLElement} mainContentArea - Element where pages are rendered
- * @property {Object.<string, PageDefinition>} pageContent - Pages map
- * @property {string} [landingPage="home"] - Initial page
- * @property {string} [baseHtmlPath] - "assets/templates/"
- */
-
-/**
- * @typedef {Object} PageDefinition
- * @property {string} title - Page title shown in the browser tab
- * @property {string} html - HTML string injected into the main content area
- * @property {() => Promise<void>|void} [setup] - Optional setup function called after the page HTML is rendered
- */
-
-/**
  * Router class for handling SPA navigation and page updates.
  * Manages click delegation, history navigation, and page content updates.
- *
  * @example
  * const router = new Router({
- *   mainContentArea: document.getElementById("page-content"),
- *   pageContent: {
- *      "home": {
- *         title: "Home - Welcome",
- *         html: "home.html",
- *         setup(): void,
- *    };
- *   landingPage: "home",
- *   baseHtmlPath = "assets/templates/",
+ *    contentArea: "#main-content",
+ *    pageContent: pageContent: {
+ *                    "home": {
+ *                        title: "Home - Welcome",
+ *                        html: "home.html",
+ *                        setup(): void,
+ *                    };
+ *    landingPage = "home",
+ *    baseHtmlPath = "src/html/",
+ *    linkAttribute: "href",
+ *    idAttribute: "data-doc-id",
  * });
  * router.init();
  */
 export class Router {
   /**
    * Creates a new Router instance.
-   * @param {RouterConfig} config
+   * @param {Object} config - The configuration object.
+   * @param {string} config.contentArea - The CSS selector for the area where pages will be rendered (e.g., "#main-content").
+   * @param {Object} config.pageContent - The page definitions. Each key is a route name, and the value is an object with `title`, `html`, and optional `setup` method.
+   * @param {string} [config.landingPage="home"] - Initial page to load.
+   * @param {string} [config.baseHtmlPath="src/html/"] - Path to external HTML files.
+   * @param {string} [config.linkAttribute="href"] - The attribute used to identify nav links.
+   * @param {string} [config.idAttribute="data-doc-id"] - The attribute used for document/page IDs.
    */
   constructor(config) {
     const {
-      mainContentArea,
+      contentArea,
       pageContent,
       landingPage = "home",
-      baseHtmlPath = "assets/html/",
+      baseHtmlPath = "src/html/",
+      linkAttribute = "href",
+      idAttribute = "data-doc-id",
     } = config;
 
-    /** @type {HTMLElement} */
-    this.mainContentArea = mainContentArea;
-
-    /** @type {Record<string, PageDefinition>} */
+    this.container = document.querySelector(contentArea);
+    this.contentArea = contentArea;
     this.pageContent = pageContent;
-
-    /** @type {string} */
     this.landingPage = landingPage;
-
-    /** @type {string} */
     this.baseHtmlPath = baseHtmlPath;
+    this.linkAttribute = linkAttribute;
+    this.idAttribute = idAttribute;
 
-    // Bind event handlers
+    // Bind event handlers to maintain correct 'this' context
     this.handleClick = this.handleClick.bind(this);
     this.handleNavigate = this.handleNavigate.bind(this);
     this.handlePopState = this.handlePopState.bind(this);
   }
 
   /**
-   * Highlights the active link(s) in the navigation menu
+   * Syncs the UI by adding the 'active' class to matching links.
+   * Uses the configured linkAttribute to identify navigation elements.
    * @param {string} activePageKey
    */
   updateActiveLinks(activePageKey) {
-    const links = document.querySelectorAll("[data-page-target]");
+    const selector = `[${this.linkAttribute}]`;
+    const links = document.querySelectorAll(selector);
 
-    const activeLinkElement = Array.from(links).find(
-      (l) => l.dataset.pageTarget === activePageKey,
-    );
+    const activeLinkElement = Array.from(links).find((l) => {
+      const val = l.getAttribute(this.linkAttribute);
+      return val === activePageKey || val === `#${activePageKey}`;
+    });
 
-    const activeGroup = activeLinkElement?.dataset.activeGroup;
+    const activeGroup = activeLinkElement?.getAttribute("data-active-group");
 
     links.forEach((link) => {
-      const isExactMatch = link.dataset.pageTarget === activePageKey;
+      const val = link.getAttribute(this.linkAttribute);
+      const isExactMatch =
+        val === activePageKey || val === `#${activePageKey}`;
       const isGroupMatch =
-        activeGroup && link.dataset.activeGroup === activeGroup;
+        activeGroup && link.getAttribute("data-active-group") === activeGroup;
 
       if (isExactMatch || isGroupMatch) {
         link.classList.add("active");
@@ -90,119 +85,124 @@ export class Router {
 
   /**
    * Update the main content area with a page.
+   * Supports both raw HTML strings and external .html file paths.
    * @param {string} pageKey - The key of the page to display.
-   * @param {{ pageId?: string }} [params]
+   * @param {Object} [params={}] - Optional parameters (e.g., { pageId: 101 }).
+   * @param {boolean} [addToHistory=true] - Whether to push to browser history.
    * @returns {Promise<void>}
    */
-  async updateMainContent(pageKey, params = {}) {
+  async updateMainContent(pageKey, params = {}, addToHistory = true) {
     const content = this.pageContent[pageKey];
-    if (!content) return;
+    if (!content || !this.container) return;
 
     let html;
 
-    // If html is a file
-    if (content.html.endsWith(".html")) {
-      // Get path to the html file
-      const fullPath = (this.baseHtmlPath || "") + content.html;
+    // If the html property points to a file, fetch it.
+    if (typeof content.html === "string" && content.html.endsWith(".html")) {
+      const fullPath = this.baseHtmlPath + content.html;
       try {
-        // Get the html content
         const response = await fetch(fullPath);
-        if (!response.ok) throw new Error(`Failed to load ${fullPath}`);
-        // Save the html content
+        if (!response.ok) throw new Error(`Could not find ${fullPath}`);
         html = await response.text();
       } catch (err) {
-        html = `<p style="color:red;">Error loading page: ${err.message}</p>`;
+        console.error("Router Error:", err);
+        html = `<section><p style="color:red;">Error loading page: ${err.message}</p></section>`;
       }
     } else {
-      html = content.html; // static string
+      // Otherwise, use the static string
+      html = content.html;
     }
 
-    // Inject HTML
-    this.mainContentArea.innerHTML = html;
+    // Inject the HTML into the page
+    this.container.innerHTML = html;
 
-    // Call setup
+    // Run setup logic if provided
     if (typeof content.setup === "function") {
       await content.setup(params.pageId);
     }
 
-    // Update history
+    // Update Browser History and URL
     let url = `#${pageKey}`;
     if (params.pageId != null) url += `?id=${params.pageId}`;
-    history.pushState({ pageKey, params }, content.title, url);
+
+    if (addToHistory) {
+      history.pushState({ pageKey, params }, content.title, url);
+    }
+
     document.title = content.title;
 
-    // Update active links
+    // Visual feedback for navigation
     this.updateActiveLinks(pageKey);
   }
 
   /**
-   * Parses the current URL hash and loads the corresponding page.
-   * Used for initial load and popstate fallback.
-   */
-  loadCurrentPage() {
-    const hash = window.location.hash.substring(1);
-    const [pageKey, query] = hash.split("?");
-
-    /** @type {{ pageId?: string }} */
-    const params = {};
-
-    if (query) {
-      const urlParams = new URLSearchParams(query);
-      params.pageId = urlParams.get("id") ?? undefined;
-    }
-
-    this.updateMainContent(pageKey || this.landingPage, params);
-  }
-
-  /**
-   * Handle clicks on elements with a `data-page-target` attribute.
+   * Handle clicks using event delegation on elements with the configured linkAttribute.
    * @param {MouseEvent} event
    */
   handleClick(event) {
-    const target = /** @type {HTMLElement} */ (event.target);
-    const link = target.closest("[data-page-target]");
+    const selector = `[${this.linkAttribute}]`;
+    const link = event.target.closest(selector);
     if (!link) return;
 
-    event.preventDefault();
+    // Only prevent default if it's an internal hash link or matches a pageKey
+    const rawLink = link.getAttribute(this.linkAttribute);
+    if (rawLink && (rawLink.startsWith("#") || this.pageContent[rawLink])) {
+      event.preventDefault();
 
-    const pageKey = link.dataset.pageTarget;
-    if (!pageKey) return;
+      const pageKey = rawLink.replace("#", "");
+      const pageId = link.getAttribute(this.idAttribute);
 
-    const pageId = link.dataset.pageTargetId;
-
-    document.dispatchEvent(
-      new CustomEvent("navigate", {
-        detail: { pageKey, pageId },
-      }),
-    );
+      document.dispatchEvent(
+        new CustomEvent("navigate", {
+          detail: { pageKey, pageId },
+        }),
+      );
+    }
   }
 
   /**
-   * Handle custom 'navigate' events.
-   * @param {CustomEvent<{ pageKey: string, pageId?: string }>} event
+   * Handle custom 'navigate' events dispatched from handleClick or other scripts.
    */
   handleNavigate(event) {
     this.updateMainContent(event.detail.pageKey, event.detail);
   }
 
   /**
-   * Handle browser back/forward navigation.
-   * @param {PopStateEvent} event
+   * Handle browser back/forward navigation (popstate).
    */
   handlePopState(event) {
     if (event.state) {
-      this.updateMainContent(event.state.pageKey, event.state.params);
+      this.updateMainContent(event.state.pageKey, event.state.params, false);
     } else {
-      this.loadCurrentPage();
+      // Fallback for initial load or manual URL entry
+      const hash = window.location.hash.substring(1);
+      const [pageKey, query] = hash.split("?");
+      const params = {};
+      if (query) {
+        const urlParams = new URLSearchParams(query);
+        params.pageId = urlParams.get("id") ?? undefined;
+      }
+      this.updateMainContent(pageKey || this.landingPage, params, false);
     }
   }
 
   /**
-   * Initialize the router by adding necessary event listeners.
+   * Initialise the router listeners.
    */
   init() {
+    if (!this.container) {
+      this.container = document.querySelector(this.contentArea);
+    }
+
     document.addEventListener("click", this.handleClick);
     document.addEventListener("navigate", this.handleNavigate);
     window.addEventListener("popstate", this.handlePopState);
+
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+      this.handlePopState({ state: null });
+    } else {
+      this.updateMainContent(this.landingPage, {}, false);
+    }
   }
 }
