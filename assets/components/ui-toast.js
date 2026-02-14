@@ -1,7 +1,7 @@
 class UIToast extends HTMLElement {
   connectedCallback() {
     this.innerHTML = /* html */ `
-    <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
       <div id="app-toast" class="toast" role="alert">
         <div class="toast-header">
           <span><!-- Icon will be added here --></span>
