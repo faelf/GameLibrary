@@ -20,13 +20,12 @@ const router = new Router({
   linkAttribute: "data-page-target",
   idAttribute: "data-page-target-id",
 });
-router.init();
 
 function initialLoad() {
   // Get current theme from config and apply it to the html tag
   const currentTheme = config.getTheme();
   document.documentElement.setAttribute("data-bs-theme", currentTheme);
-  router.loadCurrentPage();
+  router.init();
 }
 
 /* 
