@@ -1,4 +1,4 @@
-<section class="col-md-10 col-xl-8 my-2 mx-auto p-2">
+<section class="container my-2">
   <h2 class="display-3">Settings</h2>
 
   <!-- User Settings -->
@@ -15,8 +15,13 @@
         <label for="first-name" class="form-label">First Name</label>
         <input type="text" class="form-control" id="first-name" autocomplete="off">
         <div class="form-text mb-3">It will be displayed in the dashboard.</div>
-        <button id="first-name-btn" type="button" class="btn btn-primary">
-          <span class="bi bi-floppy-fill"></span>Save
+        <button id="first-name-btn" type="button" class="btn btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md me-2">
+            <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+            <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+            <path d="M7 3v4a1 1 0 0 0 1 1h7" />
+          </svg>
+          Save
         </button>
       </form>
 
@@ -62,15 +67,19 @@
 
       <label for="import-options" class="form-label">Import file format</label>
       <select class="form-select mb-3" id="import-options">
-        <option value="" disabled selected>Select a file format</option>
-        <option value="json">JSON</option>
-        <option value="csv">CSV</option>
+        <option value="">Select a file format</option>
+        <option value="json" disabled>JSON</option>
+        <option value="csv" selected>CSV</option>
       </select>
 
       <input id="import-data" type="file" class="form-control mb-3" aria-label="Upload">
 
-      <button class="btn btn-primary">
-        <span class="bi bi-cloud-arrow-up-fill"></span>
+      <button class="btn btn-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md me-2">
+          <path d="M12 13v8" />
+          <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+          <path d="m8 17 4-4 4 4" />
+        </svg>
         Import
       </button>
 
@@ -89,15 +98,20 @@
 
       <label for="merge-options" class="form-label">Merge file format</label>
       <select class="form-select mb-3" id="merge-options">
-        <option value="" disabled selected>Select a file format</option>
-        <option value="json">JSON</option>
-        <option value="csv">CSV</option>
+        <option value="">Select a file format</option>
+        <option value="json" disabled>JSON</option>
+        <option value="csv" selected>CSV</option>
       </select>
 
       <input id="merge-data" type="file" class="form-control mb-3" aria-label="Upload">
 
-      <button class="btn btn-primary mb-3" type="button" id="merge-data-btn">
-        <span class="bi bi-cloud-plus-fill"></span> Merge
+      <button class="btn btn-secondary mb-3" type="button" id="merge-data-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md me-2">
+          <path d="M12 13v8" />
+          <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+          <path d="m8 17 4-4 4 4" />
+        </svg>
+        Merge
       </button>
     </form>
   </div>
@@ -112,12 +126,16 @@
       <form id="export-form" class="col-sm-6">
         <label for="export-options" class="form-label">Export file format</label>
         <select class="form-select mb-3" id="export-options">
-          <option value="" disabled selected>Select a file format</option>
-          <option value="json">JSON</option>
-          <option value="csv">CSV</option>
+          <option value="">Select a file format</option>
+          <option value="json" disabled>JSON</option>
+          <option value="csv" selected>CSV</option>
         </select>
-        <button class="btn btn-primary">
-          <span class="bi bi-cloud-arrow-down-fill"></span>
+        <button class="btn btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md me-2">
+            <path d="M12 13v8l-4-4" />
+            <path d="m12 21 4-4" />
+            <path d="M4.393 15.269A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.436 8.284" />
+          </svg>
           Export
         </button>
       </form>
@@ -135,7 +153,13 @@
     </div>
     <div class="col-sm-6 mb-3">
       <button type="button" class="btn btn-danger" id="delete-data">
-        <span class="bi-trash3-fill"></span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md me-2">
+          <path d="M10 11v6" />
+          <path d="M14 11v6" />
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+          <path d="M3 6h18" />
+          <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+        </svg>
         Delete All Games
       </button>
     </div>

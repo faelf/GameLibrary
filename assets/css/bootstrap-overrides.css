@@ -29,44 +29,44 @@
   --bs-gray-700: #495057;
   --bs-gray-800: #343a40;
   --bs-gray-900: #212529;
-  --bs-primary: hsl(216, 45%, 72%);
-  --bs-secondary: hsl(258, 42%, 72%);
-  --bs-success: hsl(158, 45%, 70%);
-  --bs-info: hsl(190, 52%, 73%);
-  --bs-warning: hsl(48, 100%, 78%);
-  --bs-danger: hsl(350, 60%, 75%);
-  --bs-light: hsl(0, 0%, 98%);
-  --bs-dark: hsl(215, 30%, 22%);
-  --bs-primary-rgb: 151, 177, 216;
-  --bs-secondary-rgb: 172, 154, 214;
-  --bs-success-rgb: 144, 213, 188;
-  --bs-info-rgb: 150, 210, 222;
-  --bs-warning-rgb: 255, 233, 143;
-  --bs-danger-rgb: 230, 153, 166;
-  --bs-light-rgb: 250, 250, 250;
-  --bs-dark-rgb: 39, 53, 73;
-  --bs-primary-text-emphasis: rgb(60.588, 70.8696, 86.292);
-  --bs-secondary-text-emphasis: rgb(68.64192, 61.4448, 85.4352);
-  --bs-success-text-emphasis: rgb(57.63, 85.17, 75.072);
-  --bs-info-text-emphasis: rgb(60.1392, 84.0072, 88.7808);
-  --bs-warning-text-emphasis: rgb(102, 93.024, 57.12);
-  --bs-danger-text-emphasis: rgb(91.8, 61.2, 66.3);
+  --bs-primary: hsl(220, 35%, 50%);
+  --bs-secondary: hsl(0, 0%, 50%);
+  --bs-success: hsl(145, 45%, 45%);
+  --bs-info: hsl(195, 70%, 60%);
+  --bs-warning: hsl(42, 90%, 60%);
+  --bs-danger: hsl(0, 70%, 58%);
+  --bs-light: hsl(0, 0%, 70%);
+  --bs-dark: hsl(0, 0%, 10%);
+  --bs-primary-rgb: 83, 113, 172;
+  --bs-secondary-rgb: 128, 128, 128;
+  --bs-success-rgb: 63, 166, 106;
+  --bs-info-rgb: 82, 189, 224;
+  --bs-warning-rgb: 245, 190, 61;
+  --bs-danger-rgb: 223, 73, 73;
+  --bs-light-rgb: 179, 179, 179;
+  --bs-dark-rgb: 26, 26, 26;
+  --bs-primary-text-emphasis: rgb(33.15, 45.05, 68.85);
+  --bs-secondary-text-emphasis: #333333;
+  --bs-success-text-emphasis: rgb(25.245, 66.555, 42.4575);
+  --bs-info-text-emphasis: rgb(32.64, 75.48, 89.76);
+  --bs-warning-text-emphasis: rgb(97.92, 75.888, 24.48);
+  --bs-danger-text-emphasis: rgb(89.148, 29.172, 29.172);
   --bs-light-text-emphasis: #495057;
   --bs-dark-text-emphasis: #495057;
-  --bs-primary-bg-subtle: rgb(234.294, 239.4348, 247.146);
-  --bs-secondary-bg-subtle: rgb(238.32096, 234.7224, 246.7176);
-  --bs-success-bg-subtle: rgb(232.815, 246.585, 241.536);
-  --bs-info-bg-subtle: rgb(234.0696, 246.0036, 248.3904);
-  --bs-warning-bg-subtle: rgb(255, 250.512, 232.56);
-  --bs-danger-bg-subtle: rgb(249.9, 234.6, 237.15);
+  --bs-primary-bg-subtle: rgb(220.575, 226.525, 238.425);
+  --bs-secondary-bg-subtle: rgb(229.5, 229.5, 229.5);
+  --bs-success-bg-subtle: rgb(216.6225, 237.2775, 225.22875);
+  --bs-info-bg-subtle: rgb(220.32, 241.74, 248.88);
+  --bs-warning-bg-subtle: rgb(252.96, 241.944, 216.24);
+  --bs-danger-bg-subtle: rgb(248.574, 218.586, 218.586);
   --bs-light-bg-subtle: rgb(251.5, 252, 252.5);
   --bs-dark-bg-subtle: #ced4da;
-  --bs-primary-border-subtle: rgb(213.588, 223.8696, 239.292);
-  --bs-secondary-border-subtle: rgb(221.64192, 214.4448, 238.4352);
-  --bs-success-border-subtle: rgb(210.63, 238.17, 228.072);
-  --bs-info-border-subtle: rgb(213.1392, 237.0072, 241.7808);
-  --bs-warning-border-subtle: rgb(255, 246.024, 210.12);
-  --bs-danger-border-subtle: rgb(244.8, 214.2, 219.3);
+  --bs-primary-border-subtle: rgb(186.15, 198.05, 221.85);
+  --bs-secondary-border-subtle: #cccccc;
+  --bs-success-border-subtle: rgb(178.245, 219.555, 195.4575);
+  --bs-info-border-subtle: rgb(185.64, 228.48, 242.76);
+  --bs-warning-border-subtle: rgb(250.92, 228.888, 177.48);
+  --bs-danger-border-subtle: rgb(242.148, 182.172, 182.172);
   --bs-light-border-subtle: #e9ecef;
   --bs-dark-border-subtle: #adb5bd;
   --bs-white-rgb: 255, 255, 255;
@@ -93,11 +93,11 @@
   --bs-tertiary-bg: #f8f9fa;
   --bs-tertiary-bg-rgb: 248, 249, 250;
   --bs-heading-color: inherit;
-  --bs-link-color: hsl(216, 45%, 72%);
-  --bs-link-color-rgb: 151, 177, 216;
+  --bs-link-color: hsl(220, 35%, 50%);
+  --bs-link-color-rgb: 83, 113, 172;
   --bs-link-decoration: underline;
-  --bs-link-hover-color: rgb(121.176, 141.7392, 172.584);
-  --bs-link-hover-color-rgb: 121, 142, 173;
+  --bs-link-hover-color: rgb(66.3, 90.1, 137.7);
+  --bs-link-hover-color-rgb: 66, 90, 138;
   --bs-code-color: #d63384;
   --bs-highlight-color: #212529;
   --bs-highlight-bg: rgb(255, 242.6, 205.4);
@@ -118,11 +118,11 @@
   --bs-box-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.075);
   --bs-focus-ring-width: 0.25rem;
   --bs-focus-ring-opacity: 0.25;
-  --bs-focus-ring-color: rgba(151.47, 177.174, 215.73, 0.25);
-  --bs-form-valid-color: hsl(158, 45%, 70%);
-  --bs-form-valid-border-color: hsl(158, 45%, 70%);
-  --bs-form-invalid-color: hsl(350, 60%, 75%);
-  --bs-form-invalid-border-color: hsl(350, 60%, 75%);
+  --bs-focus-ring-color: rgba(82.875, 112.625, 172.125, 0.25);
+  --bs-form-valid-color: hsl(145, 45%, 45%);
+  --bs-form-valid-border-color: hsl(145, 45%, 45%);
+  --bs-form-invalid-color: hsl(0, 70%, 58%);
+  --bs-form-invalid-border-color: hsl(0, 70%, 58%);
 }
 
 [data-bs-theme=dark] {
@@ -141,35 +141,35 @@
   --bs-tertiary-color-rgb: 222, 226, 230;
   --bs-tertiary-bg: rgb(42.5, 47.5, 52.5);
   --bs-tertiary-bg-rgb: 43, 48, 53;
-  --bs-primary-text-emphasis: rgb(192.882, 208.3044, 231.438);
-  --bs-secondary-text-emphasis: rgb(204.96288, 194.1672, 230.1528);
-  --bs-success-text-emphasis: rgb(188.445, 229.755, 214.608);
-  --bs-info-text-emphasis: rgb(192.2088, 228.0108, 235.1712);
-  --bs-warning-text-emphasis: rgb(255, 241.536, 187.68);
-  --bs-danger-text-emphasis: rgb(239.7, 193.8, 201.45);
+  --bs-primary-text-emphasis: rgb(151.725, 169.575, 205.275);
+  --bs-secondary-text-emphasis: rgb(178.5, 178.5, 178.5);
+  --bs-success-text-emphasis: rgb(139.8675, 201.8325, 165.68625);
+  --bs-info-text-emphasis: rgb(150.96, 215.22, 236.64);
+  --bs-warning-text-emphasis: rgb(248.88, 215.832, 138.72);
+  --bs-danger-text-emphasis: rgb(235.722, 145.758, 145.758);
   --bs-light-text-emphasis: #f8f9fa;
   --bs-dark-text-emphasis: #dee2e6;
-  --bs-primary-bg-subtle: rgb(30.294, 35.4348, 43.146);
-  --bs-secondary-bg-subtle: rgb(34.32096, 30.7224, 42.7176);
-  --bs-success-bg-subtle: rgb(28.815, 42.585, 37.536);
-  --bs-info-bg-subtle: rgb(30.0696, 42.0036, 44.3904);
-  --bs-warning-bg-subtle: rgb(51, 46.512, 28.56);
-  --bs-danger-bg-subtle: rgb(45.9, 30.6, 33.15);
+  --bs-primary-bg-subtle: rgb(16.575, 22.525, 34.425);
+  --bs-secondary-bg-subtle: rgb(25.5, 25.5, 25.5);
+  --bs-success-bg-subtle: rgb(12.6225, 33.2775, 21.22875);
+  --bs-info-bg-subtle: rgb(16.32, 37.74, 44.88);
+  --bs-warning-bg-subtle: rgb(48.96, 37.944, 12.24);
+  --bs-danger-bg-subtle: rgb(44.574, 14.586, 14.586);
   --bs-light-bg-subtle: #343a40;
   --bs-dark-bg-subtle: #1a1d20;
-  --bs-primary-border-subtle: rgb(90.882, 106.3044, 129.438);
-  --bs-secondary-border-subtle: rgb(102.96288, 92.1672, 128.1528);
-  --bs-success-border-subtle: rgb(86.445, 127.755, 112.608);
-  --bs-info-border-subtle: rgb(90.2088, 126.0108, 133.1712);
-  --bs-warning-border-subtle: rgb(153, 139.536, 85.68);
-  --bs-danger-border-subtle: rgb(137.7, 91.8, 99.45);
+  --bs-primary-border-subtle: rgb(49.725, 67.575, 103.275);
+  --bs-secondary-border-subtle: rgb(76.5, 76.5, 76.5);
+  --bs-success-border-subtle: rgb(37.8675, 99.8325, 63.68625);
+  --bs-info-border-subtle: rgb(48.96, 113.22, 134.64);
+  --bs-warning-border-subtle: rgb(146.88, 113.832, 36.72);
+  --bs-danger-border-subtle: rgb(133.722, 43.758, 43.758);
   --bs-light-border-subtle: #495057;
   --bs-dark-border-subtle: #343a40;
   --bs-heading-color: inherit;
-  --bs-link-color: rgb(192.882, 208.3044, 231.438);
-  --bs-link-hover-color: rgb(205.3056, 217.64352, 236.1504);
-  --bs-link-color-rgb: 193, 208, 231;
-  --bs-link-hover-color-rgb: 205, 218, 236;
+  --bs-link-color: rgb(151.725, 169.575, 205.275);
+  --bs-link-hover-color: rgb(172.38, 186.66, 215.22);
+  --bs-link-color-rgb: 152, 170, 205;
+  --bs-link-hover-color-rgb: 172, 187, 215;
   --bs-code-color: rgb(230.4, 132.6, 181.2);
   --bs-highlight-color: #dee2e6;
   --bs-highlight-bg: rgb(102, 77.2, 2.8);
@@ -1934,13 +1934,13 @@ progress {
 
 .table-primary {
   --bs-table-color: #000;
-  --bs-table-bg: rgb(234.294, 239.4348, 247.146);
-  --bs-table-border-color: rgb(187.4352, 191.54784, 197.7168);
-  --bs-table-striped-bg: rgb(222.5793, 227.46306, 234.7887);
+  --bs-table-bg: rgb(220.575, 226.525, 238.425);
+  --bs-table-border-color: rgb(176.46, 181.22, 190.74);
+  --bs-table-striped-bg: rgb(209.54625, 215.19875, 226.50375);
   --bs-table-striped-color: #000;
-  --bs-table-active-bg: rgb(210.8646, 215.49132, 222.4314);
+  --bs-table-active-bg: rgb(198.5175, 203.8725, 214.5825);
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: rgb(216.72195, 221.47719, 228.61005);
+  --bs-table-hover-bg: rgb(204.031875, 209.535625, 220.543125);
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -1948,13 +1948,13 @@ progress {
 
 .table-secondary {
   --bs-table-color: #000;
-  --bs-table-bg: rgb(238.32096, 234.7224, 246.7176);
-  --bs-table-border-color: rgb(190.656768, 187.77792, 197.37408);
-  --bs-table-striped-bg: rgb(226.404912, 222.98628, 234.38172);
+  --bs-table-bg: rgb(229.5, 229.5, 229.5);
+  --bs-table-border-color: rgb(183.6, 183.6, 183.6);
+  --bs-table-striped-bg: rgb(218.025, 218.025, 218.025);
   --bs-table-striped-color: #000;
-  --bs-table-active-bg: rgb(214.488864, 211.25016, 222.04584);
+  --bs-table-active-bg: rgb(206.55, 206.55, 206.55);
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: rgb(220.446888, 217.11822, 228.21378);
+  --bs-table-hover-bg: rgb(212.2875, 212.2875, 212.2875);
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -1962,13 +1962,13 @@ progress {
 
 .table-success {
   --bs-table-color: #000;
-  --bs-table-bg: rgb(232.815, 246.585, 241.536);
-  --bs-table-border-color: rgb(186.252, 197.268, 193.2288);
-  --bs-table-striped-bg: rgb(221.17425, 234.25575, 229.4592);
+  --bs-table-bg: rgb(216.6225, 237.2775, 225.22875);
+  --bs-table-border-color: rgb(173.298, 189.822, 180.183);
+  --bs-table-striped-bg: rgb(205.791375, 225.413625, 213.9673125);
   --bs-table-striped-color: #000;
-  --bs-table-active-bg: rgb(209.5335, 221.9265, 217.3824);
+  --bs-table-active-bg: rgb(194.96025, 213.54975, 202.705875);
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: rgb(215.353875, 228.091125, 223.4208);
+  --bs-table-hover-bg: rgb(200.3758125, 219.4816875, 208.33659375);
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -1976,13 +1976,13 @@ progress {
 
 .table-info {
   --bs-table-color: #000;
-  --bs-table-bg: rgb(234.0696, 246.0036, 248.3904);
-  --bs-table-border-color: rgb(187.25568, 196.80288, 198.71232);
-  --bs-table-striped-bg: rgb(222.36612, 233.70342, 235.97088);
+  --bs-table-bg: rgb(220.32, 241.74, 248.88);
+  --bs-table-border-color: rgb(176.256, 193.392, 199.104);
+  --bs-table-striped-bg: rgb(209.304, 229.653, 236.436);
   --bs-table-striped-color: #000;
-  --bs-table-active-bg: rgb(210.66264, 221.40324, 223.55136);
+  --bs-table-active-bg: rgb(198.288, 217.566, 223.992);
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: rgb(216.51438, 227.55333, 229.76112);
+  --bs-table-hover-bg: rgb(203.796, 223.6095, 230.214);
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -1990,13 +1990,13 @@ progress {
 
 .table-warning {
   --bs-table-color: #000;
-  --bs-table-bg: rgb(255, 250.512, 232.56);
-  --bs-table-border-color: rgb(204, 200.4096, 186.048);
-  --bs-table-striped-bg: rgb(242.25, 237.9864, 220.932);
+  --bs-table-bg: rgb(252.96, 241.944, 216.24);
+  --bs-table-border-color: rgb(202.368, 193.5552, 172.992);
+  --bs-table-striped-bg: rgb(240.312, 229.8468, 205.428);
   --bs-table-striped-color: #000;
-  --bs-table-active-bg: rgb(229.5, 225.4608, 209.304);
+  --bs-table-active-bg: rgb(227.664, 217.7496, 194.616);
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: rgb(235.875, 231.7236, 215.118);
+  --bs-table-hover-bg: rgb(233.988, 223.7982, 200.022);
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -2004,13 +2004,13 @@ progress {
 
 .table-danger {
   --bs-table-color: #000;
-  --bs-table-bg: rgb(249.9, 234.6, 237.15);
-  --bs-table-border-color: rgb(199.92, 187.68, 189.72);
-  --bs-table-striped-bg: rgb(237.405, 222.87, 225.2925);
+  --bs-table-bg: rgb(248.574, 218.586, 218.586);
+  --bs-table-border-color: rgb(198.8592, 174.8688, 174.8688);
+  --bs-table-striped-bg: rgb(236.1453, 207.6567, 207.6567);
   --bs-table-striped-color: #000;
-  --bs-table-active-bg: rgb(224.91, 211.14, 213.435);
+  --bs-table-active-bg: rgb(223.7166, 196.7274, 196.7274);
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: rgb(231.1575, 217.005, 219.36375);
+  --bs-table-hover-bg: rgb(229.93095, 202.19205, 202.19205);
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -2018,13 +2018,13 @@ progress {
 
 .table-light {
   --bs-table-color: #000;
-  --bs-table-bg: hsl(0, 0%, 98%);
-  --bs-table-border-color: rgb(199.92, 199.92, 199.92);
-  --bs-table-striped-bg: rgb(237.405, 237.405, 237.405);
+  --bs-table-bg: hsl(0, 0%, 70%);
+  --bs-table-border-color: rgb(142.8, 142.8, 142.8);
+  --bs-table-striped-bg: rgb(169.575, 169.575, 169.575);
   --bs-table-striped-color: #000;
-  --bs-table-active-bg: rgb(224.91, 224.91, 224.91);
+  --bs-table-active-bg: rgb(160.65, 160.65, 160.65);
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: rgb(231.1575, 231.1575, 231.1575);
+  --bs-table-hover-bg: rgb(165.1125, 165.1125, 165.1125);
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -2032,13 +2032,13 @@ progress {
 
 .table-dark {
   --bs-table-color: #fff;
-  --bs-table-bg: hsl(215, 30%, 22%);
-  --bs-table-border-color: rgb(82.416, 93.636, 109.344);
-  --bs-table-striped-bg: rgb(50.0565, 63.38025, 82.0335);
+  --bs-table-bg: hsl(0, 0%, 10%);
+  --bs-table-border-color: rgb(71.4, 71.4, 71.4);
+  --bs-table-striped-bg: rgb(36.975, 36.975, 36.975);
   --bs-table-striped-color: #fff;
-  --bs-table-active-bg: rgb(60.843, 73.4655, 91.137);
+  --bs-table-active-bg: rgb(48.45, 48.45, 48.45);
   --bs-table-active-color: #fff;
-  --bs-table-hover-bg: rgb(55.44975, 68.422875, 86.58525);
+  --bs-table-hover-bg: rgb(42.7125, 42.7125, 42.7125);
   --bs-table-hover-color: #fff;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -2138,9 +2138,9 @@ progress {
 .form-control:focus {
   color: var(--bs-body-color);
   background-color: var(--bs-body-bg);
-  border-color: rgb(203.235, 216.087, 235.365);
+  border-color: rgb(168.9375, 183.8125, 213.5625);
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(151.47, 177.174, 215.73, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(82.875, 112.625, 172.125, 0.25);
 }
 .form-control::-webkit-date-and-time-value {
   min-width: 85px;
@@ -2283,9 +2283,9 @@ textarea.form-control-lg {
   }
 }
 .form-select:focus {
-  border-color: rgb(203.235, 216.087, 235.365);
+  border-color: rgb(168.9375, 183.8125, 213.5625);
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(151.47, 177.174, 215.73, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(82.875, 112.625, 172.125, 0.25);
 }
 .form-select[multiple], .form-select[size]:not([size="1"]) {
   padding-right: 0.75rem;
@@ -2367,13 +2367,13 @@ textarea.form-control-lg {
   filter: brightness(90%);
 }
 .form-check-input:focus {
-  border-color: rgb(203.235, 216.087, 235.365);
+  border-color: rgb(168.9375, 183.8125, 213.5625);
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(151.47, 177.174, 215.73, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(82.875, 112.625, 172.125, 0.25);
 }
 .form-check-input:checked {
-  background-color: hsl(216, 45%, 72%);
-  border-color: hsl(216, 45%, 72%);
+  background-color: hsl(220, 35%, 50%);
+  border-color: hsl(220, 35%, 50%);
 }
 .form-check-input:checked[type=checkbox] {
   --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
@@ -2382,8 +2382,8 @@ textarea.form-control-lg {
   --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
 }
 .form-check-input[type=checkbox]:indeterminate {
-  background-color: hsl(216, 45%, 72%);
-  border-color: hsl(216, 45%, 72%);
+  background-color: hsl(220, 35%, 50%);
+  border-color: hsl(220, 35%, 50%);
   --bs-form-check-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");
 }
 .form-check-input:disabled {
@@ -2414,7 +2414,7 @@ textarea.form-control-lg {
   }
 }
 .form-switch .form-check-input:focus {
-  --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28203.235, 216.087, 235.365%29'/%3e%3c/svg%3e");
+  --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%28168.9375, 183.8125, 213.5625%29'/%3e%3c/svg%3e");
 }
 .form-switch .form-check-input:checked {
   background-position: right center;
@@ -2460,10 +2460,10 @@ textarea.form-control-lg {
   outline: 0;
 }
 .form-range:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(151.47, 177.174, 215.73, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(82.875, 112.625, 172.125, 0.25);
 }
 .form-range:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(151.47, 177.174, 215.73, 0.25);
+  box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem rgba(82.875, 112.625, 172.125, 0.25);
 }
 .form-range::-moz-focus-outer {
   border: 0;
@@ -2473,7 +2473,7 @@ textarea.form-control-lg {
   height: 1rem;
   margin-top: -0.25rem;
   appearance: none;
-  background-color: hsl(216, 45%, 72%);
+  background-color: hsl(220, 35%, 50%);
   border: 0;
   border-radius: 1rem;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -2484,7 +2484,7 @@ textarea.form-control-lg {
   }
 }
 .form-range::-webkit-slider-thumb:active {
-  background-color: rgb(223.941, 231.6522, 243.219);
+  background-color: rgb(203.3625, 212.2875, 230.1375);
 }
 .form-range::-webkit-slider-runnable-track {
   width: 100%;
@@ -2499,7 +2499,7 @@ textarea.form-control-lg {
   width: 1rem;
   height: 1rem;
   appearance: none;
-  background-color: hsl(216, 45%, 72%);
+  background-color: hsl(220, 35%, 50%);
   border: 0;
   border-radius: 1rem;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -2510,7 +2510,7 @@ textarea.form-control-lg {
   }
 }
 .form-range::-moz-range-thumb:active {
-  background-color: rgb(223.941, 231.6522, 243.219);
+  background-color: rgb(203.3625, 212.2875, 230.1375);
 }
 .form-range::-moz-range-track {
   width: 100%;
@@ -2741,7 +2741,7 @@ textarea.form-control-lg {
 .was-validated .form-control:valid, .form-control.is-valid {
   border-color: var(--bs-form-valid-border-color);
   padding-right: calc(1.5em + 0.75rem);
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='hsl%28158, 45%, 70%%29' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='hsl%28145, 45%, 45%%29' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right calc(0.375em + 0.1875rem) center;
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
@@ -2760,7 +2760,7 @@ textarea.form-control-lg {
   border-color: var(--bs-form-valid-border-color);
 }
 .was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"], .form-select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"] {
-  --bs-form-select-bg-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='hsl%28158, 45%, 70%%29' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e");
+  --bs-form-select-bg-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='hsl%28145, 45%, 45%%29' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1'/%3e%3c/svg%3e");
   padding-right: 4.125rem;
   background-position: right 0.75rem center, center right 2.25rem;
   background-size: 16px 12px, calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
@@ -2831,7 +2831,7 @@ textarea.form-control-lg {
 .was-validated .form-control:invalid, .form-control.is-invalid {
   border-color: var(--bs-form-invalid-border-color);
   padding-right: calc(1.5em + 0.75rem);
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='hsl%28350, 60%, 75%%29'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='hsl%28350, 60%, 75%%29' stroke='none'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='hsl%280, 70%, 58%%29'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='hsl%280, 70%, 58%%29' stroke='none'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right calc(0.375em + 0.1875rem) center;
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
@@ -2850,7 +2850,7 @@ textarea.form-control-lg {
   border-color: var(--bs-form-invalid-border-color);
 }
 .was-validated .form-select:invalid:not([multiple]):not([size]), .was-validated .form-select:invalid:not([multiple])[size="1"], .form-select.is-invalid:not([multiple]):not([size]), .form-select.is-invalid:not([multiple])[size="1"] {
-  --bs-form-select-bg-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='hsl%28350, 60%, 75%%29'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='hsl%28350, 60%, 75%%29' stroke='none'/%3e%3c/svg%3e");
+  --bs-form-select-bg-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='hsl%280, 70%, 58%%29'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='hsl%280, 70%, 58%%29' stroke='none'/%3e%3c/svg%3e");
   padding-right: 4.125rem;
   background-position: right 0.75rem center, center right 2.25rem;
   background-size: 16px 12px, calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
@@ -2969,274 +2969,274 @@ textarea.form-control-lg {
 }
 
 .btn-primary {
-  --bs-btn-color: #000;
-  --bs-btn-bg: hsl(216, 45%, 72%);
-  --bs-btn-border-color: hsl(216, 45%, 72%);
-  --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: rgb(166.9995, 188.8479, 221.6205);
-  --bs-btn-hover-border-color: rgb(161.823, 184.9566, 219.657);
-  --bs-btn-focus-shadow-rgb: 129, 151, 183;
-  --bs-btn-active-color: #000;
-  --bs-btn-active-bg: rgb(172.176, 192.7392, 223.584);
-  --bs-btn-active-border-color: rgb(161.823, 184.9566, 219.657);
+  --bs-btn-color: #fff;
+  --bs-btn-bg: hsl(220, 35%, 50%);
+  --bs-btn-border-color: hsl(220, 35%, 50%);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: rgb(70.44375, 95.73125, 146.30625);
+  --bs-btn-hover-border-color: rgb(66.3, 90.1, 137.7);
+  --bs-btn-focus-shadow-rgb: 109, 134, 185;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: rgb(66.3, 90.1, 137.7);
+  --bs-btn-active-border-color: rgb(62.15625, 84.46875, 129.09375);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: hsl(216, 45%, 72%);
-  --bs-btn-disabled-border-color: hsl(216, 45%, 72%);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: hsl(220, 35%, 50%);
+  --bs-btn-disabled-border-color: hsl(220, 35%, 50%);
 }
 
 .btn-secondary {
   --bs-btn-color: #000;
-  --bs-btn-bg: hsl(258, 42%, 72%);
-  --bs-btn-border-color: hsl(258, 42%, 72%);
+  --bs-btn-bg: hsl(0, 0%, 50%);
+  --bs-btn-border-color: hsl(0, 0%, 50%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: rgb(184.11408, 168.8202, 219.7998);
-  --bs-btn-hover-border-color: rgb(179.94432, 163.7508, 217.7292);
-  --bs-btn-focus-shadow-rgb: 146, 131, 182;
+  --bs-btn-hover-bg: rgb(146.625, 146.625, 146.625);
+  --bs-btn-hover-border-color: rgb(140.25, 140.25, 140.25);
+  --bs-btn-focus-shadow-rgb: 108, 108, 108;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: rgb(188.28384, 173.8896, 221.8704);
-  --bs-btn-active-border-color: rgb(179.94432, 163.7508, 217.7292);
+  --bs-btn-active-bg: #999999;
+  --bs-btn-active-border-color: rgb(140.25, 140.25, 140.25);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: hsl(258, 42%, 72%);
-  --bs-btn-disabled-border-color: hsl(258, 42%, 72%);
+  --bs-btn-disabled-bg: hsl(0, 0%, 50%);
+  --bs-btn-disabled-border-color: hsl(0, 0%, 50%);
 }
 
 .btn-success {
   --bs-btn-color: #000;
-  --bs-btn-bg: hsl(158, 45%, 70%);
-  --bs-btn-border-color: hsl(158, 45%, 70%);
+  --bs-btn-bg: hsl(145, 45%, 45%);
+  --bs-btn-border-color: hsl(145, 45%, 45%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: rgb(160.71375, 219.23625, 197.778);
-  --bs-btn-hover-border-color: rgb(155.1675, 217.1325, 194.412);
-  --bs-btn-focus-shadow-rgb: 122, 181, 160;
+  --bs-btn-hover-bg: rgb(91.895625, 179.679375, 128.4721875);
+  --bs-btn-hover-border-color: rgb(82.30125, 175.24875, 121.029375);
+  --bs-btn-focus-shadow-rgb: 54, 141, 90;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: rgb(166.26, 221.34, 201.144);
-  --bs-btn-active-border-color: rgb(155.1675, 217.1325, 194.412);
+  --bs-btn-active-bg: rgb(101.49, 184.11, 135.915);
+  --bs-btn-active-border-color: rgb(82.30125, 175.24875, 121.029375);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: hsl(158, 45%, 70%);
-  --bs-btn-disabled-border-color: hsl(158, 45%, 70%);
+  --bs-btn-disabled-bg: hsl(145, 45%, 45%);
+  --bs-btn-disabled-border-color: hsl(145, 45%, 45%);
 }
 
 .btn-info {
   --bs-btn-color: #000;
-  --bs-btn-bg: hsl(190, 52%, 73%);
-  --bs-btn-border-color: hsl(190, 52%, 73%);
+  --bs-btn-bg: hsl(195, 70%, 60%);
+  --bs-btn-border-color: hsl(195, 70%, 60%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: rgb(166.0458, 216.7653, 226.9092);
-  --bs-btn-hover-border-color: rgb(160.8132, 214.5162, 225.2568);
-  --bs-btn-focus-shadow-rgb: 128, 179, 189;
+  --bs-btn-hover-bg: rgb(107.61, 198.645, 228.99);
+  --bs-btn-hover-border-color: rgb(98.94, 195.33, 227.46);
+  --bs-btn-focus-shadow-rgb: 69, 160, 191;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: rgb(171.2784, 219.0144, 228.5616);
-  --bs-btn-active-border-color: rgb(160.8132, 214.5162, 225.2568);
+  --bs-btn-active-bg: rgb(116.28, 201.96, 230.52);
+  --bs-btn-active-border-color: rgb(98.94, 195.33, 227.46);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: hsl(190, 52%, 73%);
-  --bs-btn-disabled-border-color: hsl(190, 52%, 73%);
+  --bs-btn-disabled-bg: hsl(195, 70%, 60%);
+  --bs-btn-disabled-border-color: hsl(195, 70%, 60%);
 }
 
 .btn-warning {
   --bs-btn-color: #000;
-  --bs-btn-bg: hsl(48, 100%, 78%);
-  --bs-btn-border-color: hsl(48, 100%, 78%);
+  --bs-btn-bg: hsl(42, 90%, 60%);
+  --bs-btn-border-color: hsl(42, 90%, 60%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: rgb(255, 235.926, 159.63);
-  --bs-btn-hover-border-color: rgb(255, 234.804, 154.02);
-  --bs-btn-focus-shadow-rgb: 217, 198, 121;
+  --bs-btn-hover-bg: rgb(246.33, 199.512, 90.27);
+  --bs-btn-hover-border-color: rgb(245.82, 196.248, 80.58);
+  --bs-btn-focus-shadow-rgb: 208, 161, 52;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: rgb(255, 237.048, 165.24);
-  --bs-btn-active-border-color: rgb(255, 234.804, 154.02);
+  --bs-btn-active-bg: rgb(246.84, 202.776, 99.96);
+  --bs-btn-active-border-color: rgb(245.82, 196.248, 80.58);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: hsl(48, 100%, 78%);
-  --bs-btn-disabled-border-color: hsl(48, 100%, 78%);
+  --bs-btn-disabled-bg: hsl(42, 90%, 60%);
+  --bs-btn-disabled-border-color: hsl(42, 90%, 60%);
 }
 
 .btn-danger {
   --bs-btn-color: #000;
-  --bs-btn-bg: hsl(350, 60%, 75%);
-  --bs-btn-border-color: hsl(350, 60%, 75%);
+  --bs-btn-bg: hsl(0, 70%, 58%);
+  --bs-btn-border-color: hsl(0, 70%, 58%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: rgb(233.325, 168.3, 179.1375);
-  --bs-btn-hover-border-color: rgb(232.05, 163.2, 174.675);
-  --bs-btn-focus-shadow-rgb: 195, 130, 141;
+  --bs-btn-hover-bg: rgb(227.6895, 100.2405, 100.2405);
+  --bs-btn-hover-border-color: rgb(226.083, 91.137, 91.137);
+  --bs-btn-focus-shadow-rgb: 189, 62, 62;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: rgb(234.6, 173.4, 183.6);
-  --bs-btn-active-border-color: rgb(232.05, 163.2, 174.675);
+  --bs-btn-active-bg: rgb(229.296, 109.344, 109.344);
+  --bs-btn-active-border-color: rgb(226.083, 91.137, 91.137);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: hsl(350, 60%, 75%);
-  --bs-btn-disabled-border-color: hsl(350, 60%, 75%);
+  --bs-btn-disabled-bg: hsl(0, 70%, 58%);
+  --bs-btn-disabled-border-color: hsl(0, 70%, 58%);
 }
 
 .btn-light {
   --bs-btn-color: #000;
-  --bs-btn-bg: hsl(0, 0%, 98%);
-  --bs-btn-border-color: hsl(0, 0%, 98%);
+  --bs-btn-bg: hsl(0, 0%, 70%);
+  --bs-btn-border-color: hsl(0, 0%, 70%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: rgb(212.415, 212.415, 212.415);
-  --bs-btn-hover-border-color: rgb(199.92, 199.92, 199.92);
-  --bs-btn-focus-shadow-rgb: 212, 212, 212;
+  --bs-btn-hover-bg: rgb(151.725, 151.725, 151.725);
+  --bs-btn-hover-border-color: rgb(142.8, 142.8, 142.8);
+  --bs-btn-focus-shadow-rgb: 152, 152, 152;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: rgb(199.92, 199.92, 199.92);
-  --bs-btn-active-border-color: rgb(187.425, 187.425, 187.425);
+  --bs-btn-active-bg: rgb(142.8, 142.8, 142.8);
+  --bs-btn-active-border-color: rgb(133.875, 133.875, 133.875);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: hsl(0, 0%, 98%);
-  --bs-btn-disabled-border-color: hsl(0, 0%, 98%);
+  --bs-btn-disabled-bg: hsl(0, 0%, 70%);
+  --bs-btn-disabled-border-color: hsl(0, 0%, 70%);
 }
 
 .btn-dark {
   --bs-btn-color: #fff;
-  --bs-btn-bg: hsl(215, 30%, 22%);
-  --bs-btn-border-color: hsl(215, 30%, 22%);
+  --bs-btn-bg: hsl(0, 0%, 10%);
+  --bs-btn-border-color: hsl(0, 0%, 10%);
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: rgb(71.6295, 83.55075, 100.2405);
-  --bs-btn-hover-border-color: rgb(60.843, 73.4655, 91.137);
-  --bs-btn-focus-shadow-rgb: 72, 84, 100;
+  --bs-btn-hover-bg: rgb(59.925, 59.925, 59.925);
+  --bs-btn-hover-border-color: rgb(48.45, 48.45, 48.45);
+  --bs-btn-focus-shadow-rgb: 60, 60, 60;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: rgb(82.416, 93.636, 109.344);
-  --bs-btn-active-border-color: rgb(60.843, 73.4655, 91.137);
+  --bs-btn-active-bg: rgb(71.4, 71.4, 71.4);
+  --bs-btn-active-border-color: rgb(48.45, 48.45, 48.45);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: hsl(215, 30%, 22%);
-  --bs-btn-disabled-border-color: hsl(215, 30%, 22%);
+  --bs-btn-disabled-bg: hsl(0, 0%, 10%);
+  --bs-btn-disabled-border-color: hsl(0, 0%, 10%);
 }
 
 .btn-outline-primary {
-  --bs-btn-color: hsl(216, 45%, 72%);
-  --bs-btn-border-color: hsl(216, 45%, 72%);
-  --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: hsl(216, 45%, 72%);
-  --bs-btn-hover-border-color: hsl(216, 45%, 72%);
-  --bs-btn-focus-shadow-rgb: 151, 177, 216;
-  --bs-btn-active-color: #000;
-  --bs-btn-active-bg: hsl(216, 45%, 72%);
-  --bs-btn-active-border-color: hsl(216, 45%, 72%);
+  --bs-btn-color: hsl(220, 35%, 50%);
+  --bs-btn-border-color: hsl(220, 35%, 50%);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: hsl(220, 35%, 50%);
+  --bs-btn-hover-border-color: hsl(220, 35%, 50%);
+  --bs-btn-focus-shadow-rgb: 83, 113, 172;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: hsl(220, 35%, 50%);
+  --bs-btn-active-border-color: hsl(220, 35%, 50%);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: hsl(216, 45%, 72%);
+  --bs-btn-disabled-color: hsl(220, 35%, 50%);
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: hsl(216, 45%, 72%);
+  --bs-btn-disabled-border-color: hsl(220, 35%, 50%);
   --bs-gradient: none;
 }
 
 .btn-outline-secondary {
-  --bs-btn-color: hsl(258, 42%, 72%);
-  --bs-btn-border-color: hsl(258, 42%, 72%);
+  --bs-btn-color: hsl(0, 0%, 50%);
+  --bs-btn-border-color: hsl(0, 0%, 50%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: hsl(258, 42%, 72%);
-  --bs-btn-hover-border-color: hsl(258, 42%, 72%);
-  --bs-btn-focus-shadow-rgb: 172, 154, 214;
+  --bs-btn-hover-bg: hsl(0, 0%, 50%);
+  --bs-btn-hover-border-color: hsl(0, 0%, 50%);
+  --bs-btn-focus-shadow-rgb: 128, 128, 128;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: hsl(258, 42%, 72%);
-  --bs-btn-active-border-color: hsl(258, 42%, 72%);
+  --bs-btn-active-bg: hsl(0, 0%, 50%);
+  --bs-btn-active-border-color: hsl(0, 0%, 50%);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: hsl(258, 42%, 72%);
+  --bs-btn-disabled-color: hsl(0, 0%, 50%);
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: hsl(258, 42%, 72%);
+  --bs-btn-disabled-border-color: hsl(0, 0%, 50%);
   --bs-gradient: none;
 }
 
 .btn-outline-success {
-  --bs-btn-color: hsl(158, 45%, 70%);
-  --bs-btn-border-color: hsl(158, 45%, 70%);
+  --bs-btn-color: hsl(145, 45%, 45%);
+  --bs-btn-border-color: hsl(145, 45%, 45%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: hsl(158, 45%, 70%);
-  --bs-btn-hover-border-color: hsl(158, 45%, 70%);
-  --bs-btn-focus-shadow-rgb: 144, 213, 188;
+  --bs-btn-hover-bg: hsl(145, 45%, 45%);
+  --bs-btn-hover-border-color: hsl(145, 45%, 45%);
+  --bs-btn-focus-shadow-rgb: 63, 166, 106;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: hsl(158, 45%, 70%);
-  --bs-btn-active-border-color: hsl(158, 45%, 70%);
+  --bs-btn-active-bg: hsl(145, 45%, 45%);
+  --bs-btn-active-border-color: hsl(145, 45%, 45%);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: hsl(158, 45%, 70%);
+  --bs-btn-disabled-color: hsl(145, 45%, 45%);
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: hsl(158, 45%, 70%);
+  --bs-btn-disabled-border-color: hsl(145, 45%, 45%);
   --bs-gradient: none;
 }
 
 .btn-outline-info {
-  --bs-btn-color: hsl(190, 52%, 73%);
-  --bs-btn-border-color: hsl(190, 52%, 73%);
+  --bs-btn-color: hsl(195, 70%, 60%);
+  --bs-btn-border-color: hsl(195, 70%, 60%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: hsl(190, 52%, 73%);
-  --bs-btn-hover-border-color: hsl(190, 52%, 73%);
-  --bs-btn-focus-shadow-rgb: 150, 210, 222;
+  --bs-btn-hover-bg: hsl(195, 70%, 60%);
+  --bs-btn-hover-border-color: hsl(195, 70%, 60%);
+  --bs-btn-focus-shadow-rgb: 82, 189, 224;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: hsl(190, 52%, 73%);
-  --bs-btn-active-border-color: hsl(190, 52%, 73%);
+  --bs-btn-active-bg: hsl(195, 70%, 60%);
+  --bs-btn-active-border-color: hsl(195, 70%, 60%);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: hsl(190, 52%, 73%);
+  --bs-btn-disabled-color: hsl(195, 70%, 60%);
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: hsl(190, 52%, 73%);
+  --bs-btn-disabled-border-color: hsl(195, 70%, 60%);
   --bs-gradient: none;
 }
 
 .btn-outline-warning {
-  --bs-btn-color: hsl(48, 100%, 78%);
-  --bs-btn-border-color: hsl(48, 100%, 78%);
+  --bs-btn-color: hsl(42, 90%, 60%);
+  --bs-btn-border-color: hsl(42, 90%, 60%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: hsl(48, 100%, 78%);
-  --bs-btn-hover-border-color: hsl(48, 100%, 78%);
-  --bs-btn-focus-shadow-rgb: 255, 233, 143;
+  --bs-btn-hover-bg: hsl(42, 90%, 60%);
+  --bs-btn-hover-border-color: hsl(42, 90%, 60%);
+  --bs-btn-focus-shadow-rgb: 245, 190, 61;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: hsl(48, 100%, 78%);
-  --bs-btn-active-border-color: hsl(48, 100%, 78%);
+  --bs-btn-active-bg: hsl(42, 90%, 60%);
+  --bs-btn-active-border-color: hsl(42, 90%, 60%);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: hsl(48, 100%, 78%);
+  --bs-btn-disabled-color: hsl(42, 90%, 60%);
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: hsl(48, 100%, 78%);
+  --bs-btn-disabled-border-color: hsl(42, 90%, 60%);
   --bs-gradient: none;
 }
 
 .btn-outline-danger {
-  --bs-btn-color: hsl(350, 60%, 75%);
-  --bs-btn-border-color: hsl(350, 60%, 75%);
+  --bs-btn-color: hsl(0, 70%, 58%);
+  --bs-btn-border-color: hsl(0, 70%, 58%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: hsl(350, 60%, 75%);
-  --bs-btn-hover-border-color: hsl(350, 60%, 75%);
-  --bs-btn-focus-shadow-rgb: 230, 153, 166;
+  --bs-btn-hover-bg: hsl(0, 70%, 58%);
+  --bs-btn-hover-border-color: hsl(0, 70%, 58%);
+  --bs-btn-focus-shadow-rgb: 223, 73, 73;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: hsl(350, 60%, 75%);
-  --bs-btn-active-border-color: hsl(350, 60%, 75%);
+  --bs-btn-active-bg: hsl(0, 70%, 58%);
+  --bs-btn-active-border-color: hsl(0, 70%, 58%);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: hsl(350, 60%, 75%);
+  --bs-btn-disabled-color: hsl(0, 70%, 58%);
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: hsl(350, 60%, 75%);
+  --bs-btn-disabled-border-color: hsl(0, 70%, 58%);
   --bs-gradient: none;
 }
 
 .btn-outline-light {
-  --bs-btn-color: hsl(0, 0%, 98%);
-  --bs-btn-border-color: hsl(0, 0%, 98%);
+  --bs-btn-color: hsl(0, 0%, 70%);
+  --bs-btn-border-color: hsl(0, 0%, 70%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: hsl(0, 0%, 98%);
-  --bs-btn-hover-border-color: hsl(0, 0%, 98%);
-  --bs-btn-focus-shadow-rgb: 250, 250, 250;
+  --bs-btn-hover-bg: hsl(0, 0%, 70%);
+  --bs-btn-hover-border-color: hsl(0, 0%, 70%);
+  --bs-btn-focus-shadow-rgb: 179, 179, 179;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: hsl(0, 0%, 98%);
-  --bs-btn-active-border-color: hsl(0, 0%, 98%);
+  --bs-btn-active-bg: hsl(0, 0%, 70%);
+  --bs-btn-active-border-color: hsl(0, 0%, 70%);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: hsl(0, 0%, 98%);
+  --bs-btn-disabled-color: hsl(0, 0%, 70%);
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: hsl(0, 0%, 98%);
+  --bs-btn-disabled-border-color: hsl(0, 0%, 70%);
   --bs-gradient: none;
 }
 
 .btn-outline-dark {
-  --bs-btn-color: hsl(215, 30%, 22%);
-  --bs-btn-border-color: hsl(215, 30%, 22%);
+  --bs-btn-color: hsl(0, 0%, 10%);
+  --bs-btn-border-color: hsl(0, 0%, 10%);
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: hsl(215, 30%, 22%);
-  --bs-btn-hover-border-color: hsl(215, 30%, 22%);
-  --bs-btn-focus-shadow-rgb: 39, 53, 73;
+  --bs-btn-hover-bg: hsl(0, 0%, 10%);
+  --bs-btn-hover-border-color: hsl(0, 0%, 10%);
+  --bs-btn-focus-shadow-rgb: 26, 26, 26;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: hsl(215, 30%, 22%);
-  --bs-btn-active-border-color: hsl(215, 30%, 22%);
+  --bs-btn-active-bg: hsl(0, 0%, 10%);
+  --bs-btn-active-border-color: hsl(0, 0%, 10%);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: hsl(215, 30%, 22%);
+  --bs-btn-disabled-color: hsl(0, 0%, 10%);
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: hsl(215, 30%, 22%);
+  --bs-btn-disabled-border-color: hsl(0, 0%, 10%);
   --bs-gradient: none;
 }
 
@@ -3252,7 +3252,7 @@ textarea.form-control-lg {
   --bs-btn-disabled-color: #6c757d;
   --bs-btn-disabled-border-color: transparent;
   --bs-btn-box-shadow: 0 0 0 #000;
-  --bs-btn-focus-shadow-rgb: 129, 151, 183;
+  --bs-btn-focus-shadow-rgb: 109, 134, 185;
   text-decoration: underline;
 }
 .btn-link:focus-visible {
@@ -3359,7 +3359,7 @@ textarea.form-control-lg {
   --bs-dropdown-link-hover-color: var(--bs-body-color);
   --bs-dropdown-link-hover-bg: var(--bs-tertiary-bg);
   --bs-dropdown-link-active-color: #fff;
-  --bs-dropdown-link-active-bg: hsl(216, 45%, 72%);
+  --bs-dropdown-link-active-bg: hsl(220, 35%, 50%);
   --bs-dropdown-link-disabled-color: var(--bs-tertiary-color);
   --bs-dropdown-item-padding-x: 1rem;
   --bs-dropdown-item-padding-y: 0.25rem;
@@ -3625,7 +3625,7 @@ textarea.form-control-lg {
   --bs-dropdown-divider-bg: var(--bs-border-color-translucent);
   --bs-dropdown-link-hover-bg: rgba(255, 255, 255, 0.15);
   --bs-dropdown-link-active-color: #fff;
-  --bs-dropdown-link-active-bg: hsl(216, 45%, 72%);
+  --bs-dropdown-link-active-bg: hsl(220, 35%, 50%);
   --bs-dropdown-link-disabled-color: #adb5bd;
   --bs-dropdown-header-color: #adb5bd;
 }
@@ -3766,7 +3766,7 @@ textarea.form-control-lg {
 }
 .nav-link:focus-visible {
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(151.47, 177.174, 215.73, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(82.875, 112.625, 172.125, 0.25);
 }
 .nav-link.disabled, .nav-link:disabled {
   color: var(--bs-nav-link-disabled-color);
@@ -3809,7 +3809,7 @@ textarea.form-control-lg {
 .nav-pills {
   --bs-nav-pills-border-radius: var(--bs-border-radius);
   --bs-nav-pills-link-active-color: #fff;
-  --bs-nav-pills-link-active-bg: hsl(216, 45%, 72%);
+  --bs-nav-pills-link-active-bg: hsl(220, 35%, 50%);
 }
 .nav-pills .nav-link {
   border-radius: var(--bs-nav-pills-border-radius);
@@ -4496,8 +4496,8 @@ textarea.form-control-lg {
   --bs-accordion-btn-icon-width: 1.25rem;
   --bs-accordion-btn-icon-transform: rotate(-180deg);
   --bs-accordion-btn-icon-transition: transform 0.2s ease-in-out;
-  --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%2860.588, 70.8696, 86.292%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-  --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(151.47, 177.174, 215.73, 0.25);
+  --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='rgb%2833.15, 45.05, 68.85%29' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(82.875, 112.625, 172.125, 0.25);
   --bs-accordion-body-padding-x: 1.25rem;
   --bs-accordion-body-padding-y: 1rem;
   --bs-accordion-active-color: var(--bs-primary-text-emphasis);
@@ -4613,8 +4613,8 @@ textarea.form-control-lg {
 }
 
 [data-bs-theme=dark] .accordion-button::after {
-  --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28192.882, 208.3044, 231.438%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e");
-  --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28192.882, 208.3044, 231.438%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e");
+  --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28151.725, 169.575, 205.275%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e");
+  --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='rgb%28151.725, 169.575, 205.275%29'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3e%3c/svg%3e");
 }
 
 .breadcrumb {
@@ -4663,10 +4663,10 @@ textarea.form-control-lg {
   --bs-pagination-hover-border-color: var(--bs-border-color);
   --bs-pagination-focus-color: var(--bs-link-hover-color);
   --bs-pagination-focus-bg: var(--bs-secondary-bg);
-  --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(151.47, 177.174, 215.73, 0.25);
+  --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(82.875, 112.625, 172.125, 0.25);
   --bs-pagination-active-color: #fff;
-  --bs-pagination-active-bg: hsl(216, 45%, 72%);
-  --bs-pagination-active-border-color: hsl(216, 45%, 72%);
+  --bs-pagination-active-bg: hsl(220, 35%, 50%);
+  --bs-pagination-active-border-color: hsl(220, 35%, 50%);
   --bs-pagination-disabled-color: var(--bs-secondary-color);
   --bs-pagination-disabled-bg: var(--bs-secondary-bg);
   --bs-pagination-disabled-border-color: var(--bs-border-color);
@@ -4878,7 +4878,7 @@ textarea.form-control-lg {
   --bs-progress-border-radius: var(--bs-border-radius);
   --bs-progress-box-shadow: var(--bs-box-shadow-inset);
   --bs-progress-bar-color: #fff;
-  --bs-progress-bar-bg: hsl(216, 45%, 72%);
+  --bs-progress-bar-bg: hsl(220, 35%, 50%);
   --bs-progress-bar-transition: width 0.6s ease;
   display: flex;
   height: var(--bs-progress-height);
@@ -4943,8 +4943,8 @@ textarea.form-control-lg {
   --bs-list-group-disabled-color: var(--bs-secondary-color);
   --bs-list-group-disabled-bg: var(--bs-body-bg);
   --bs-list-group-active-color: #fff;
-  --bs-list-group-active-bg: hsl(216, 45%, 72%);
-  --bs-list-group-active-border-color: hsl(216, 45%, 72%);
+  --bs-list-group-active-bg: hsl(220, 35%, 50%);
+  --bs-list-group-active-border-color: hsl(220, 35%, 50%);
   display: flex;
   flex-direction: column;
   padding-left: 0;
@@ -5275,7 +5275,7 @@ textarea.form-control-lg {
   --bs-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e");
   --bs-btn-close-opacity: 0.5;
   --bs-btn-close-hover-opacity: 0.75;
-  --bs-btn-close-focus-shadow: 0 0 0 0.25rem rgba(151.47, 177.174, 215.73, 0.25);
+  --bs-btn-close-focus-shadow: 0 0 0 0.25rem rgba(82.875, 112.625, 172.125, 0.25);
   --bs-btn-close-focus-opacity: 1;
   --bs-btn-close-disabled-opacity: 0.25;
   box-sizing: content-box;
@@ -6758,7 +6758,7 @@ textarea.form-control-lg {
 }
 
 .text-bg-primary {
-  color: #000 !important;
+  color: #fff !important;
   background-color: RGBA(var(--bs-primary-rgb), var(--bs-bg-opacity, 1)) !important;
 }
 
@@ -6802,8 +6802,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-primary-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-primary:hover, .link-primary:focus {
-  color: RGBA(172, 193, 224, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(172, 193, 224, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(66, 90, 138, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(66, 90, 138, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-secondary {
@@ -6811,8 +6811,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-secondary-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-secondary:hover, .link-secondary:focus {
-  color: RGBA(188, 174, 222, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(188, 174, 222, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(153, 153, 153, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(153, 153, 153, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-success {
@@ -6820,8 +6820,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-success-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-success:hover, .link-success:focus {
-  color: RGBA(166, 221, 201, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(166, 221, 201, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(101, 184, 136, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(101, 184, 136, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-info {
@@ -6829,8 +6829,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-info-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-info:hover, .link-info:focus {
-  color: RGBA(171, 219, 229, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(171, 219, 229, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(116, 202, 231, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(116, 202, 231, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-warning {
@@ -6838,8 +6838,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-warning-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-warning:hover, .link-warning:focus {
-  color: RGBA(255, 237, 165, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(255, 237, 165, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(247, 203, 100, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(247, 203, 100, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-danger {
@@ -6847,8 +6847,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-danger-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-danger:hover, .link-danger:focus {
-  color: RGBA(235, 173, 184, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(235, 173, 184, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(229, 109, 109, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(229, 109, 109, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-light {
@@ -6856,8 +6856,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-light-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-light:hover, .link-light:focus {
-  color: RGBA(251, 251, 251, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(251, 251, 251, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(194, 194, 194, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(194, 194, 194, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-dark {
@@ -6865,8 +6865,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-dark-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-dark:hover, .link-dark:focus {
-  color: RGBA(31, 43, 58, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(31, 43, 58, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(20, 20, 20, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(20, 20, 20, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-body-emphasis {
@@ -11878,4 +11878,80 @@ textarea.form-control-lg {
     content: attr(data-cell) ": ";
     font-weight: 600;
   }
+}
+.navbar-brand {
+  font-weight: 600;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .nav-link-text {
+    order: 1;
+  }
+}
+
+.nav-svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+@media (min-width: 768px) {
+  .nav-svg {
+    margin-left: 0.5rem;
+    order: 2;
+  }
+}
+
+svg {
+  display: inline-block;
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.svg-md {
+  width: 1rem;
+  height: 1rem;
+}
+
+.svg-lg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.svg-xl {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.svg-xxl {
+  width: calc(1.525rem + 3.3vw);
+  height: calc(1.525rem + 3.3vw);
+  stroke-width: 2;
+}
+
+.svg-page {
+  width: calc(1.525rem + 25vh);
+  height: calc(1.525rem + 25vh);
+  stroke-width: 1;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

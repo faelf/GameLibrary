@@ -54,7 +54,7 @@ export const table = {
       const tr = document.createElement("tr");
       thead.appendChild(tr);
 
-      Object.entries(columns).forEach(([key, value]) => {
+      Object.values(columns).forEach((value) => {
         const th = document.createElement("th");
         th.textContent = value.labelText;
         tr.appendChild(th);
@@ -111,9 +111,16 @@ export const table = {
               break;
             case key === "deleteBtn" && settings[key] === true:
               const deleteBtn = document.createElement("button");
-              deleteBtn.className = "btn btn-danger btn-sm";
+              deleteBtn.className = "btn btn-danger";
               deleteBtn.dataset.deleteItem = "";
-              deleteBtn.innerHTML = /* html */ `<span class="bi bi-trash"></span>`;
+              deleteBtn.innerHTML = /* html */ `
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md">
+                <path d="M10 11v6" />
+                <path d="M14 11v6" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                <path d="M3 6h18" />
+                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+              </svg>`;
               td.appendChild(deleteBtn);
               td.className = "text-lg-center";
               break;

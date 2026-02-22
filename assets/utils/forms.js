@@ -43,6 +43,7 @@ export const form = {
     // Handle value if provided
     if (value !== null && value !== undefined) {
       input.value = value;
+      input.setAttribute("value", value);
     }
 
     wrapper.appendChild(label);
@@ -83,6 +84,7 @@ export const form = {
 
     if (value !== null && value !== undefined) {
       input.value = value;
+      input.setAttribute("value", value);
     }
 
     wrapper.appendChild(label);
@@ -103,7 +105,6 @@ export const form = {
    * document.getElementById("my-form").appendChild(platformWrapper);
    */
   select(config, selectedValue = "") {
-    // Note: I assume 'list' is an object { "ps5": "PlayStation 5" }
     const { inputId, labelText, list, placeholder } = config;
 
     const wrapper = this.__wrapper();
@@ -123,7 +124,7 @@ export const form = {
       selectedValue === null ||
       selectedValue === undefined
     ) {
-      defaultOption.selected = true;
+      defaultOption.setAttribute("selected", "");
     }
 
     select.appendChild(defaultOption);
@@ -136,7 +137,7 @@ export const form = {
         option.textContent = labelText;
 
         if (String(key) === String(selectedValue)) {
-          option.selected = true;
+          option.setAttribute("selected", "");
         }
 
         select.appendChild(option);
@@ -162,8 +163,9 @@ export const form = {
 
     textarea.rows = rows;
 
-    if (value !== null && value !== undefined) {
+    if (value !== null && value !== undefined && value !== "") {
       textarea.value = value;
+      textarea.textContent = value;
     }
 
     wrapper.appendChild(label);
@@ -176,13 +178,11 @@ export const form = {
 
     const wrapper = this.__wrapper();
 
-    // Main Label
     const groupLabel = document.createElement("label");
     groupLabel.className = "form-label d-block";
     groupLabel.textContent = labelText;
     wrapper.appendChild(groupLabel);
 
-    // Loop through options
     if (list) {
       Object.entries(list).forEach(([key, value]) => {
         const checkWrapper = document.createElement("div");
@@ -196,7 +196,7 @@ export const form = {
         input.id = `${inputId}-${key}`;
 
         if (String(checkedValue) === String(key)) {
-          input.checked = true;
+          input.setAttribute("checked", ""); // ✅
         }
 
         const label = document.createElement("label");
@@ -224,9 +224,8 @@ export const form = {
     input.type = "checkbox";
     input.id = inputId;
 
-    // Logic: strictly check if true (or "true" string just in case)
     if (isChecked === true || isChecked === "true") {
-      input.checked = true;
+      input.setAttribute("checked", ""); // ✅
     }
 
     const label = document.createElement("label");
@@ -244,19 +243,15 @@ export const form = {
     const { inputId, labelText, list } = config;
     const wrapper = this.__wrapper();
 
-    // 1. Main Group Label
     const groupLabel = document.createElement("label");
     groupLabel.className = "form-label d-block";
     groupLabel.textContent = labelText;
     wrapper.appendChild(groupLabel);
 
-    // 2. Safety: Ensure we have an array of strings for comparison
-    // This handles null/undefined safely and fixes "1" vs 1 mismatch
     const safeValues = Array.isArray(checkedValues)
       ? checkedValues.map(String)
       : [];
 
-    // 3. Loop through the options
     if (list) {
       Object.entries(list).forEach(([key, value]) => {
         const checkWrapper = document.createElement("div");
@@ -265,13 +260,12 @@ export const form = {
         const input = document.createElement("input");
         input.className = "form-check-input";
         input.type = "checkbox";
-        input.name = inputId; // Group them by name
+        input.name = inputId;
         input.value = key;
         input.id = `${inputId}-${key}`;
 
-        // Check against our safe array
         if (safeValues.includes(String(key))) {
-          input.checked = true;
+          input.setAttribute("checked", "");
         }
 
         const label = document.createElement("label");
