@@ -1,0 +1,168 @@
+<section class="container my-2">
+  <h2 class="display-3">Settings</h2>
+
+  <!-- User Settings -->
+  <div class="row mb-3">
+    <div class="col-sm-6 mb-3">
+      <h3>User Settings</h3>
+      <p>More features to come.</p>
+    </div>
+
+    <!-- User Prefered Settings -->
+    <div class="col-sm-6 mb-3">
+      <!-- User Info Form -->
+      <form id="user-info-form" class="mb-3">
+        <label for="first-name" class="form-label">First Name</label>
+        <input type="text" class="form-control" id="first-name" autocomplete="off">
+        <div class="form-text mb-3">It will be displayed in the dashboard.</div>
+        <button id="first-name-btn" type="button" class="btn btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md me-2">
+            <path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" />
+            <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+            <path d="M7 3v4a1 1 0 0 0 1 1h7" />
+          </svg>
+          Save
+        </button>
+      </form>
+
+      <!-- Country Form -->
+      <form id="user-country-form">
+        <label for="user-country" class="form-label">Select your country</label>
+        <div class="input-group">
+          <label class="input-group-text" for="user-country">
+            <span id="country-flag">🌎</span>
+          </label>
+          <select id="user-country" class="form-select">
+            <option value="UK">United Kingdom</option>
+            <option value="US">United States</option>
+            <option value="DE">Germany</option>
+            <option value="FR">France</option>
+            <option value="BR">Brazil</option>
+          </select>
+        </div>
+        <div class="form-text mb-3">It will change how prices are shown in the page.</div>
+      </form>
+
+      <!-- Theme Form -->
+      <form id="user-theme-form">
+        <label for="theme-select" class="form-label">Page Theme</label>
+        <select id="theme-select" class="form-select">
+          <option value="dark">Dark Theme</option>
+          <option value="light">Light Theme</option>
+        </select>
+      </form>
+    </div> <!-- User Prefered Settings Ends -->
+  </div> <!-- User Settings Row Ends -->
+
+  <!-- Import (Replace) -->
+  <div class="row mb-3">
+    <div class="col-sm-6 mb-3">
+      <h3>Import Game Data</h3>
+      <p class="card-text">
+        Restore your library from an exported file.<br>
+        <strong>All existing data will be replaced.</strong>
+      </p>
+    </div>
+    <form id="import-form" class="col-sm-6">
+
+      <label for="import-options" class="form-label">Import file format</label>
+      <select class="form-select mb-3" id="import-options">
+        <option value="">Select a file format</option>
+        <option value="json" disabled>JSON</option>
+        <option value="csv" selected>CSV</option>
+      </select>
+
+      <input id="import-data" type="file" class="form-control mb-3" aria-label="Upload">
+
+      <button class="btn btn-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md me-2">
+          <path d="M12 13v8" />
+          <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+          <path d="m8 17 4-4 4 4" />
+        </svg>
+        Import
+      </button>
+
+    </form>
+  </div> <!-- Import (Replace) Ends -->
+
+  <!-- Merge -->
+  <div class="row mb-3">
+    <div class="col-sm-6 mb-3">
+      <h3>Merge Game Data</h3>
+      <p class="card-text">Add games from an exported file to your existing library.<br>
+        No current data will be removed.
+      </p>
+    </div>
+    <form id="csv-merge-form" class="col-sm-6">
+
+      <label for="merge-options" class="form-label">Merge file format</label>
+      <select class="form-select mb-3" id="merge-options">
+        <option value="">Select a file format</option>
+        <option value="json" disabled>JSON</option>
+        <option value="csv" selected>CSV</option>
+      </select>
+
+      <input id="merge-data" type="file" class="form-control mb-3" aria-label="Upload">
+
+      <button class="btn btn-secondary mb-3" type="button" id="merge-data-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md me-2">
+          <path d="M12 13v8" />
+          <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+          <path d="m8 17 4-4 4 4" />
+        </svg>
+        Merge
+      </button>
+    </form>
+  </div>
+
+  <!-- Export -->
+  <div class="row mb-3">
+    <div class="col-sm-6 mb-3">
+      <h3>Export Game Data</h3>
+      <p>Download your entire game library as a file for backup or transfer.</p>
+    </div>
+    <div class="col-sm-6 mb-3">
+      <form id="export-form" class="col-sm-6">
+        <label for="export-options" class="form-label">Export file format</label>
+        <select class="form-select mb-3" id="export-options">
+          <option value="">Select a file format</option>
+          <option value="json" disabled>JSON</option>
+          <option value="csv" selected>CSV</option>
+        </select>
+        <button class="btn btn-secondary">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md me-2">
+            <path d="M12 13v8l-4-4" />
+            <path d="m12 21 4-4" />
+            <path d="M4.393 15.269A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.436 8.284" />
+          </svg>
+          Export
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete -->
+  <div class="row mb-3">
+    <div class="col-sm-6 mb-3">
+      <h3>Delete Game Data</h3>
+      <p class="card-text">
+        Permanently removes <strong>all games</strong> from your library.<br>
+        This action cannot be undone.
+      </p>
+    </div>
+    <div class="col-sm-6 mb-3">
+      <button type="button" class="btn btn-danger" id="delete-data">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md me-2">
+          <path d="M10 11v6" />
+          <path d="M14 11v6" />
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+          <path d="M3 6h18" />
+          <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+        </svg>
+        Delete All Games
+      </button>
+    </div>
+  </div> <!-- Delete Ends -->
+
+</section>
