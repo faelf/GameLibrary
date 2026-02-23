@@ -1,10 +1,11 @@
 import { config } from "../utils/config.js";
 import { formatters } from "../utils/formatters.js";
 import { stats } from "../data/stats.js";
+import HomePageHtml from "../html/home.html?raw";
 
 export const HomePage = {
   title: "Dashboard",
-  html: "home.html",
+  html: HomePageHtml,
   setup() {
     const greetingText = document.getElementById("greeting");
     const firstName = config.getFirstName();

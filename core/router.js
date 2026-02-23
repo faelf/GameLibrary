@@ -97,19 +97,22 @@ export class Router {
 
     let html;
 
-    // If the html property points to a file, fetch it.
-    if (typeof content.html === "string" && content.html.endsWith(".html")) {
-      const fullPath = this.baseHtmlPath + content.html;
+    // Check if the content is a filename (ends in .html) or raw HTML content
+    const isFilePath =
+      typeof content.html === "string" &&
+      content.html.endsWith(".html") &&
+      !content.html.includes("<");
+
+    if (isFilePath) {
+      // Fetch if it looks like a path
       try {
-        const response = await fetch(fullPath);
-        if (!response.ok) throw new Error(`Could not find ${fullPath}`);
+        const response = await fetch(content.html);
         html = await response.text();
       } catch (err) {
-        console.error("Router Error:", err);
-        html = `<section><p style="color:red;">Error loading page: ${err.message}</p></section>`;
+        html = `<p style="color:red;">Error fetching ${content.html}</p>`;
       }
     } else {
-      // Otherwise, use the static string
+      // Vite ?raw Support
       html = content.html;
     }
 

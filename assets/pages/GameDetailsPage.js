@@ -3,10 +3,11 @@ import { config } from "../utils/config.js";
 import { form } from "../utils/forms.js";
 import { storages } from "../utils/storages.js";
 import { toast } from "../utils/toast.js";
+import GameDetailsPageHtml from "../html/game-details.html?raw";
 
 export const GameDetailsPage = {
   title: "Game Details",
-  html: "game-details.html",
+  html: GameDetailsPageHtml,
   setup(gameId) {
     const game = storages.get(config.keys.games, gameId);
 

@@ -5,10 +5,11 @@ import { gameSchema } from "../data/game-schema.js";
 import { countrySchema } from "../data/country-schema.js";
 import { config } from "../utils/config.js";
 import { toast } from "../utils/toast.js";
+import SettingsPageHtml from "../html/settings.html?raw";
 
 export const SettingsPage = {
   title: "Settings",
-  html: "settings.html",
+  html: SettingsPageHtml,
   setup() {
     // --- Data Loading (General) ----------------------------------------
     let gamesData = storages.load(config.keys.games);

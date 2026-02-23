@@ -4,10 +4,11 @@ import { table } from "../utils/table.js";
 import { gameSchema } from "../data/game-schema.js";
 import { pagination } from "../utils/pagination.js";
 import { toast } from "../utils/toast.js";
+import GamesListPageHtml from "../html/games-list.html?raw";
 
 export const GamesListPage = {
   title: "Games List",
-  html: "games-list.html",
+  html: GamesListPageHtml,
   setup() {
     // --- DOM Elements ---
     const displayItems = document.getElementById("display-items");
