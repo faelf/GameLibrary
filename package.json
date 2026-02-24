@@ -2,7 +2,6 @@
   "name": "gamelibrary",
   "version": "1.0.0",
   "description": "This is a personal project to track my gaming collection.",
-  "main": "index.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

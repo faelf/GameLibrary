@@ -7,9 +7,9 @@ export default defineConfig({
     rollupOptions: {
       input: "index.html",
       output: {
-        entryFileNames: "app.min.js",
-        chunkFileNames: "[name].js",
-        assetFileNames: "[name].[ext]",
+        entryFileNames: "app/app.min.js",
+        chunkFileNames: "js/[name].js",
+        assetFileNames: "src/[name].[ext]",
       },
     },
     minify: "terser",

@@ -1,9 +1,9 @@
 /* 
   Import configuration, page definitions, and Web Components
 */
-import { config } from "../assets/utils/config.js";
-import { pageContent } from "../assets/pages/index.js";
-import "../assets/components/index.js";
+import { config } from "../utils/config.js";
+import { pageContent } from "../pages/index.js";
+import "../components/index.js";
 import { Router } from "./router.js";
 
 /* 
@@ -16,7 +16,7 @@ const router = new Router({
   contentArea: "#page-content",
   pageContent: pageContent,
   landingPage: "dashboard-page",
-  baseHtmlPath: "assets/html/",
+  baseHtmlPath: "../html/",
   linkAttribute: "data-page-target",
   idAttribute: "data-page-target-id",
 });
