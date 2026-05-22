@@ -3,13 +3,14 @@ import { config } from "../utils/config.js";
 import { form } from "../utils/forms.js";
 import { storages } from "../utils/storages.js";
 import { toast } from "../utils/toast.js";
+import { firebase } from "../utils/firebase.js";
 import GameDetailsPageHtml from "../html/game-details.html?raw";
 
 export const GameDetailsPage = {
   title: "Game Details",
   html: GameDetailsPageHtml,
-  setup(gameId) {
-    const game = storages.get(config.keys.games, gameId);
+  async setup(gameId) {
+    const game = await firebase.getDocument("games", gameId);
 
     if (!game) {
       toast.error("Game not found");

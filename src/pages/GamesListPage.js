@@ -4,6 +4,7 @@ import { table } from "../utils/table.js";
 import { gameSchema } from "../data/game-schema.js";
 import { pagination } from "../utils/pagination.js";
 import { toast } from "../utils/toast.js";
+import { firebase } from "../utils/firebase.js";
 import GamesListPageHtml from "../html/games-list.html?raw";
 
 export const GamesListPage = {
@@ -35,8 +36,8 @@ export const GamesListPage = {
      * Renders the games list table or an empty state message.
      * Handles filtering, pagination, and table generation.
      */
-    function renderGames() {
-      const games = storages.load(config.keys.games);
+    async function renderGames() {
+      const games = await firebase.getDocuments("games");
 
       // Clear UI before re-rendering
       thead.innerHTML = "";
