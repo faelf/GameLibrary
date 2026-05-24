@@ -1,126 +1,93 @@
-/**
- * A generic storage utility that works with any key in localStorage.
- * Provides methods to load, save, add, get, update, remove, and check items.
- * @module utils/storages.js
- */
 export const storages = {
-  /**
-   * Load all items from a given key in localStorage.
-   *
-   * @param {string} key - The key in localStorage to load items from.
-   * @returns {Array<Object>} An array of objects stored under the key, or an empty array if none.
-   * @example
-   * const allGames = storages.load("games");
-   */
-  load(key) {
-    const storedData = localStorage.getItem(key);
+  getStorage() {
+    return localStorage.getItem("storage") ?? "localstorage";
+  },
 
-    if (storedData) {
-      return JSON.parse(storedData);
-    } else {
-      return [];
+  async _getFirebase() {
+    const [{ db }, firestore] = await Promise.all([
+      import("./firebase.js"),
+      import("https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js"),
+    ]);
+    return { db, ...firestore };
+  },
+
+  async load(collectionName) {
+    if (this.getStorage() === "localstorage") {
+      const storedData = localStorage.getItem(collectionName);
+      return storedData ? JSON.parse(storedData) : [];
+    } else if (this.getStorage() === "firebase") {
+      const { db, collection, getDocs } = await this._getFirebase();
+      const col = collection(db, collectionName);
+      const snapshot = await getDocs(col);
+      return snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
     }
   },
 
-  /**
-   * Save an array of items to a given key in localStorage.
-   *
-   * @param {string} key - The key in localStorage to save items under.
-   * @param {Array<Object>} values - An array of objects to store.
-   * @example
-   */
+  async get(collectionName, itemId) {
+    if (this.getStorage() === "localstorage") {
+      const items = await this.load(collectionName);
+      return items.find((item) => item.id == itemId);
+    } else if (this.getStorage() === "firebase") {
+      const { db, doc, getDoc } = await this._getFirebase();
+      const docRef = doc(db, collectionName, itemId);
+      const docSnap = await getDoc(docRef);
+      return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null;
+    }
+  },
+
+  async add(collectionName, data) {
+    if (this.getStorage() === "localstorage") {
+      const items = await this.load(collectionName);
+      const newItem = {
+        id: String(Date.now() + Math.floor(Math.random() * 1000)),
+        ...data,
+      };
+      items.push(newItem);
+      this.save(collectionName, items);
+      return newItem;
+    } else if (this.getStorage() === "firebase") {
+      const { db, collection, addDoc } = await this._getFirebase();
+      const col = collection(db, collectionName);
+      const docRef = await addDoc(col, data);
+      return { id: docRef.id, ...data };
+    }
+  },
+
+  async update(collectionName, itemId, updates) {
+    if (this.getStorage() === "localstorage") {
+      const items = await this.load(collectionName);
+      const itemIndex = items.findIndex((item) => item.id == itemId);
+      if (itemIndex === -1) return false;
+      items[itemIndex] = { ...items[itemIndex], ...updates };
+      this.save(collectionName, items);
+      return true;
+    } else if (this.getStorage() === "firebase") {
+      const { db, doc, updateDoc } = await this._getFirebase();
+      const docRef = doc(db, collectionName, itemId);
+      await updateDoc(docRef, updates);
+      return true;
+    }
+  },
+
+  async remove(collectionName, itemId) {
+    if (this.getStorage() === "localstorage") {
+      const items = await this.load(collectionName);
+      const filteredItems = items.filter((item) => item.id != itemId);
+      this.save(collectionName, filteredItems);
+      return true;
+    } else if (this.getStorage() === "firebase") {
+      const { db, doc, deleteDoc } = await this._getFirebase();
+      const docRef = doc(db, collectionName, itemId);
+      await deleteDoc(docRef);
+      return true;
+    }
+  },
+
+  async exists(collectionName, itemId) {
+    return Boolean(await this.get(collectionName, itemId));
+  },
+
   save(key, values) {
     localStorage.setItem(key, JSON.stringify(values));
-  },
-
-  /**
-   * Add a new item to storage under a given key.
-   * Generates a unique `id` automatically for the new item.
-   * @param {string} key - The key in localStorage to save the item under.
-   * @param {Object} item - The item object to add.
-   * @returns {Object} The newly created item (with the generated id).
-   * @example
-   * const newGame = storages.add("games", { title: "Pokemon", platform: "Gameboy" });
-   */
-  add(key, item) {
-    const items = this.load(key);
-    const newItem = {
-      id: String(Date.now() + Math.floor(Math.random() * 1000)),
-      ...item,
-    };
-    items.push(newItem);
-    this.save(key, items);
-    return newItem;
-  },
-
-  /**
-   * Get a single item from storage by key and item ID.
-   *
-   * @param {string} key - The key in localStorage to load from.
-   * @param {string} itemId - The ID of the item to retrieve.
-   * @returns {Object|undefined} The item object if found, otherwise undefined.
-   * @example
-   * const game = storages.get("games", "1709823456789");
-   */
-  get(key, itemId) {
-    const items = this.load(key);
-
-    return items.find(function (item) {
-      return item.id == itemId;
-    });
-  },
-
-  /**
-   * Update an existing item in storage by key and item ID.
-   *
-   * @param {string} key - The key in localStorage to update.
-   * @param {string} itemId - The ID of the item to update.
-   * @param {Object} updates - An object containing properties to update.
-   * @returns {boolean} True if the item was found and updated, false if not found.
-   * @example
-   * const updated = storages.update("games", "1709823456789", { status: "Completed" });
-   */
-  update(key, itemId, updates) {
-    const items = this.load(key);
-    const itemIndex = items.findIndex(function (item) {
-      return item.id == itemId;
-    });
-    if (itemIndex === -1) {
-      return false;
-    }
-    items[itemIndex] = {
-      ...items[itemIndex],
-      ...updates,
-    };
-    this.save(key, items);
-    return true;
-  },
-
-  /**
-   * Remove an item from storage by key and item ID.
-   *
-   * @param {string} key - The key in localStorage to remove from.
-   * @param {string} itemId - The ID of the item to remove.
-   * @example
-   * storages.remove("games", "1709823456789");
-   */
-  remove(key, itemId) {
-    const filteredItems = this.load(key).filter(function (item) {
-      return item.id != itemId;
-    });
-    this.save(key, filteredItems);
-  },
-
-  /**
-   * Check if an item exists in storage by key and item ID.
-   *
-   * @param {string} key - The key in localStorage to check.
-   * @param {string} itemId - The ID of the item to check.
-   * @returns {boolean} True if the item exists, false otherwise.
-   * @example
-   * const exists = storages.exists("games", "1709823456789");
-   */
-  exists(key, itemId) {
-    return Boolean(this.get(key, itemId));
   },
 };

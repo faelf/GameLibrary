@@ -4,13 +4,12 @@ import { table } from "../utils/table.js";
 import { gameSchema } from "../data/game-schema.js";
 import { pagination } from "../utils/pagination.js";
 import { toast } from "../utils/toast.js";
-import { firebase } from "../utils/firebase.js";
 import GamesListPageHtml from "../html/games-list.html?raw";
 
 export const GamesListPage = {
   title: "Games List",
   html: GamesListPageHtml,
-  setup() {
+  async setup() {
     // --- DOM Elements ---
     const displayItems = document.getElementById("display-items");
     const searchInput = document.getElementById("search-input");
@@ -37,7 +36,7 @@ export const GamesListPage = {
      * Handles filtering, pagination, and table generation.
      */
     async function renderGames() {
-      const games = await firebase.getDocuments("games");
+      const games = await storages.load(config.keys.games);
 
       // Clear UI before re-rendering
       thead.innerHTML = "";
@@ -124,10 +123,11 @@ export const GamesListPage = {
     // --- Event Listeners ---
 
     // Items Per Page Selection
-    displayItems.addEventListener("change", (e) => {
+    displayItems.addEventListener("change", async (e) => {
       const value = e.target.value;
       if (value === "all") {
-        itemsPerPage = storages.load(config.keys.games).length;
+        const games = await storages.load(config.keys.games);
+        itemsPerPage = games.length;
       } else {
         itemsPerPage = Number(value);
       }
@@ -142,7 +142,7 @@ export const GamesListPage = {
     });
 
     // Table Actions (Delete)
-    tbody.addEventListener("click", (e) => {
+    tbody.addEventListener("click", async (e) => {
       const btn = e.target.closest("[data-delete-item]");
       if (btn) {
         const id = btn.closest("tr").dataset.id;
@@ -152,21 +152,22 @@ export const GamesListPage = {
             "Are you sure you want to delete this game?",
           )
         ) {
-          storages.remove(config.keys.games, id);
+          await storages.remove(config.keys.games, id);
           renderGames();
         }
       }
     });
 
     // Global Events (Game Added)
-    document.addEventListener("game-added", () => {
+    document.addEventListener("game-added", async () => {
+      const games = await storages.load(config.keys.games);
       const lastPage = {
-        totalItems: storages.load(config.keys.games).length,
+        totalItems: games.length,
       };
       handlePageChange(pagination.getLastPage(lastPage));
     });
 
     // --- Initialisation ---
-    renderGames();
+    await renderGames();
   },
 };

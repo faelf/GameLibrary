@@ -3,14 +3,13 @@ import { config } from "../utils/config.js";
 import { form } from "../utils/forms.js";
 import { storages } from "../utils/storages.js";
 import { toast } from "../utils/toast.js";
-import { firebase } from "../utils/firebase.js";
 import GameDetailsPageHtml from "../html/game-details.html?raw";
 
 export const GameDetailsPage = {
   title: "Game Details",
   html: GameDetailsPageHtml,
   async setup(gameId) {
-    const game = await firebase.getDocument("games", gameId);
+    const game = await storages.get(config.keys.games, gameId);
 
     if (!game) {
       toast.error("Game not found");
@@ -72,7 +71,7 @@ export const GameDetailsPage = {
 
     const editForm = document.getElementById("game-edit-form");
 
-    editForm.addEventListener("submit", function (event) {
+    editForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       const gameDataToSave = form.getFormData(gameSchema);
 
@@ -84,8 +83,8 @@ export const GameDetailsPage = {
         ? Number(gameDataToSave.price)
         : 0;
 
-      gameDataToSave.id = Number(gameId);
-      storages.update(config.keys.games, gameId, gameDataToSave);
+      gameDataToSave.id = gameId;
+      await storages.update(config.keys.games, gameId, gameDataToSave);
       toast.success("Game details updated successfully!");
     });
   },
