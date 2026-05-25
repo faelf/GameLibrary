@@ -6,6 +6,7 @@ import { countrySchema } from "../data/country-schema.js";
 import { config } from "../utils/config.js";
 import { toast } from "../utils/toast.js";
 import SettingsPageHtml from "../html/settings.html?raw";
+import { formEngine } from "../utils/forms.js";
 
 export const SettingsPage = {
   title: "Settings",
@@ -14,54 +15,44 @@ export const SettingsPage = {
     // --- Data Loading (General) ----------------------------------------
     let gamesData = await storages.load(config.keys.games);
 
-    // --- Theme Settings ------------------------------------------------
-    const themeSelect = document.getElementById("theme-select");
+    /*
+       --- User Settings Form --------------------------------------------
+       Information captured by the user form is saved on localstorage only.
+    */
+    const userSettingsForm = document.querySelector("#user-settings-form");
+    const countrySelect = document.querySelector("#user-country");
 
-    // Init: Apply saved theme
-    const currentTheme = config.getTheme();
-    document.documentElement.setAttribute("data-bs-theme", currentTheme);
-    themeSelect.value = currentTheme;
-
-    // Action: Change theme
-    themeSelect.addEventListener("change", (e) => {
-      const newTheme = e.target.value;
-      storages.save(config.keys.theme, newTheme);
-      document.documentElement.setAttribute("data-bs-theme", newTheme);
-      toast.success("Theme updated successfully!");
+    countrySelect.addEventListener("change", () => {
+      config.updateFlag();
     });
 
-    // --- Personal Information (First Name) -----------------------------
-    const firstNameInput = document.getElementById("first-name");
-    const firstNameBtn = document.getElementById("first-name-btn");
-
-    // Init: Load saved name
-    firstNameInput.value = config.getFirstName();
-
-    // Action: Save name
-    firstNameBtn.addEventListener("click", () => {
-      const nameValue = firstNameInput.value;
-      storages.save(config.keys.user.firstName, nameValue);
-      toast.success("Name updated successfully!");
+    formEngine.populate({
+      formID: "#user-settings-form",
+      data: JSON.parse(localStorage.getItem(config.keys.user)),
     });
 
-    // --- Regional Settings (Country & Flag) ----------------------------
-    const countryInput = document.getElementById("user-country");
-    const flagSpan = document.getElementById("country-flag");
+    config.updateFlag();
 
-    // Init: Load saved country
-    countryInput.value = config.getCountryCode();
-    flagSpan.textContent = config.getCountryFlag(); // Assuming this helper exists
+    userSettingsForm.addEventListener("reset", function (event) {
+      event.preventDefault();
+      formEngine.populate({
+        formID: "#user-settings-form",
+        data: JSON.parse(localStorage.getItem(config.keys.user)),
+      });
+      config.updateFlag();
+    });
 
-    // Action: Change country
-    countryInput.addEventListener("change", (e) => {
-      const newCountry = e.target.value;
-
-      // Update UI immediately
-      flagSpan.textContent = countrySchema[newCountry].flag;
-
-      // Save to config
-      config.setCountryCode(newCountry);
-      toast.success("Country updated");
+    userSettingsForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const userSettings = formEngine.getData("#user-settings-form");
+      localStorage.setItem(config.keys.user, JSON.stringify(userSettings));
+      formEngine.populate({
+        formID: "#user-settings-form",
+        data: JSON.parse(localStorage.getItem(config.keys.user)),
+      });
+      updateFlag();
+      config.setTheme();
+      toast.success("Information updated successfully");
     });
 
     // --- Delete Data ---------------------------------------------------
@@ -182,13 +173,12 @@ export const SettingsPage = {
         .catch((error) => toast.warning(error.message));
     });
 
-    // --- Set Storage
+    // --- Set Storage ---------------------------------------------------
     const storageForm = document.querySelector("#storage-form");
     const storageSelect = document.querySelector("#storage-options");
     const firebaseFields = document.querySelectorAll(
       ".mb-3:not(:first-child):not(:last-child)",
     );
-    // easier to just wrap them, see below
 
     // On load — populate fields with saved values
     storageSelect.value = localStorage.getItem("storage") ?? "localstorage";

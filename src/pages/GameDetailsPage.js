@@ -1,6 +1,6 @@
 import { gameSchema } from "../data/game-schema.js";
 import { config } from "../utils/config.js";
-import { form } from "../utils/forms.js";
+import { formEngine } from "../utils/forms.js";
 import { storages } from "../utils/storages.js";
 import { toast } from "../utils/toast.js";
 import GameDetailsPageHtml from "../html/game-details.html?raw";
@@ -53,7 +53,7 @@ export const GameDetailsPage = {
       }
     });
 
-    form.render({
+    formEngine.render({
       containerId: "game-info-set",
       schema: gameInfoSchema,
       layoutMap,
@@ -61,7 +61,7 @@ export const GameDetailsPage = {
       initialData: game,
     });
 
-    form.render({
+    formEngine.render({
       containerId: "game-collection-info-set",
       schema: collectionInfoSchema,
       layoutMap,
@@ -73,7 +73,7 @@ export const GameDetailsPage = {
 
     editForm.addEventListener("submit", async function (event) {
       event.preventDefault();
-      const gameDataToSave = form.getFormData(gameSchema);
+      const gameDataToSave = formEngine.getFormData(gameSchema);
 
       // Ensure numeric values are stored as numbers, not strings
       gameDataToSave.year = gameDataToSave.year

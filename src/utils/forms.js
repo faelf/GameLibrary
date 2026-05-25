@@ -1,7 +1,7 @@
 /**
  * Form Utility
  */
-export const form = {
+export const formEngine = {
   __wrapper() {
     const wrapper = document.createElement("div");
     return wrapper;
@@ -20,7 +20,7 @@ export const form = {
    * @returns { HTMLDivElement } Wrapper containing the label and input.
    * @example
    * const titleField = document.getElementById("title-field");
-   * const titleInputWrapper = form.input(gameInfo.title);
+   * const titleInputWrapper = formEngine.input(gameInfo.title);
    * titleField.appendChild(titleInputWrapper);
    */
   input(config, value = "") {
@@ -101,7 +101,7 @@ export const form = {
    * @returns { HTMLDivElement } The wrapper containing the label and select menu.
    * @example
    * // Example: Creating a platform selector and defaulting to 'switch'
-   * const platformWrapper = form.select(gameInfo.platform, "switch");
+   * const platformWrapper = formEngine.select(gameInfo.platform, "switch");
    * document.getElementById("my-form").appendChild(platformWrapper);
    */
   select(config, selectedValue = "") {
@@ -385,5 +385,59 @@ export const form = {
     });
 
     return data;
+  },
+  getData(formID) {
+    const form = document.querySelector(formID);
+
+    if (!form) return null;
+
+    const formData = new FormData(form);
+    return Object.fromEntries(formData.entries());
+  },
+  populate({ formID, data }) {
+    const form = document.querySelector(formID);
+    if (!form || !data) return;
+
+    Object.entries(data).forEach(([key, value]) => {
+      const field = form.elements[key];
+
+      if (!field) return;
+
+      // Checkbox
+      if (field.type === "checkbox") {
+        field.checked = value;
+        field.defaultChecked = value;
+        return;
+      }
+
+      // Radio
+      if (field instanceof RadioNodeList || field.type === "radio") {
+        const radios = form.querySelectorAll(
+          `input[name="${key}"][type="radio"]`,
+        );
+
+        if (radios.length > 0) {
+          radios.forEach((radio) => {
+            const isChecked = radio.value === String(value);
+            radio.checked = isChecked;
+            radio.defaultChecked = isChecked;
+          });
+          return;
+        }
+      }
+
+      // Select
+      if (field.tagName === "SELECT") {
+        field.value = value;
+        Array.from(field.options).forEach((option) => {
+          option.defaultSelected = option.value === String(value);
+        });
+        return;
+      }
+
+      // Input / textarea
+      field.value = value;
+      field.defaultValue = value;
+    });
   },
 };

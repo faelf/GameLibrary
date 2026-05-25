@@ -11,60 +11,113 @@ import { countrySchema } from "../data/country-schema.js";
 export const config = {
   keys: {
     games: "games",
-    currency: "currency",
-    user: {
-      default: "You",
-      firstName: "first-name",
-    },
-    theme: "theme",
+    user: "user-settings",
   },
-  getCountryCode() {
-    const storedCode = localStorage.getItem("user-country");
-    if (storedCode) {
-      return storedCode;
+  _getUserSettings() {
+    try {
+      const savedSettings = localStorage.getItem(this.keys.user);
+
+      if (savedSettings) {
+        const parsedSettings = JSON.parse(savedSettings);
+        return parsedSettings;
+      } else {
+        return {};
+      }
+    } catch {
+      return {};
+    }
+  },
+  getFirstName() {
+    const settings = this._getUserSettings();
+    const firstName = settings["first-name"];
+
+    if (firstName) {
+      return firstName;
+    } else {
+      return "Stranger";
+    }
+  },
+  getCountry() {
+    const settings = this._getUserSettings();
+    const country = settings["user-country"];
+
+    if (country) {
+      return country;
     } else {
       return "UK";
     }
   },
-  getCountryFlag() {
-    const code = this.getCountryCode();
-    return countrySchema[code].flag;
-  },
-  setCountryCode(code) {
-    if (countrySchema[code]) {
-      localStorage.setItem("user-country", code);
-      return true;
-    } else {
-      console.error("Error: Invalid country code");
-      return false;
-    }
-  },
-  getCurrency() {
-    const code = this.getCountryCode();
-    return countrySchema[code].currency;
-  },
-  getLocale() {
-    const code = this.getCountryCode();
-    return countrySchema[code].locale;
-  },
-  getFirstName() {
-    const value = localStorage.getItem(this.keys.user.firstName);
-    if (!value) return this.keys.user.default;
-    try {
-      return JSON.parse(value);
-    } catch (e) {
-      console.log(e);
-      return value;
-    }
-  },
   getTheme() {
-    const value = localStorage.getItem(this.keys.theme);
-    if (!value) return "dark";
-    try {
-      return JSON.parse(value);
-    } catch (e) {
-      console.log(e);
-      return value;
+    const settings = this._getUserSettings();
+    const theme = settings["user-theme"];
+
+    if (theme) {
+      return theme;
+    } else {
+      return "light";
+    }
+  },
+  setTheme() {
+    const currentTheme = this.getTheme();
+    document.documentElement.setAttribute("data-bs-theme", currentTheme);
+  },
+  getCountryCode() {
+    return this.getCountry();
+  },
+  getCountryFlag(country) {
+    let code;
+
+    if (country) {
+      code = country;
+    } else {
+      code = this.getCountryCode();
+    }
+
+    if (countrySchema[code]) {
+      return countrySchema[code].flag;
+    } else {
+      return undefined;
+    }
+  },
+  updateFlag({
+    flagText = "#country-flag",
+    flagSelect = "#user-country",
+  } = {}) {
+    const flag = document.querySelector(flagText);
+    const flagSelected = document.querySelector(flagSelect).value;
+
+    if (flag && flagSelected) {
+      flag.innerHTML = this.getCountryFlag(flagSelected);
+    }
+  },
+  getCurrency(country) {
+    let code;
+
+    if (country) {
+      code = country;
+    } else {
+      code = this.getCountryCode();
+    }
+
+    if (countrySchema[code]) {
+      return countrySchema[code].currency;
+    } else {
+      return undefined;
+    }
+  },
+  getLocale(country) {
+    let code;
+
+    if (country) {
+      code = country;
+    } else {
+      code = this.getCountryCode();
+    }
+
+    if (countrySchema[code]) {
+      return countrySchema[code].locale;
+    } else {
+      return undefined;
     }
   },
 };

@@ -1,5 +1,5 @@
 import { config } from "../utils/config.js";
-import { form } from "../utils/forms.js";
+import { formEngine } from "../utils/forms.js";
 import { gameSchema } from "../data/game-schema.js";
 import { storages } from "../utils/storages.js";
 
@@ -93,7 +93,7 @@ class UIAddGame extends HTMLElement {
       inputGroupText: currency,
     };
 
-    form.render({
+    formEngine.render({
       containerId: "form-row",
       schema: gameSchema,
       layoutMap,
@@ -104,7 +104,7 @@ class UIAddGame extends HTMLElement {
     const addBtn = document.getElementById("add-game-btn");
 
     addBtn.addEventListener("click", function () {
-      const newGame = form.getFormData(gameSchema);
+      const newGame = formEngine.getFormData(gameSchema);
       newGame.id = Date.now();
       storages.add(config.keys.games, newGame);
       const modal = bootstrap.Modal.getInstance(modalElement);
