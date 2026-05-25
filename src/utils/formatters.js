@@ -11,18 +11,22 @@ export const formatters = {
     });
   },
   price(price) {
+    const parsedPrice = parseFloat(price);
+    if (isNaN(parsedPrice)) return "-";
+
     const locale = config.getLocale();
-    price = parseFloat(price);
-    return `${price.toLocaleString(locale, {
+    return `${parsedPrice.toLocaleString(locale, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })}`;
   },
   fullPrice(price) {
+    const parsedPrice = parseFloat(price);
+    if (isNaN(parsedPrice)) return "-";
+
     const currency = config.getCurrency();
     const locale = config.getLocale();
-    price = parseFloat(price);
-    return `${currency}${price.toLocaleString(locale, {
+    return `${currency}${parsedPrice.toLocaleString(locale, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })}`;

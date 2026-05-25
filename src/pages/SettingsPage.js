@@ -110,7 +110,7 @@ export const SettingsPage = {
     const formatGameData = (game) => ({
       ...game,
       "release-year": game["release-year"] ? Number(game["release-year"]) : "",
-      "price-paid": game["price-paid"] ? Number(game["price-paid"]) : 0,
+      "price-paid": game["price-paid"] ? Number(game["price-paid"]) : "",
     });
 
     // --- Export Data ---------------------------------------------------

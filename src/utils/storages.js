@@ -48,8 +48,9 @@ export const storages = {
     } else if (this.getStorage() === "firebase") {
       const { db, collection, addDoc } = await this._getFirebase();
       const col = collection(db, collectionName);
-      const docRef = await addDoc(col, data);
-      return { id: docRef.id, ...data };
+      const { id, ...dataToSave } = data;
+      const docRef = await addDoc(col, dataToSave);
+      return { id: docRef.id, ...dataToSave };
     }
   },
 
