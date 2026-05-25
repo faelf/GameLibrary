@@ -462,7 +462,8 @@ export const formEngine = {
           data[key] = inputElement.checked;
           break;
         case inputElement && config.inputType === "number":
-          data[key] = inputElement.valueAsNumber || 0;
+          data[key] =
+            inputElement.value === "" ? "" : inputElement.valueAsNumber;
           break;
         case !!inputElement:
           data[key] = inputElement.value;
