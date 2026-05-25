@@ -13,7 +13,7 @@
  * @typedef { Object } GameConfig
  * @property { FieldConfig } title - Configuration for the Game Title input.
  * @property { FieldConfig } platform - Configuration for the Platform select menu.
- * @property { FieldConfig } year - Configuration for the Release Year input.
+ * @property { FieldConfig } releaseyear - Configuration for the Release Year input.
  * @property { FieldConfig } region - Configuration for the Region select/radio.
  * @property { FieldConfig } condition - Configuration for the Condition radio group.
  * @property { FieldConfig } status - Configuration for the Play Status (e.g., Beaten/Backlog).
@@ -26,14 +26,14 @@ export const gameSchema = {
   title: {
     component: "input",
     inputType: "text",
-    inputId: "game-title-input",
-    labelText: "Game Title",
+    inputId: "title",
+    labelText: "Title",
     placeholder: "Enter the game title",
   },
   platform: {
     component: "select",
-    inputId: "game-platform-input",
-    labelText: "Game Console",
+    inputId: "platform",
+    labelText: "Console",
     placeholder: "Select a console",
     list: {
       NES: "Nintendo Entertainment System",
@@ -53,17 +53,17 @@ export const gameSchema = {
       STEAM: "Steam",
     },
   },
-  year: {
+  "release-year": {
     component: "input",
-    inputType: "number",
-    inputId: "game-year-input",
-    labelText: "Game Release Year",
+    inputType: "text",
+    inputId: "release-year",
+    labelText: "Release Year",
     placeholder: "Format YYYY",
   },
   region: {
     component: "select",
-    inputId: "game-region-input",
-    labelText: "Game Region",
+    inputId: "region",
+    labelText: "Region",
     placeholder: "Select a region",
     list: {
       JP: "Japan",
@@ -77,8 +77,8 @@ export const gameSchema = {
   },
   condition: {
     component: "select",
-    inputId: "game-condition-input",
-    labelText: "Game Condition",
+    inputId: "condition",
+    labelText: "Condition",
     placeholder: "Select a condition",
     list: {
       SEALED: "Sealed",
@@ -95,8 +95,8 @@ export const gameSchema = {
   },
   status: {
     component: "select",
-    inputId: "game-status-input",
-    labelText: "Game Status",
+    inputId: "status",
+    labelText: "Status",
     placeholder: "Select a status",
     list: {
       NOTSTARTED: "Not started",
@@ -106,23 +106,23 @@ export const gameSchema = {
       PRETTY: "Beautifying my shelf",
     },
   },
-  price: {
+  "price-paid": {
     component: "input-group",
     inputType: "number",
-    inputId: "game-price-input",
+    inputId: "price-paid",
     labelText: "Price Paid",
     placeholder: "0.00",
   },
-  purchaseDate: {
+  "purchase-date": {
     component: "input",
     inputType: "date",
-    labelText: "Game Purchase Date",
-    inputId: "game-purchase-date-input",
+    labelText: "Purchase Date",
+    inputId: "purchase-date",
     placeholder: "Enter the game purchase date",
   },
-  ownership: {
+  "ownership-status": {
     component: "select",
-    inputId: "game-ownership-status-input",
+    inputId: "ownership-status",
     labelText: "Ownership Status",
     placeholder: "Where is the game",
     list: {
@@ -134,7 +134,7 @@ export const gameSchema = {
   },
   note: {
     component: "textarea",
-    inputId: "game-note-input",
+    inputId: "note",
     labelText: "Note",
     placeholder: "Write a note",
   },

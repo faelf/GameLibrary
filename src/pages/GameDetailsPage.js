@@ -12,25 +12,25 @@ export const GameDetailsPage = {
     const game = await storages.get(config.keys.games, gameId);
 
     if (!game) {
-      toast.error("Game not found");
+      toast.error({ text: "Game not found" });
       return;
     }
 
-    // Make sure the price is displayed 0.00
-    if (game && game.price !== undefined) {
-      game.price = Number(game.price).toFixed(2);
+    // Make sure the price-paid is displayed 0.00
+    if (game && game["price-paid"] !== undefined) {
+      game["price-paid"] = Number(game["price-paid"]).toFixed(2);
     }
 
     const layoutMap = {
       title: "col-12",
       platform: "col-sm-6",
-      year: "col-sm-6",
+      "release-year": "col-sm-6",
       region: "col-sm-6",
       condition: "col-sm-6",
       status: "col-sm-6",
-      price: "col-sm-6",
-      purchaseDate: "col-sm-6",
-      ownership: "col-sm-6",
+      "price-paid": "col-sm-6",
+      "purchase-date": "col-sm-6",
+      "ownership-status": "col-sm-6",
       note: "col-12",
     };
 
@@ -41,7 +41,7 @@ export const GameDetailsPage = {
     };
 
     // Split the schema into two parts
-    const gameInfoKeys = ["title", "platform", "year", "region"];
+    const gameInfoKeys = ["title", "platform", "release-year", "region"];
     const gameInfoSchema = {};
     const collectionInfoSchema = {};
 
@@ -71,21 +71,51 @@ export const GameDetailsPage = {
 
     const editForm = document.getElementById("game-edit-form");
 
+    editForm.addEventListener("reset", async function (event) {
+      event.preventDefault();
+      const savedGame = await storages.get(config.keys.games, gameId);
+
+      if (savedGame && savedGame["price-paid"] !== undefined) {
+        savedGame["price-paid"] = Number(savedGame["price-paid"]).toFixed(2);
+      }
+
+      formEngine.populate({
+        formID: "#game-edit-form",
+        data: savedGame || game,
+      });
+    });
+
     editForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       const gameDataToSave = formEngine.getFormData(gameSchema);
 
       // Ensure numeric values are stored as numbers, not strings
-      gameDataToSave.year = gameDataToSave.year
-        ? Number(gameDataToSave.year)
+      gameDataToSave["release-year"] = gameDataToSave["release-year"]
+        ? Number(gameDataToSave["release-year"])
         : "";
-      gameDataToSave.price = gameDataToSave.price
-        ? Number(gameDataToSave.price)
+      gameDataToSave["price-paid"] = gameDataToSave["price-paid"]
+        ? Number(gameDataToSave["price-paid"])
         : 0;
 
       gameDataToSave.id = gameId;
       await storages.update(config.keys.games, gameId, gameDataToSave);
-      toast.success("Game details updated successfully!");
+      toast.success({ text: "Game details updated successfully!" });
+    });
+
+    const deleteBtn = document.querySelector("#delete-btn");
+
+    deleteBtn.addEventListener("click", async (e) => {
+      if (
+        toast.success({
+          text: "Game deleted.",
+          alert: "Are you sure you want to delete this game?",
+        })
+      ) {
+        await storages.remove(config.keys.games, gameId);
+        window.location.hash = "games-list-page";
+      } else {
+        return;
+      }
     });
   },
 };

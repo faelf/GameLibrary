@@ -77,13 +77,13 @@ class UIAddGame extends HTMLElement {
     const layoutMap = {
       title: "col-12",
       platform: "col-lg-6",
-      year: "col-lg-6",
+      "release-year": "col-lg-6",
       region: "col-lg-6",
       condition: "col-lg-6",
       status: "col-lg-6",
-      price: "col-lg-6",
-      purchaseDate: "col-lg-6",
-      ownership: "col-lg-6",
+      "price-paid": "col-lg-6",
+      "purchase-date": "col-lg-6",
+      "ownership-status": "col-lg-6",
       note: "col-12",
     };
 
@@ -103,10 +103,10 @@ class UIAddGame extends HTMLElement {
     const modalElement = document.getElementById("add-game");
     const addBtn = document.getElementById("add-game-btn");
 
-    addBtn.addEventListener("click", function () {
+    addBtn.addEventListener("click", async function () {
       const newGame = formEngine.getFormData(gameSchema);
       newGame.id = Date.now();
-      storages.add(config.keys.games, newGame);
+      await storages.add(config.keys.games, newGame);
       const modal = bootstrap.Modal.getInstance(modalElement);
       document.dispatchEvent(new CustomEvent("game-added"));
       if (modal) modal.hide();

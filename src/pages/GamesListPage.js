@@ -13,8 +13,7 @@ export const GamesListPage = {
     // --- DOM Elements ---
     const displayItems = document.getElementById("display-items");
     const searchInput = document.getElementById("search-input");
-    const tbody = document.getElementById("games-table-body");
-    const thead = document.getElementById("games-table-head");
+    const gamesTable = document.getElementById("games-table");
     const emptyTable = document.getElementById("empty-table");
     const paginationContainer = document.getElementById("pagination-controls");
 
@@ -39,8 +38,12 @@ export const GamesListPage = {
       const games = await storages.load(config.keys.games);
 
       // Clear UI before re-rendering
-      thead.innerHTML = "";
-      tbody.innerHTML = "";
+      if (gamesTable) {
+        const thead = gamesTable.querySelector("thead");
+        const tbody = gamesTable.querySelector("tbody");
+        if (thead) thead.innerHTML = "";
+        if (tbody) tbody.innerHTML = "";
+      }
       emptyTable.innerHTML = "";
       paginationContainer.innerHTML = "";
 
@@ -82,19 +85,17 @@ export const GamesListPage = {
 
       // Render the table with the paginated pages
       table.render({
-        thead: "games-table-head",
-        tbody: "games-table-body",
+        table: "#games-table",
         columns: {
           title: gameSchema.title,
           platform: gameSchema.platform,
-          year: gameSchema.year,
+          // "release-year": gameSchema["release-year"],
           region: gameSchema.region,
-          condition: gameSchema.condition,
+          // condition: gameSchema.condition,
           status: gameSchema.status,
-          price: gameSchema.price,
-          purchaseDate: gameSchema.purchaseDate,
-          ownership: gameSchema.ownership,
-          deleteBtn: { labelText: "Delete" },
+          // "price-paid": gameSchema["price-paid"],
+          "purchase-date": gameSchema["purchase-date"],
+          "ownership-status": gameSchema["ownership-status"],
         },
         data: pagination.paginateItems({
           items: filteredGames,
@@ -102,11 +103,11 @@ export const GamesListPage = {
           itemsPerPage,
         }),
         options: {
-          hyperlink: "title",
+          hyperlink: "table-row",
           hyperlinkTarget: "game-details-page",
-          longDate: "purchaseDate",
-          currencySymbol: "price",
-          deleteBtn: true,
+          longDate: ["purchase-date"],
+          currencySymbol: ["price-paid"],
+          deleteBtn: false,
         },
       });
 
@@ -141,23 +142,6 @@ export const GamesListPage = {
       renderGames();
     });
 
-    // Table Actions (Delete)
-    tbody.addEventListener("click", async (e) => {
-      const btn = e.target.closest("[data-delete-item]");
-      if (btn) {
-        const id = btn.closest("tr").dataset.id;
-        if (
-          toast.success(
-            "Game deleted.",
-            "Are you sure you want to delete this game?",
-          )
-        ) {
-          await storages.remove(config.keys.games, id);
-          renderGames();
-        }
-      }
-    });
-
     // Global Events (Game Added)
     document.addEventListener("game-added", async () => {
       const games = await storages.load(config.keys.games);
@@ -165,6 +149,28 @@ export const GamesListPage = {
         totalItems: games.length,
       };
       handlePageChange(pagination.getLastPage(lastPage));
+    });
+
+    // Table Actions (Delete)
+    gamesTable.addEventListener("click", async (e) => {
+      const btn = e.target.closest("[data-delete-item]");
+      if (btn) {
+        // Stop the router from navigating when clicking the delete button
+        e.stopPropagation();
+
+        const tr = btn.closest("tr");
+        const id = tr.dataset.itemId;
+
+        if (
+          toast.success({
+            text: "Game deleted.",
+            alert: "Are you sure you want to delete this game?",
+          })
+        ) {
+          await storages.remove(config.keys.games, id);
+          renderGames();
+        }
+      }
     });
 
     // --- Initialisation ---
