@@ -1,17 +1,20 @@
 export const stats = {
   totalGames(data) {
-    let total = data.length;
+    const safeData = data || [];
+    let total = safeData.length;
     return total;
   },
 
   completedGames(data) {
-    let completed = data.filter((game) => game.status === "Completed");
+    const safeData = data || [];
+    let completed = safeData.filter((game) => game.status === "Completed");
     completed = completed.length;
     return completed;
   },
 
   totalSpent(data) {
-    let spent = data.reduce(
+    const safeData = data || [];
+    let spent = safeData.reduce(
       (sum, game) => sum + Number(game["price-paid"] || 0),
       0,
     );
@@ -19,19 +22,22 @@ export const stats = {
   },
 
   currentlyPlaying(data) {
-    let playing = data.filter((game) => game.status === "Playing");
+    const safeData = data || [];
+    let playing = safeData.filter((game) => game.status === "Playing");
     playing = playing.length;
     return playing;
   },
 
   backlogGames(data) {
-    let backlog = data.filter((game) => game.status === "Not started");
+    const safeData = data || [];
+    let backlog = safeData.filter((game) => game.status === "Not started");
     backlog = backlog.length;
     return backlog;
   },
 
   totalConsoles(data) {
-    let platforms = new Set(data.map((game) => game.platform));
+    const safeData = data || [];
+    let platforms = new Set(safeData.map((game) => game.platform));
     platforms = platforms.size;
     return platforms;
   },

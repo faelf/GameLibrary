@@ -13,6 +13,14 @@ export const config = {
     games: "games",
     user: "user-settings",
   },
+  init() {
+    if (!localStorage.getItem(this.keys.user)) {
+      localStorage.setItem(
+        this.keys.user,
+        JSON.stringify({ "first-name": "Stranger", "user-country": "UK" }),
+      );
+    }
+  },
   _getUserSettings() {
     try {
       const savedSettings = localStorage.getItem(this.keys.user);

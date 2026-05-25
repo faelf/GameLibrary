@@ -5,6 +5,7 @@ import { config } from "../utils/config.js";
 import { pageContent } from "../pages/index.js";
 import "../components/index.js";
 import { Router } from "./router.js";
+import { storages } from "../utils/storages.js";
 
 /* 
   Initialise the router
@@ -22,9 +23,10 @@ const router = new Router({
 });
 
 function initialLoad() {
-  // Get current theme from config and apply it to the html tag
+  config.init();
   const currentTheme = config.getTheme();
   document.documentElement.setAttribute("data-bs-theme", currentTheme);
+  storages.init();
   router.init();
 }
 

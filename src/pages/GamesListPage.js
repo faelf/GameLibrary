@@ -48,7 +48,7 @@ export const GamesListPage = {
       paginationContainer.innerHTML = "";
 
       // Empty State Check (If there is no games)
-      if (games.length === 0) {
+      if (!games || games.length === 0) {
         emptyTable.innerHTML = /* html */ `
           <div class="text-center py-5">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-page mx-auto">
@@ -67,7 +67,7 @@ export const GamesListPage = {
 
       // Search
       const searchTerm = searchInput.value.toLowerCase();
-      const filteredGames = games.filter((game) =>
+      const filteredGames = (games || []).filter((game) =>
         game.title.toLowerCase().includes(searchTerm),
       );
 
@@ -128,7 +128,7 @@ export const GamesListPage = {
       const value = e.target.value;
       if (value === "all") {
         const games = await storages.load(config.keys.games);
-        itemsPerPage = games.length;
+        itemsPerPage = games ? games.length : 10;
       } else {
         itemsPerPage = Number(value);
       }
@@ -146,7 +146,7 @@ export const GamesListPage = {
     document.addEventListener("game-added", async () => {
       const games = await storages.load(config.keys.games);
       const lastPage = {
-        totalItems: games.length,
+        totalItems: games ? games.length : 0,
       };
       handlePageChange(pagination.getLastPage(lastPage));
     });

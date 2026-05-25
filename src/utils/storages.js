@@ -1,4 +1,10 @@
 export const storages = {
+  init() {
+    if (!localStorage.getItem("storage")) {
+      localStorage.setItem("storage", "localstorage");
+    }
+  },
+
   getStorage() {
     return localStorage.getItem("storage") ?? "localstorage";
   },
