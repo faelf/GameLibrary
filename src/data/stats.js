@@ -11,7 +11,10 @@ export const stats = {
   },
 
   totalSpent(data) {
-    let spent = data.reduce((sum, game) => sum + Number(game.price || 0), 0);
+    let spent = data.reduce(
+      (sum, game) => sum + Number(game["price-paid"] || 0),
+      0,
+    );
     return spent;
   },
 
