@@ -2,7 +2,7 @@
   <h2 class="display-4 mb-5">Settings</h2>
 
   <div class="row">
-    <div class="mb-3 col-xxl-6"> <!-- User Settings Container -->
+    <div class="mb-3 col-lg-6"> <!-- User Settings Container -->
       <div class="row">
         <div class="mb-3 col-sm-6">
           <h3>User Settings</h3>
@@ -15,27 +15,8 @@
             <div class="form-text">It will be displayed in the dashboard.</div>
           </div> <!-- First Name Ends -->
 
-          <div class="mb-3"> <!-- Coutnry -->
-            <label for="user-country" class="form-label fw-bold">Select your country</label>
-            <div class="input-group">
-              <label class="input-group-text" for="user-country">
-                <span id="country-flag">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md d-flex align-center">
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-                    <path d="M2 12h20" />
-                  </svg>
-                </span>
-              </label>
-              <select id="user-country" name="user-country" class="form-select">
-                <option value="UK">United Kingdom</option>
-                <option value="US">United States</option>
-                <option value="DE">Germany</option>
-                <option value="FR">France</option>
-                <option value="BR">Brazil</option>
-              </select>
-            </div>
-            <div class="form-text">It will change how prices are shown in the page.</div>
+          <div id="user-country-container" class="mb-3"> <!-- Coutnry -->
+            <!-- Injected via JavaScript -->
           </div> <!-- Coutnry Ends -->
 
           <div class="mb-3"> <!-- Theme -->
@@ -80,7 +61,7 @@
       </div>
     </div> <!-- User Settings Row Ends -->
 
-    <div class="mb-3 col-xxl-6"> <!-- Storage Settings Container -->
+    <div class="mb-3 col-lg-6"> <!-- Storage Settings Container -->
       <form id="storage-form" class="row">
         <div class="mb-3 col-sm-6">
           <h3>Storage Options</h3>
@@ -140,7 +121,7 @@
       </form>
     </div> <!-- Storage Settings Ends -->
 
-    <div class="mb-3 col-xxl-6"> <!-- Import (Replace) Container -->
+    <div class="mb-3 col-lg-6"> <!-- Import (Replace) Container -->
       <div class="row">
         <div class="col-sm-6">
           <h3>Import Game Data</h3>
@@ -173,7 +154,7 @@
       </div> <!-- Import (Replace) Ends -->
     </div>
 
-    <div class="mb-3 col-xxl-6"> <!-- Merge Container -->
+    <div class="mb-3 col-lg-6"> <!-- Merge Container -->
       <div class="row">
         <div class="col-sm-6">
           <h3>Merge Game Data</h3>
@@ -205,7 +186,7 @@
       </div>
     </div> <!-- Merge Ends -->
 
-    <div class="mb-3 col-xxl-6"> <!-- Export Container -->
+    <div class="mb-3 col-lg-6"> <!-- Export Container -->
       <div class="row">
         <div class="mb-3 col-sm-6">
           <h3>Export Game Data</h3>
@@ -232,7 +213,7 @@
       </div>
     </div> <!-- Export Ends -->
 
-    <div class="mb-3 col-xxl-6"> <!-- Delete Container -->
+    <div class="mb-3 col-lg-6"> <!-- Delete Container -->
       <div class="row">
         <div class="col-sm-6 mb-3">
           <h3>Delete Game Data</h3>

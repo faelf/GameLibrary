@@ -9,9 +9,15 @@ export const formEngine = {
   __label(inputId, labelText) {
     const label = document.createElement("label");
     label.htmlFor = inputId;
-    label.className = "form-label";
+    label.classList.add("form-label", "fw-bold");
     label.textContent = labelText;
     return label;
+  },
+  __helper(text) {
+    const formText = document.createElement("div");
+    formText.className = "form-text";
+    formText.textContent = text;
+    return formText;
   },
   /**
    * Creates an input field using a configuration object.
@@ -73,6 +79,7 @@ export const formEngine = {
 
     const input = document.createElement("input");
     input.id = inputId;
+    input.name = inputId;
     input.type = inputType || "number";
     input.className = "form-control";
 
@@ -112,6 +119,7 @@ export const formEngine = {
 
     const select = document.createElement("select");
     select.id = inputId;
+    select.name = inputId;
     select.className = "form-select";
 
     // Create Placeholder
@@ -149,6 +157,75 @@ export const formEngine = {
 
     return wrapper;
   },
+  /**
+   * Renders a select input within an input group (useful for adding icons).
+   * @param { FieldConfig } config - Configuration object (must contain a 'list' property).
+   * @param { string } groupText - The symbol, text, or HTML string (like an SVG) to display.
+   * @param { string } helperText - The symbol, text, or HTML string (like an SVG) to display.
+   * @param { string } [selectedValue] - The key of the option to select by default.
+   * @returns { HTMLDivElement } The wrapper containing the label and select group.
+   */
+  selectGroup(config, groupText, selectedValue = "") {
+    const { inputId, labelText, list, placeholder, helper } = config;
+
+    const wrapper = this.__wrapper();
+    const label = this.__label(inputId, labelText);
+
+    const inputGroupEl = document.createElement("div");
+    inputGroupEl.className = "input-group";
+
+    // Use label for the text span to improve accessibility when clicking the icon
+    const groupTextSpan = document.createElement("label");
+    groupTextSpan.className = "input-group-text";
+    groupTextSpan.htmlFor = inputId;
+    groupTextSpan.innerHTML = groupText;
+
+    const select = document.createElement("select");
+    select.id = inputId;
+    select.name = inputId;
+    select.className = "form-select";
+
+    // Create Placeholder
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = placeholder || "Select an option...";
+
+    if (
+      selectedValue === "" ||
+      selectedValue === null ||
+      selectedValue === undefined
+    ) {
+      defaultOption.setAttribute("selected", "");
+    }
+
+    select.appendChild(defaultOption);
+
+    // Loop options
+    if (list) {
+      Object.entries(list).forEach(([key, optionLabel]) => {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = optionLabel;
+
+        if (String(key) === String(selectedValue)) {
+          option.setAttribute("selected", "");
+        }
+
+        select.appendChild(option);
+      });
+    }
+
+    wrapper.appendChild(label);
+    inputGroupEl.appendChild(groupTextSpan);
+    inputGroupEl.appendChild(select);
+    wrapper.appendChild(inputGroupEl);
+
+    if (helper) {
+      wrapper.appendChild(this.__helper(helper));
+    }
+
+    return wrapper;
+  },
   textarea(config, rows = 3, value = "") {
     const { inputId, labelText, placeholder } = config;
 
@@ -157,6 +234,7 @@ export const formEngine = {
 
     const textarea = document.createElement("textarea");
     textarea.id = inputId;
+    textarea.name = inputId;
     textarea.className = "form-control";
 
     if (placeholder) textarea.placeholder = placeholder;
@@ -223,6 +301,7 @@ export const formEngine = {
     input.className = "form-check-input";
     input.type = "checkbox";
     input.id = inputId;
+    input.name = inputId;
 
     if (isChecked === true || isChecked === "true") {
       input.setAttribute("checked", ""); // ✅
@@ -322,6 +401,13 @@ export const formEngine = {
       switch (config.component) {
         case "select":
           fieldWrapper = this.select(config, fieldValue);
+          break;
+        case "select-group":
+          fieldWrapper = this.selectGroup(
+            config,
+            finalOptions.inputGroupText,
+            fieldValue,
+          );
           break;
         case "radio":
           fieldWrapper = this.radio(config, fieldValue);

@@ -19,6 +19,36 @@ export const SettingsPage = {
        --- User Settings Form --------------------------------------------
        Information captured by the user form is saved on localstorage only.
     */
+    const countryContainer = document.querySelector("#user-country-container");
+
+    const countryIcon = `
+      <span id="country-flag">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md d-flex align-center">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+          <path d="M2 12h20" />
+        </svg>
+      </span>
+    `;
+
+    const countryWrapper = formEngine.selectGroup(
+      {
+        inputId: "user-country",
+        labelText: "Select your country",
+        list: Object.fromEntries(
+          Object.entries(countrySchema).map(([key, value]) => [
+            key,
+            value.label,
+          ]),
+        ),
+        helper: "It will change how prices are shown in the page.",
+      },
+      countryIcon,
+    );
+
+    countryContainer.innerHTML = "";
+    countryContainer.appendChild(countryWrapper);
+
     const userSettingsForm = document.querySelector("#user-settings-form");
     const countrySelect = document.querySelector("#user-country");
 
@@ -50,9 +80,9 @@ export const SettingsPage = {
         formID: "#user-settings-form",
         data: JSON.parse(localStorage.getItem(config.keys.user)),
       });
-      updateFlag();
+      config.updateFlag();
       config.setTheme();
-      toast.success("Information updated successfully");
+      toast.success({ text: "Information updated successfully" });
     });
 
     // --- Delete Data ---------------------------------------------------
@@ -60,10 +90,10 @@ export const SettingsPage = {
 
     deleteBtn.addEventListener("click", () => {
       // Toast will return user confirmation
-      toast.success(
-        "All game data deleted successfully!",
-        "Are you sure? This action cannot be undone.",
-      );
+      toast.success({
+        text: "All game data deleted successfully!",
+        alert: "Are you sure? This action cannot be undone.",
+      });
 
       gamesData = [];
       storages.save(config.keys.games, gamesData);
@@ -79,8 +109,8 @@ export const SettingsPage = {
     // Helper: Format incoming data (Used by both Import & Merge)
     const formatGameData = (game) => ({
       ...game,
-      year: game.year ? Number(game.year) : "",
-      price: game.price ? Number(game.price) : 0,
+      "release-year": game["release-year"] ? Number(game["release-year"]) : "",
+      "price-paid": game["price-paid"] ? Number(game["price-paid"]) : 0,
     });
 
     // --- Export Data ---------------------------------------------------
@@ -100,22 +130,22 @@ export const SettingsPage = {
             fileName: "games",
           });
           if (json) {
-            toast.success("JSON created.");
+            toast.success({ text: "JSON created." });
           } else {
-            toast.info("No data to be exported.");
+            toast.info({ text: "No data to be exported." });
           }
           break;
         case "csv":
           const file = csv.export(gamesData, gameCSVHeaders, "games.csv");
           if (file) {
-            toast.success("CSV created.");
+            toast.success({ text: "CSV created." });
           } else {
-            toast.info("No data to be exported.");
+            toast.info({ text: "No data to be exported." });
           }
           break;
         // If nothing is selected
         default:
-          toast.info("Please select a format");
+          toast.info({ text: "Please select a format" });
       }
     });
 
@@ -132,7 +162,7 @@ export const SettingsPage = {
 
       switch (importFormat) {
         case "json":
-          toast.success("Games imported successfully!");
+          toast.success({ text: "Games imported successfully!" });
           break;
         case "csv":
           csv
@@ -144,13 +174,13 @@ export const SettingsPage = {
             .then((data) => {
               gamesData = data;
               importInput.value = "";
-              toast.success("Games imported successfully!");
+              toast.success({ text: "Games imported successfully!" });
             })
-            .catch((error) => toast.warning(error.message));
+            .catch((error) => toast.warning({ text: error.message }));
           break;
         // If nothing is selected
         default:
-          toast.info("Please select a format");
+          toast.info({ text: "Please select a format" });
       }
     });
 
@@ -168,9 +198,9 @@ export const SettingsPage = {
         .then((data) => {
           gamesData = data;
           mergeInput.value = "";
-          toast.success("Games merged successfully!");
+          toast.success({ text: "Games merged successfully!" });
         })
-        .catch((error) => toast.warning(error.message));
+        .catch((error) => toast.warning({ text: error.message }));
     });
 
     // --- Set Storage ---------------------------------------------------
