@@ -54,41 +54,45 @@ export const toast = {
   },
   /**
    * Displays a success toast.
-   * @param {string} bodyMessage - The message to display.
-   * @param {string|null} [confirmMessage=null] - Optional confirmation prompt.
+   * @param {Object} options - Configuration object.
+   * @param {string} options.text - The message to display.
+   * @param {string|null} [options.alert=null] - Optional confirmation prompt.
    * @returns {boolean} True if confirmed/shown, false if cancelled.
    */
-  success(bodyMessage, confirmMessage = null) {
-    return this._show(bodyMessage, confirmMessage, "success");
+  success({ text, alert = null }) {
+    return this._show(text, alert, "success");
   },
 
   /**
    * Displays an error toast.
-   * @param {string} bodyMessage - The message to display.
-   * @param {string|null} [confirmMessage=null] - Optional confirmation prompt.
+   * @param {Object} options - Configuration object.
+   * @param {string} options.text - The message to display.
+   * @param {string|null} [options.alert=null] - Optional confirmation prompt.
    * @returns {boolean} True if confirmed/shown, false if cancelled.
    */
-  error(bodyMessage, confirmMessage = null) {
-    return this._show(bodyMessage, confirmMessage, "error");
+  error({ text, alert = null }) {
+    return this._show(text, alert, "error");
   },
 
   /**
    * Displays a warning toast.
-   * @param {string} bodyMessage - The message to display.
-   * @param {string|null} [confirmMessage=null] - Optional confirmation prompt.
+   * @param {Object} options - Configuration object.
+   * @param {string} options.text - The message to display.
+   * @param {string|null} [options.alert=null] - Optional confirmation prompt.
    * @returns {boolean} True if confirmed/shown, false if cancelled.
    */
-  warning(bodyMessage, confirmMessage = null) {
-    return this._show(bodyMessage, confirmMessage, "warning");
+  warning({ text, alert = null }) {
+    return this._show(text, alert, "warning");
   },
 
   /**
    * Displays an info toast.
-   * @param {string} bodyMessage - The message to display.
-   * @param {string|null} [confirmMessage=null] - Optional confirmation prompt.
+   * @param {Object} options - Configuration object.
+   * @param {string} options.text - The message to display.
+   * @param {string|null} [options.alert=null] - Optional confirmation prompt.
    * @returns {boolean} True if confirmed/shown, false if cancelled.
    */
-  info(bodyMessage, confirmMessage = null) {
-    return this._show(bodyMessage, confirmMessage, "info");
+  info({ text, alert = null }) {
+    return this._show(text, alert, "info");
   },
 };
