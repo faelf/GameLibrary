@@ -1,39 +1,76 @@
 export const storages = {
+  Key: "game-collection-storage",
+  Value: {
+    Default: "Local Storage",
+    LocalStorage: "Local Storage",
+    Firestore: "Firestore",
+  },
+  Firebase: {
+    app: "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js",
+    Database: "Firestore",
+    Firestore: {
+      ConfigKey: "game-collection-firebase",
+      url: "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js",
+    },
+  },
   init() {
-    if (!localStorage.getItem("game-collection-storage")) {
-      localStorage.setItem("game-collection-storage", "Local Storage");
+    if (!localStorage.getItem(this.Key)) {
+      localStorage.setItem(this.Key, this.Value.Default);
     }
   },
 
   getStorage() {
-    return localStorage.getItem("game-collection-storage") ?? "Local Storage";
+    return localStorage.getItem(this.Key) ?? this.Value.Default;
   },
 
   async _getFirestore() {
-    const [{ db }, firestore] = await Promise.all([
-      import("./firebase.js"),
-      import("https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js"),
+    const [firebaseApp, firestore] = await Promise.all([
+      import(this.Firebase.app),
+      import(this.Firebase.Firestore.url),
     ]);
+
+    const config = JSON.parse(
+      localStorage.getItem(this.Firebase.Firestore.ConfigKey),
+    );
+    const app = firebaseApp.initializeApp(config);
+    const db = firestore.getFirestore(app);
+
     return { db, ...firestore };
   },
 
   async load(collectionName) {
-    if (this.getStorage() === "Local Storage") {
-      const storedData = localStorage.getItem(collectionName);
-      return storedData ? JSON.parse(storedData) : [];
-    } else if (this.getStorage() === "Firebase") {
+    if (this.getStorage() === this.Value.LocalStorage) {
+      try {
+        const storedData = localStorage.getItem(collectionName);
+        return storedData ? JSON.parse(storedData) : [];
+      } catch (error) {
+        console.error("Local Storage parse error:", error);
+        return [];
+      }
+    }
+
+    if (this.getStorage() === this.Value.Firestore) {
       const { db, collection, getDocs } = await this._getFirestore();
       const col = collection(db, collectionName);
       const snapshot = await getDocs(col);
+
+      if (snapshot.empty) {
+        return [];
+      }
+
       return snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
     }
+
+    return [];
   },
 
   async get(collectionName, itemId) {
-    if (this.getStorage() === "Local Storage") {
+    if (this.getStorage() === this.Value.LocalStorage) {
       const items = await this.load(collectionName);
       return items.find((item) => item.id == itemId);
-    } else if (this.getStorage() === "Firebase") {
+    }
+
+    if (this.getStorage() === this.Value.Firestore) {
       const { db, doc, getDoc } = await this._getFirestore();
       const docRef = doc(db, collectionName, itemId);
       const docSnap = await getDoc(docRef);
@@ -42,7 +79,7 @@ export const storages = {
   },
 
   async add(collectionName, data) {
-    if (this.getStorage() === "Local Storage") {
+    if (this.getStorage() === this.Value.LocalStorage) {
       const items = await this.load(collectionName);
       const newItem = {
         id: String(Date.now() + Math.floor(Math.random() * 1000)),
@@ -51,7 +88,9 @@ export const storages = {
       items.push(newItem);
       this.save(collectionName, items);
       return newItem;
-    } else if (this.getStorage() === "Firebase") {
+    }
+
+    if (this.getStorage() === this.Value.Firestore) {
       const { db, collection, addDoc } = await this._getFirestore();
       const col = collection(db, collectionName);
       const { id, ...dataToSave } = data;
@@ -61,14 +100,16 @@ export const storages = {
   },
 
   async update(collectionName, itemId, updates) {
-    if (this.getStorage() === "Local Storage") {
+    if (this.getStorage() === this.Value.LocalStorage) {
       const items = await this.load(collectionName);
       const itemIndex = items.findIndex((item) => item.id == itemId);
       if (itemIndex === -1) return false;
       items[itemIndex] = { ...items[itemIndex], ...updates };
       this.save(collectionName, items);
       return true;
-    } else if (this.getStorage() === "Firebase") {
+    }
+
+    if (this.getStorage() === this.Value.Firestore) {
       const { db, doc, updateDoc } = await this._getFirestore();
       const docRef = doc(db, collectionName, itemId);
       await updateDoc(docRef, updates);
@@ -77,12 +118,14 @@ export const storages = {
   },
 
   async remove(collectionName, itemId) {
-    if (this.getStorage() === "Local Storage") {
+    if (this.getStorage() === this.Value.LocalStorage) {
       const items = await this.load(collectionName);
       const filteredItems = items.filter((item) => item.id != itemId);
       this.save(collectionName, filteredItems);
       return true;
-    } else if (this.getStorage() === "Firebase") {
+    }
+
+    if (this.getStorage() === this.Value.Firestore) {
       const { db, doc, deleteDoc } = await this._getFirestore();
       const docRef = doc(db, collectionName, itemId);
       await deleteDoc(docRef);
