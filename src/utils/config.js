@@ -10,7 +10,7 @@ import { countrySchema } from "../data/country-schema.js";
  */
 export const config = {
   keys: {
-    games: "games",
+    games: "game-collection",
     user: "user-settings",
   },
   init() {
