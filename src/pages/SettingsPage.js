@@ -211,10 +211,11 @@ export const SettingsPage = {
     );
 
     // On load — populate fields with saved values
-    storageSelect.value = localStorage.getItem("storage") ?? "localstorage";
+    storageSelect.value =
+      localStorage.getItem("game-collection-storage") ?? "Local Storage";
 
     const savedConfig = JSON.parse(
-      localStorage.getItem("firebaseConfig") ?? "{}",
+      localStorage.getItem("game-collection-firebase") ?? "{}",
     );
     document.querySelector("#api-key").value = savedConfig.apiKey ?? "";
     document.querySelector("#auth-domain").value =
@@ -228,7 +229,7 @@ export const SettingsPage = {
 
     // Show/hide firebase fields based on select
     function toggleFirebaseFields() {
-      const isFirebase = storageSelect.value === "firebase";
+      const isFirebase = storageSelect.value === "Firebase";
       document.querySelector("#firebase-fields").style.display = isFirebase
         ? "block"
         : "none";
@@ -240,9 +241,9 @@ export const SettingsPage = {
     // Save
     storageForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      localStorage.setItem("storage", storageSelect.value);
+      localStorage.setItem("game-collection-storage", storageSelect.value);
 
-      if (storageSelect.value === "firebase") {
+      if (storageSelect.value === "Firebase") {
         const config = {
           apiKey: document.querySelector("#api-key").value,
           authDomain: document.querySelector("#auth-domain").value,
@@ -251,7 +252,10 @@ export const SettingsPage = {
           messagingSenderId: document.querySelector("#sender-id").value,
           appId: document.querySelector("#app-id").value,
         };
-        localStorage.setItem("firebaseConfig", JSON.stringify(config));
+        localStorage.setItem(
+          "game-collection-firebase",
+          JSON.stringify(config),
+        );
       }
     });
   },
