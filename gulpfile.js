@@ -1,34 +1,41 @@
-const { src, dest, watch, series } = require("gulp");
-const sass = require("gulp-sass")(require("sass"));
-const cleanCSS = require("gulp-clean-css");
-const rename = require("gulp-rename");
-const { deleteAsync } = require("del");
+import gulp from "gulp";
+import gulpSass from "gulp-sass";
+import dartSass from "sass";
+import postcss from "gulp-postcss";
+import autoprefixer from "autoprefixer";
+import cleanCSS from "gulp-clean-css";
+import rename from "gulp-rename";
+import { deleteAsync } from "del";
 
-function clean() {
+const { src, dest, watch, series } = gulp;
+const sass = gulpSass(dartSass);
+
+export function clean() {
   return deleteAsync([
-    "assets/css/bootstrap-overrides.css",
-    "assets/css/bootstrap-overrides.min.css",
+    "src/css/bootstrap-overrides.css",
+    "src/css/bootstrap-overrides.min.css",
   ]);
 }
 
-function compileSass() {
-  return src("assets/scss/bootstrap-overrides.scss")
+export function compileSass() {
+  return src("src/scss/bootstrap-overrides.scss")
     .pipe(
       sass({
         includePaths: ["node_modules"],
         quietDeps: true,
         silenceDeprecations: ["import", "color-functions"],
-      }).on("error", sass.logError)
+      }).on("error", sass.logError),
     )
-    .pipe(dest("assets/css"))
+    .pipe(postcss([autoprefixer()]))
+    .pipe(dest("src/css"))
     .pipe(cleanCSS())
     .pipe(rename({ suffix: ".min" }))
-    .pipe(dest("assets/css"));
+    .pipe(dest("src/css"));
 }
 
-function watchSass() {
-  watch(["assets/scss/**/*.scss"], compileSass);
+export function watchSass() {
+  watch(["src/scss/**/*.scss"], compileSass);
 }
 
-exports.build = series(clean, compileSass);
-exports.default = series(clean, compileSass, watchSass);
+export const build = series(clean, compileSass);
+export default series(clean, compileSass, watchSass);
