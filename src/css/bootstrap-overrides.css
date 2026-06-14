@@ -11982,6 +11982,7 @@ textarea.form-control-lg {
 :root {
   --bs-navbar-brand-font-size: 1.5rem;
   --svg-size: 1rem;
+  --svg-stroke-width: 2;
 }
 
 table {
@@ -11991,32 +11992,28 @@ table {
   overflow: hidden;
   border-radius: var(--bs-border-radius);
 }
-
 @media (max-width: 992px) {
-  thead {
+  table thead {
     display: none;
   }
-  tbody td,
-  tfoot td {
+  table tbody td,
+  table tfoot td {
     display: grid;
-    grid-template-columns: 15ch auto;
+    grid-template-columns: 20ch auto;
   }
-  tbody td:first-child {
-    margin-top: 0.5rem;
-  }
-  tbody td:last-child {
-    margin-bottom: 0.5rem;
-  }
-  tbody td::before {
+  table tbody td::before {
     content: attr(data-cell) ": ";
     font-weight: 600;
   }
 }
+
 .navbar-brand {
   font-weight: 600;
 }
 
 .nav-link {
+  --svg-size: 1.2rem;
+  --svg-stroke-width: 2;
   display: flex;
   align-items: center;
   font-weight: 600;
@@ -12029,33 +12026,21 @@ table {
 }
 @media (min-width: 768px) {
   .nav-link {
+    --svg-stroke-width: 1;
+    --svg-size: 1.5rem;
     flex-direction: column;
     gap: 0;
   }
 }
 
-.nav-svg {
-  display: block;
-  width: 1rem;
-  height: 1rem;
-  stroke-width: 2;
-}
-@media (min-width: 768px) {
-  .nav-svg {
-    width: 1.5rem;
-    height: 1.5rem;
-    stroke-width: 1;
-  }
-}
-
 svg {
-  width: var(--svg-size);
-  height: var(--svg-size);
+  width: var(--svg-size, 1rem);
+  height: var(--svg-size, 1rem);
   display: inline-block;
   vertical-align: middle;
   fill: none;
   stroke: currentColor;
-  stroke-width: 2;
+  stroke-width: var(--svg-stroke-width, 2);
   stroke-linecap: round;
   stroke-linejoin: round;
 }
