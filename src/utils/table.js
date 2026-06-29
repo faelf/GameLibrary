@@ -1,23 +1,34 @@
 import { formatters } from "./formatters.js";
 
-/**
- * Utility object for generating dynamic HTML table structures.
- * Contains methods to programmatically build <thead> and <tbody> elements
- * based on provided data and schema configurations.
- * @namespace
- */
-export const table = {
-  /**
-   * Generates a skeleton loader HTML string for a table.
-   * @param {Object} [config] - Configuration config.
-   * @param {number} [config.rows=5] - Number of rows to generate.
-   * @param {number} [config.cols=10] - Number of columns per row.
-   * @returns {string} The HTML string representing the skeleton rows.
-   */
-  skeleton({ rows = 5, cols = 10 } = {}) {
-    return Array.from(
-      { length: rows },
-      () => `
+export function emptyTable(container) {
+  container.innerHTML = /* html */ `
+  <div class="text-center py-5">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-page mx-auto">
+      <line x1="6" x2="10" y1="11" y2="11"/>
+      <line x1="8" x2="8" y1="9" y2="13"/>
+      <line x1="15" x2="15.01" y1="12" y2="12"/>
+      <line x1="18" x2="18.01" y1="10" y2="10"/>
+      <path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/>
+    </svg>
+    <h4 class="mt-3">No games in your library yet</h4>
+    <p class="text-muted">Click the "Add Game" button to start tracking your collection!</p>
+  </div>`;
+}
+
+export function noResultsFound() {
+  const noResults = /* html */ `
+          <div class="text-center py-5">
+            <span class="bi bi-search display-1 text-muted"></span>
+            <h4 class="mt-3">No results found</h4>
+            <p class="text-muted">Try adjusting your search terms.</p>
+          </div>
+        `;
+}
+
+function skeleton({ rows = 5, cols = 10 } = {}) {
+  return Array.from(
+    { length: rows },
+    () => `
       <tr>
         ${Array.from(
           { length: cols },
@@ -29,135 +40,56 @@ export const table = {
         ).join("")}
       </tr>
     `,
-    ).join("");
-  },
-  _tbody(config) {
-    const { columns, data, options = {} } = config;
-    const tbody = document.createElement("tbody");
+  ).join("");
+}
 
-    const settings = {
-      hyperlink: "title",
-      hyperlinkTarget: "details-page",
-      longDate: "date",
-      currencySymbol: "price",
-      deleteBtn: false,
-      ...options,
-    };
+function tbody({ columns, data }) {
+  const tbody = document.createElement("tbody");
 
-    if (!Array.isArray(settings.longDate)) {
-      settings.longDate = [settings.longDate];
-    }
-    if (!Array.isArray(settings.currencySymbol)) {
-      settings.currencySymbol = [settings.currencySymbol];
-    }
-
-    if (!Array.isArray(data)) {
-      console.error("table._tbody expects an Array of data, got:", data);
-      return tbody;
-    }
-
-    const effectiveColumns = { ...columns };
-    if (settings.deleteBtn) {
-      effectiveColumns.deleteBtn = { labelText: "Delete" };
-    }
-
-    data.forEach((rowData) => {
-      const tr = document.createElement("tr");
-      tr.dataset.itemId = rowData.id;
-
-      if (settings.hyperlink === "table-row") {
-        tr.style.cursor = "pointer";
-        tr.dataset.pageTarget = settings.hyperlinkTarget;
-        tr.dataset.pageTargetId = rowData.id;
-      }
-
-      Object.entries(effectiveColumns).forEach(([key, value]) => {
-        const td = document.createElement("td");
-        td.setAttribute("data-cell", value.labelText);
-
-        let displayValue = rowData[key];
-        if (value.list && value.list[displayValue]) {
-          displayValue = value.list[displayValue];
-        }
-
-        switch (true) {
-          case key === settings.hyperlink:
-            const a = document.createElement("a");
-            a.href = "#";
-            a.className = "text-decoration-none";
-            a.dataset.pageTarget = settings.hyperlinkTarget;
-            a.dataset.pageTargetId = rowData.id;
-            a.innerText = (displayValue !== undefined && displayValue !== "") ? displayValue : "-";
-            td.appendChild(a);
-            break;
-          case key === "deleteBtn" && settings[key] === true:
-            const deleteBtn = document.createElement("button");
-            deleteBtn.className = "btn btn-danger";
-            deleteBtn.dataset.deleteItem = "";
-            deleteBtn.innerHTML = /* html */ `
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md">
-                <path d="M10 11v6" />
-                <path d="M14 11v6" />
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                <path d="M3 6h18" />
-                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-              </svg>`;
-            td.appendChild(deleteBtn);
-            td.className = "text-lg-center";
-            break;
-          case settings.longDate.includes(key):
-            td.innerText = rowData[key]
-              ? formatters.longDate(rowData[key])
-              : "-";
-            break;
-          case settings.currencySymbol.includes(key):
-            td.innerText = formatters.fullPrice(rowData[key]);
-            break;
-          default:
-            td.innerText = (displayValue !== undefined && displayValue !== "") ? displayValue : "-";
-        }
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
-    });
-
-    return tbody;
-  },
-  _thead(config) {
-    const { columns, options = {} } = config;
-    const settings = { deleteBtn: false, ...options };
-    const thead = document.createElement("thead");
+  data.forEach((item) => {
     const tr = document.createElement("tr");
-    thead.appendChild(tr);
+    tr.setAttribute("data-id", item.id);
+    tr.setAttribute("data-href", "game-details-page");
 
-    const effectiveColumns = { ...columns };
-    if (settings.deleteBtn) {
-      effectiveColumns.deleteBtn = { labelText: "Delete" };
+    for (const column of Object.keys(columns)) {
+      const td = document.createElement("td");
+      td.setAttribute("data-cell", columns[column]);
+      td.innerHTML = item[column] ?? "";
+      tr.appendChild(td);
     }
 
-    Object.entries(effectiveColumns).forEach(([key, value]) => {
-      const th = document.createElement("th");
-      th.textContent = value.labelText;
-      tr.appendChild(th);
-    });
+    tbody.appendChild(tr);
+  });
 
-    return thead;
-  },
-  /**
-   * Renders the table header and body.
-   * @param { Object } config
-   * @param { HTMLElement|string } config.table - The <thead> element or its ID.
-   * @param { Object } config.columns - The schema object for columns.
-   * @param { Array<Object> } config.data - The array of data objects.
-   * @param { Object } [config.options] - Optional configuration (hyperlinks, formatting).
-   */
-  render(config) {
-    const tableEl = document.querySelector(config.table);
+  return tbody;
+}
 
-    if (tableEl) {
-      tableEl.innerHTML = "";
-      tableEl.appendChild(this._thead(config));
-      tableEl.appendChild(this._tbody(config));
-    }
-  },
-};
+function thead(columns) {
+  const thead = document.createElement("thead");
+  const tr = document.createElement("tr");
+
+  Object.values(columns).forEach((value) => {
+    const th = document.createElement("th");
+    th.innerText = value;
+    tr.appendChild(th);
+  });
+
+  thead.appendChild(tr);
+
+  return thead;
+}
+
+export function loadTable(config) {
+  // Get the container from the DOM
+  const tableContainer = document.querySelector(config.container);
+  // Clear the container
+  tableContainer.innerHTML = "";
+  // Create the table element
+  const table = document.createElement("table");
+  table.className = "table table-hover";
+  // Append thead and tbody
+  table.appendChild(thead(config.columns));
+  table.appendChild(tbody({ columns: config.columns, data: config.data }));
+  // Append table to container
+  tableContainer.appendChild(table);
+}

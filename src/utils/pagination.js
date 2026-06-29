@@ -1,46 +1,7 @@
-/**
- * @typedef {Object} PaginationOptions
- * @property {string} containerId - The HTML ID of the element to render into.
- * @property {number} totalItems - Total number of items to paginate.
- * @property {number} [itemsPerPage=10] - Number of items per page.
- * @property {number} [currentPage=1] - The current active page number.
- * @property {Function} onPageChange - Callback fired when a page is selected (receives newPage number).
- */
-
-/**
- * @typedef {Object} PageLinkOptions - Configuration for the button.
- * @property {string|number} text - The text to display inside the button.
- * @property {number} pageNumber - The page number this button links to.
- * @property {boolean} isDisabled - Whether the button should be disabled.
- * @property {boolean} isActive - Whether the button represents the current page.
- * @property {Function} onPageChange - Callback function to run on click (receives pageNumber).
- * @property {number} currentPage - The current active page number (used for validation).
- */
-
-/**
- * @typedef {Object} PaginateItems - Pagination options.
- * @property {Array<Object>} items - The full array of items to slice.
- * @property {number} [currentPage=1] - The current page number.
- * @property {number} [itemsPerPage] - Number of items per page (defaults to global default).
- */
-
-/**
- * Utility object for handling pagination logic and rendering.
- * @namespace
- */
 export const pagination = {
-  /**
-   * Default configuration settings.
-   * @property {number} itemsPerPage - Default number of items to show per page (10).
-   */
   default: {
     itemsPerPage: 10,
   },
-  /**
-   * Helper Function: Create a single button (<li><a>...</a></li>).
-   * @param {PageLinkOptions} options
-   * @returns {HTMLLIElement} The constructed list item element.
-   */
   _createPageLink(options) {
     const {
       text,
@@ -186,24 +147,11 @@ export const pagination = {
     // Append the list into the container on the page
     container.appendChild(ul);
   },
-  /**
-   * Calculates the last page number based on total items.
-   * Useful for jumping to the end of the list after adding an item.
-   * @param {Object} lastPage - Configuration object.
-   * @param {number} lastPage.totalItems - Total number of items.
-   * @param {number} [lastPage.itemsPerPage] - Items per page (defaults to global default).
-   * @returns {number} The last page number.
-   */
   getLastPage(lastPage) {
     const itemsPerPage = lastPage.itemsPerPage || this.default.itemsPerPage;
     const page = Math.ceil(lastPage.totalItems / itemsPerPage) || 1;
     return page;
   },
-  /**
-   * Slices an array of items to return only those for the specific page.
-   * @param {PaginateItems} options - Pagination options.
-   * @returns {Array<Object>} The sliced array of items for the current page.
-   */
   paginateItems(options) {
     const {
       items,
@@ -213,12 +161,6 @@ export const pagination = {
     const startIndex = (currentPage - 1) * itemsPerPage;
     return items.slice(startIndex, startIndex + itemsPerPage);
   },
-  /**
-   * Creates a handler function that updates state and re-renders.
-   * @param {Function} updateState - Callback to update the current page (e.g. (p) => currentPage = p).
-   * @param {Function} render - Callback to re-render the content.
-   * @returns {function(number): void} A function that accepts a page number.
-   */
   createPageHandler(updateState, render) {
     return (newPage) => {
       updateState(newPage);
