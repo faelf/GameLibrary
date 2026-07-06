@@ -1,6 +1,6 @@
 import { gameSchema } from "../data/game-schema.js";
 import { config } from "../utils/config.js";
-import { formEngine } from "../utils/forms.js";
+import * as formEngine from "../utils/forms.js";
 import { storages } from "../utils/storages.js";
 import { toast } from "../utils/toast.js";
 import GameDetailsPageHtml from "../html/game-details.html?raw";

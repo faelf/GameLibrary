@@ -1,6 +1,6 @@
 import { config } from "../utils/config.js";
 import { storages } from "../utils/storages.js";
-import { formEngine } from "../utils/forms.js";
+import * as formEngine from "../utils/forms.js";
 import { gameSchema } from "../data/game-schema.js";
 import * as tableUtil from "../utils/table.js";
 import GamesListPageHtml from "../html/games-list.html?raw";
@@ -67,8 +67,6 @@ export const GamesListPage = {
       if (!games || games.length === 0) {
         tableUtil.emptyTable(tableContainer);
       }
-
-      console.log(games);
 
       tableUtil.loadTable({
         container: "#games-container",

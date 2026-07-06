@@ -6,7 +6,7 @@ import { countrySchema } from "../data/country-schema.js";
 import { config } from "../utils/config.js";
 import { toast } from "../utils/toast.js";
 import SettingsPageHtml from "../html/settings.html?raw";
-import { formEngine } from "../utils/forms.js";
+import * as formEngine from "../utils/forms.js";
 
 export const SettingsPage = {
   title: "Settings",
