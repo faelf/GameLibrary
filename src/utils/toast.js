@@ -1,98 +1,84 @@
 /**
- * @module utils/toast
- * Toast utility for displaying notifications.
- * Depends on Bootstrap's Toast component.
+ * @typedef {Object} ToastOptions
+ * @property {string} text - Text to show in the body of the toast.
+ * @property {string} [alert] - Text to trigger the browser's alert.
  */
-export const toast = {
-  /**
-   * Internal method to configure and show the toast.
-   * @param {string} bodyMessage - The main message to display.
-   * @param {string|null} confirmMessage - Optional confirmation message.
-   * @param {string} type - The type of toast ('success', 'error', 'warning', 'info').
-   * @returns {boolean} True if shown (and confirmed if applicable), false otherwise.
-   * @private
-   */
-  _show(bodyMessage, confirmMessage, type) {
-    const config = {
-      success: {
-        title: "Success",
-        icon: "bi bi-check-circle-fill text-success",
-      },
-      error: {
-        title: "Error",
-        icon: "bi bi-x-circle-fill text-danger",
-      },
-      warning: {
-        title: "Warning",
-        icon: "bi bi-exclamation-triangle-fill text-warning",
-      },
-      info: {
-        title: "Info",
-        icon: "bi bi-info-circle-fill text-primary",
-      },
-    };
 
-    // If confirmMessage exists, ask for confirmation
-    if (confirmMessage) {
-      const confirmed = confirm(confirmMessage);
-      if (!confirmed) return false;
-    }
-
-    const toastElement = document.getElementById("app-toast");
-    const icon = toastElement.querySelector(".toast-header span");
-    const toastTitle = toastElement.querySelector(".toast-header strong");
-    const toastBody = document.getElementById("toast-body");
-
-    // Use the config object!
-    toastBody.innerText = bodyMessage;
-    toastTitle.innerText = config[type].title;
-    icon.className = config[type].icon + " me-2";
-
-    const toast = new bootstrap.Toast(toastElement);
-    toast.show();
-    return true;
+const config = {
+  success: {
+    title: "Success",
+    svg: `<path d="M21.801 10A10 10 0 1 1 17 3.335"/>
+          <path d="m9 11 3 3L22 4"/>`,
   },
-  /**
-   * Displays a success toast.
-   * @param {Object} options - Configuration object.
-   * @param {string} options.text - The message to display.
-   * @param {string|null} [options.alert=null] - Optional confirmation prompt.
-   * @returns {boolean} True if confirmed/shown, false if cancelled.
-   */
-  success({ text, alert = null }) {
-    return this._show(text, alert, "success");
+  error: {
+    title: "Error",
+    svg: `<circle cx="12" cy="12" r="10"/>
+          <path d="m15 9-6 6"/>
+          <path d="m9 9 6 6"/>`,
   },
-
-  /**
-   * Displays an error toast.
-   * @param {Object} options - Configuration object.
-   * @param {string} options.text - The message to display.
-   * @param {string|null} [options.alert=null] - Optional confirmation prompt.
-   * @returns {boolean} True if confirmed/shown, false if cancelled.
-   */
-  error({ text, alert = null }) {
-    return this._show(text, alert, "error");
+  warning: {
+    title: "Warning",
+    svg: `<circle cx="12" cy="12" r="10"/>
+          <line x1="12" x2="12" y1="8" y2="12"/>
+          <line x1="12" x2="12.01" y1="16" y2="16"/>`,
   },
-
-  /**
-   * Displays a warning toast.
-   * @param {Object} options - Configuration object.
-   * @param {string} options.text - The message to display.
-   * @param {string|null} [options.alert=null] - Optional confirmation prompt.
-   * @returns {boolean} True if confirmed/shown, false if cancelled.
-   */
-  warning({ text, alert = null }) {
-    return this._show(text, alert, "warning");
-  },
-
-  /**
-   * Displays an info toast.
-   * @param {Object} options - Configuration object.
-   * @param {string} options.text - The message to display.
-   * @param {string|null} [options.alert=null] - Optional confirmation prompt.
-   * @returns {boolean} True if confirmed/shown, false if cancelled.
-   */
-  info({ text, alert = null }) {
-    return this._show(text, alert, "info");
+  info: {
+    title: "Info",
+    svg: `<circle cx="12" cy="12" r="10"/>
+          <path d="M12 16v-4"/>
+          <path d="M12 8h.01"/>`,
   },
 };
+
+function show(bodyMessage, confirmMessage, type) {
+  // If confirmMessage exists, ask for confirmation
+  if (confirmMessage) {
+    const confirmed = confirm(confirmMessage);
+    if (!confirmed) return false;
+  }
+
+  const toastElement = document.querySelector("#app-toast");
+  const toastBody = toastElement.querySelector(".toast-body");
+  const icon = toastElement.querySelector(".toast-header svg");
+  const toastTitle = toastElement.querySelector(".toast-header strong");
+
+  // Use the config object!
+  icon.innerHTML = config[type].svg;
+  toastTitle.innerText = config[type].title;
+  toastBody.innerText = bodyMessage;
+
+  const toast = new bootstrap.Toast(toastElement);
+  toast.show();
+  return true;
+}
+
+/**
+ * @param {ToastOptions} toast
+ */
+export function success({ text, alert = null }) {
+  return show(text, alert, "success");
+}
+
+/**
+ * @param {ToastOptions} toast
+ * ToastOptions
+ *  ├─ text: string
+ *  └─ alert?: string
+ */
+export function error({ text, alert = null }) {
+  return show(text, alert, "error");
+}
+
+/**
+ * @param {ToastOptions} toast
+ */
+export function warning({ text, alert = null }) {
+  return show(text, alert, "warning");
+}
+
+/**
+ * @param {ToastOptions} toast
+ */
+export function info({ text, alert = null }) {
+  return this._show(text, alert, "info");
+}
