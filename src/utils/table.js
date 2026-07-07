@@ -17,12 +17,12 @@ export function emptyTable(container) {
 
 export function noResultsFound() {
   const noResults = /* html */ `
-          <div class="text-center py-5">
-            <span class="bi bi-search display-1 text-muted"></span>
-            <h4 class="mt-3">No results found</h4>
-            <p class="text-muted">Try adjusting your search terms.</p>
-          </div>
-        `;
+    <div class="text-center py-5">
+      <span class="bi bi-search display-1 text-muted"></span>
+      <h4 class="mt-3">No results found</h4>
+      <p class="text-muted">Try adjusting your search terms.</p>
+    </div>
+  `;
 }
 
 function skeleton({ rows = 5, cols = 10 } = {}) {
@@ -45,6 +45,7 @@ function skeleton({ rows = 5, cols = 10 } = {}) {
 
 function tbody({ columns, data }) {
   const tbody = document.createElement("tbody");
+  tbody.className = "table-group-divider";
 
   data.forEach((item) => {
     const tr = document.createElement("tr");
@@ -52,9 +53,18 @@ function tbody({ columns, data }) {
     tr.setAttribute("data-href", "game-details-page");
 
     for (const column of Object.keys(columns)) {
+      const value = item[column];
       const td = document.createElement("td");
       td.setAttribute("data-cell", columns[column]);
-      td.innerHTML = item[column] ?? "";
+
+      if (value && column.toLowerCase().includes("date")) {
+        td.textContent = formatters.longDate(value);
+      } else if (value && column.toLowerCase().includes("price")) {
+        td.textContent = formatters.fullPrice(value);
+      } else {
+        td.textContent = value ?? "-";
+      }
+
       tr.appendChild(td);
     }
 
@@ -66,6 +76,7 @@ function tbody({ columns, data }) {
 
 function thead(columns) {
   const thead = document.createElement("thead");
+  thead.className = "text-center";
   const tr = document.createElement("tr");
 
   Object.values(columns).forEach((value) => {
@@ -86,7 +97,7 @@ export function loadTable(config) {
   tableContainer.innerHTML = "";
   // Create the table element
   const table = document.createElement("table");
-  table.className = "table table-hover";
+  table.className = "table table-striped table-hover align-middle";
   // Append thead and tbody
   table.appendChild(thead(config.columns));
   table.appendChild(tbody({ columns: config.columns, data: config.data }));
