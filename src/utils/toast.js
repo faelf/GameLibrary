@@ -1,8 +1,4 @@
-/**
- * @typedef {Object} ToastOptions
- * @property {string} text - Text to show in the body of the toast.
- * @property {string} [alert] - Text to trigger the browser's alert.
- */
+import * as alerts from "./alerts.js";
 
 const config = {
   success: {
@@ -30,10 +26,10 @@ const config = {
   },
 };
 
-function show(bodyMessage, confirmMessage, type) {
+async function show(bodyMessage, confirmMessage, type, showToast = true) {
   // If confirmMessage exists, ask for confirmation
   if (confirmMessage) {
-    const confirmed = confirm(confirmMessage);
+    const confirmed = await alerts.confirm(confirmMessage);
     if (!confirmed) return false;
   }
 
@@ -42,13 +38,15 @@ function show(bodyMessage, confirmMessage, type) {
   const icon = toastElement.querySelector(".toast-header svg");
   const toastTitle = toastElement.querySelector(".toast-header strong");
 
-  // Use the config object!
-  icon.innerHTML = config[type].svg;
-  toastTitle.innerText = config[type].title;
-  toastBody.innerText = bodyMessage;
+  if (showToast) {
+    // Use the config object!
+    icon.innerHTML = config[type].svg;
+    toastTitle.innerText = config[type].title;
+    toastBody.innerText = bodyMessage;
 
-  const toast = new bootstrap.Toast(toastElement);
-  toast.show();
+    const toast = new bootstrap.Toast(toastElement);
+    toast.show();
+  }
   return true;
 }
 
@@ -56,7 +54,7 @@ function show(bodyMessage, confirmMessage, type) {
  * @param {ToastOptions} toast
  */
 export function success({ text, alert = null }) {
-  return show(text, alert, "success");
+  return show(text, alert, "success", !alert);
 }
 
 /**
@@ -66,19 +64,19 @@ export function success({ text, alert = null }) {
  *  └─ alert?: string
  */
 export function error({ text, alert = null }) {
-  return show(text, alert, "error");
+  return show(text, alert, "error", !alert);
 }
 
 /**
  * @param {ToastOptions} toast
  */
 export function warning({ text, alert = null }) {
-  return show(text, alert, "warning");
+  return show(text, alert, "warning", !alert);
 }
 
 /**
  * @param {ToastOptions} toast
  */
 export function info({ text, alert = null }) {
-  return this._show(text, alert, "info");
+  return show(text, alert, "info", !alert);
 }

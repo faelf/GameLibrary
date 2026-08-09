@@ -11985,12 +11985,38 @@ textarea.form-control-lg {
   --svg-stroke-width: 2;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+input[type=date], input[type=number] {
+  font-variant-numeric: tabular-nums;
+}
+
+textarea {
+  field-sizing: content;
+}
+
 table {
   border-collapse: separate;
   border-spacing: 0;
   border: var(--bs-border-width) solid var(--bs-border-color);
   overflow: hidden;
   border-radius: var(--bs-border-radius);
+  font-variant-numeric: tabular-nums;
 }
 @media (max-width: 992px) {
   table thead {
@@ -12062,7 +12088,8 @@ svg {
 }
 
 .svg-page {
-  --svg-size: calc(1.525rem + 25vh);
+  --svg-size: calc(1.525rem + 10vh);
+  --svg-stroke-width: 1;
 }
 
 .btn {

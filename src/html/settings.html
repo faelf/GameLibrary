@@ -10,37 +10,28 @@
         </div>
         <form id="user-settings-form" class="col-sm-6">
           <div class="mb-3"> <!-- First Name -->
-            <label for="first-name" class="form-label fw-bold">First Name</label>
-            <input type="text" class="form-control" id="first-name" name="first-name" autocomplete="off">
+            <label for="first-name-input" class="form-label fw-bold">First Name</label>
+            <input type="text" class="form-control" id="first-name-input" name="first-name" autocomplete="off">
             <div class="form-text">It will be displayed in the dashboard.</div>
           </div> <!-- First Name Ends -->
 
-          <div id="user-country-container" class="mb-3"> <!-- Coutnry -->
-            <!-- Injected via JavaScript -->
-          </div> <!-- Coutnry Ends -->
+          <div class="mb-3"> <!-- Currency -->
+            <label for="user-country-select" class="form-label fw-bold">Currency</label>
+            <select id="user-country-select" name="user-country" class="form-select">
+              <option value="UK">United Kingdom</option>
+              <option value="BR">Brazil</option>
+            </select>
+          </div> <!-- Currency Ends -->
 
           <div class="mb-3"> <!-- Theme -->
-            <label for="user-theme" class="form-label fw-bold">Page Theme</label>
-            <div class="input-group">
-              <label class="input-group-text" for="user-theme">
-                <span id="theme-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md d-flex align-center">
-                    <path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" />
-                    <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
-                    <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
-                    <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
-                    <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
-                  </svg>
-                </span>
-              </label>
-              <select id="user-theme" name="user-theme" class="form-select">
-                <option value="light">Light Theme</option>
-                <option value="dark">Dark Theme</option>
-              </select>
-            </div>
+            <label for="user-theme-select" class="form-label fw-bold">Theme</label>
+            <select id="user-theme-select" name="user-theme" class="form-select">
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
           </div> <!-- Theme Ends -->
 
-          <div class="d-flex gap-3 justify-content-end">
+          <div class="d-flex gap-3 justify-content-end"> <!-- Buttons -->
             <button type="reset" class="btn btn-warning">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="svg-md me-2">
                 <path d="M9 14 4 9l5-5" />
@@ -56,7 +47,7 @@
               </svg>
               Save
             </button>
-          </div>
+          </div> <!-- Buttons End -->
         </form>
       </div>
     </div> <!-- User Settings Row Ends -->

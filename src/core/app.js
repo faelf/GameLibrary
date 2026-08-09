@@ -1,7 +1,7 @@
-import { config } from "../utils/config.js";
-import { pageContent } from "../pages/index.js";
 import { Router } from "./router.js";
-import { storages } from "../utils/storages.js";
+import { pageContent } from "../pages/index.js";
+import * as config from "../utils/config.js";
+import * as storages from "../utils/storages.js";
 
 const router = new Router({
   contentArea: "#page-content",

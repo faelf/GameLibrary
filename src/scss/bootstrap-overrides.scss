@@ -20,12 +20,38 @@ $btn-font-weight: 700;
   --svg-stroke-width: 2;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+input[type="date"], input[type="number"] {
+  font-variant-numeric: tabular-nums;
+}
+
+textarea {
+  field-sizing: content;
+}
+
 table {
   border-collapse: separate;
   border-spacing: 0;
   border: var(--bs-border-width) solid var(--bs-border-color);
   overflow: hidden;
   border-radius: var(--bs-border-radius);
+  font-variant-numeric: tabular-nums;
   @media (max-width: 992px) {
     thead {
       display: none;
@@ -83,7 +109,7 @@ svg {
 .svg-lg { --svg-size: 1.75rem; }
 .svg-xl { --svg-size: 2.5rem;  }
 .svg-xxl { --svg-size: calc(1.525rem + 3.3vw); }
-.svg-page { --svg-size: calc(1.525rem + 25vh); }
+.svg-page { --svg-size: calc(1.525rem + 10vh); --svg-stroke-width: 1; }
 
 .btn {
   display: flex;

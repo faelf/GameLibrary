@@ -3,12 +3,12 @@ export function wrapper() {
   return wrapper;
 }
 
-export function label(inputId, labelText) {
-  const label = document.createElement("label");
-  label.htmlFor = inputId;
-  label.classList.add("form-label", "fw-bold");
-  label.textContent = labelText;
-  return label;
+export function label(id, labelText) {
+  const labelElement = document.createElement("label");
+  labelElement.htmlFor = id;
+  labelElement.classList.add("form-label", "fw-bold");
+  labelElement.textContent = labelText;
+  return labelElement;
 }
 
 export function helper(text) {
@@ -19,23 +19,21 @@ export function helper(text) {
 }
 
 export function input(config, value = "") {
-  const { inputId, labelText, inputType, placeholder } = config;
+  const { id, label: labelText, type, placeholder, name } = config;
 
   const fieldWrapper = wrapper();
-  const labelEl = label(inputId, labelText);
+  const labelEl = label(id, labelText);
 
   const input = document.createElement("input");
-  input.id = inputId;
-  input.name = inputId;
-  input.type = inputType || "text";
+  input.id = id;
+  input.name = name;
+  input.type = type || "text";
   input.className = "form-control";
 
-  // Only add placeholder if it's NOT a date input
-  if (inputType !== "date" && placeholder) {
+  if (type !== "date" && placeholder) {
     input.placeholder = placeholder;
   }
 
-  // Handle value if provided
   if (value !== null && value !== undefined) {
     input.value = value;
     input.setAttribute("value", value);
@@ -48,10 +46,10 @@ export function input(config, value = "") {
 }
 
 export function inputGroup(config, groupText, value = "") {
-  const { inputId, labelText, inputType, placeholder } = config;
+  const { id, label: labelText, type, placeholder, name } = config;
 
   const fieldWrapper = wrapper();
-  const labelEl = label(inputId, labelText);
+  const labelEl = label(id, labelText);
 
   const inputGroupEl = document.createElement("div");
   inputGroupEl.className = "input-group";
@@ -61,9 +59,9 @@ export function inputGroup(config, groupText, value = "") {
   groupTextSpan.textContent = groupText;
 
   const input = document.createElement("input");
-  input.id = inputId;
-  input.name = inputId;
-  input.type = inputType || "number";
+  input.id = id;
+  input.name = name;
+  input.type = type || "number";
   input.className = "form-control";
 
   if (input.type === "number") {
@@ -86,17 +84,16 @@ export function inputGroup(config, groupText, value = "") {
 }
 
 export function select(config, selectedValue = "") {
-  const { inputId, labelText, list, placeholder } = config;
+  const { id, label: labelText, list, placeholder, name } = config;
 
   const fieldWrapper = wrapper();
-  const labelEl = label(inputId, labelText);
+  const labelEl = label(id, labelText);
 
   const select = document.createElement("select");
-  select.id = inputId;
-  select.name = inputId;
+  select.id = id;
+  select.name = name;
   select.className = "form-select";
 
-  // Create Placeholder
   const defaultOption = document.createElement("option");
   defaultOption.value = "";
   defaultOption.textContent = placeholder || "Select an option...";
@@ -111,14 +108,13 @@ export function select(config, selectedValue = "") {
 
   select.appendChild(defaultOption);
 
-  // Loop options
   if (list) {
-    Object.entries(list).forEach(([key, labelText]) => {
+    list.forEach((optionText) => {
       const option = document.createElement("option");
-      option.value = key;
-      option.textContent = labelText;
+      option.value = optionText;
+      option.textContent = optionText;
 
-      if (String(key) === String(selectedValue)) {
+      if (String(optionText) === String(selectedValue)) {
         option.setAttribute("selected", "");
       }
 
@@ -133,10 +129,10 @@ export function select(config, selectedValue = "") {
 }
 
 export function selectGroup(config, groupText, selectedValue = "") {
-  const { inputId, labelText, list, placeholder, helper } = config;
+  const { id, label: labelText, list, placeholder, helper: helperText, name } = config;
 
   const fieldWrapper = wrapper();
-  const labelEl = label(inputId, labelText);
+  const labelEl = label(id, labelText);
 
   const inputGroupEl = document.createElement("div");
   inputGroupEl.className = "input-group";
@@ -144,12 +140,12 @@ export function selectGroup(config, groupText, selectedValue = "") {
   // Use label for the text span to improve accessibility when clicking the icon
   const groupTextSpan = document.createElement("label");
   groupTextSpan.className = "input-group-text";
-  groupTextSpan.htmlFor = inputId;
+  groupTextSpan.htmlFor = id;
   groupTextSpan.innerHTML = groupText;
 
   const select = document.createElement("select");
-  select.id = inputId;
-  select.name = inputId;
+  select.id = id;
+  select.name = name;
   select.className = "form-select";
 
   // Create Placeholder
@@ -169,12 +165,12 @@ export function selectGroup(config, groupText, selectedValue = "") {
 
   // Loop options
   if (list) {
-    Object.entries(list).forEach(([key, optionLabel]) => {
+    list.forEach((optionLabel) => {
       const option = document.createElement("option");
-      option.value = key;
+      option.value = optionLabel;
       option.textContent = optionLabel;
 
-      if (String(key) === String(selectedValue)) {
+      if (String(optionLabel) === String(selectedValue)) {
         option.setAttribute("selected", "");
       }
 
@@ -187,22 +183,22 @@ export function selectGroup(config, groupText, selectedValue = "") {
   inputGroupEl.appendChild(select);
   fieldWrapper.appendChild(inputGroupEl);
 
-  if (helper) {
-    fieldWrapper.appendChild(this.helper(helper));
+  if (helperText) {
+    fieldWrapper.appendChild(helper(helperText));
   }
 
   return fieldWrapper;
 }
 
 export function textarea(config, rows = 3, value = "") {
-  const { inputId, labelText, placeholder } = config;
+  const { id, label: labelText, placeholder, name } = config;
 
   const fieldWrapper = wrapper();
-  const labelEl = label(inputId, labelText);
+  const labelEl = label(id, labelText);
 
   const textarea = document.createElement("textarea");
-  textarea.id = inputId;
-  textarea.name = inputId;
+  textarea.id = id;
+  textarea.name = name;
   textarea.className = "form-control";
 
   if (placeholder) textarea.placeholder = placeholder;
@@ -221,7 +217,7 @@ export function textarea(config, rows = 3, value = "") {
 }
 
 export function radio(config, checkedValue = "") {
-  const { inputId, labelText, list } = config;
+  const { id, label: labelText, list, name } = config;
 
   const fieldWrapper = wrapper();
 
@@ -238,21 +234,21 @@ export function radio(config, checkedValue = "") {
       const input = document.createElement("input");
       input.className = "form-check-input";
       input.type = "radio";
-      input.name = inputId;
+      input.name = name;
       input.value = key;
-      input.id = `${inputId}-${key}`;
+      input.id = `${id}-${key}`;
 
       if (String(checkedValue) === String(key)) {
         input.setAttribute("checked", "");
       }
 
-      const label = document.createElement("label");
-      label.className = "form-check-label";
-      label.htmlFor = input.id;
-      label.textContent = value;
+      const optionLabel = document.createElement("label");
+      optionLabel.className = "form-check-label";
+      optionLabel.htmlFor = input.id;
+      optionLabel.textContent = value;
 
       checkWrapper.appendChild(input);
-      checkWrapper.appendChild(label);
+      checkWrapper.appendChild(optionLabel);
       fieldWrapper.appendChild(checkWrapper);
     });
   }
@@ -261,7 +257,7 @@ export function radio(config, checkedValue = "") {
 }
 
 export function singleCheckbox(config, isChecked = false) {
-  const { inputId, labelText } = config;
+  const { id, label: labelText, name } = config;
 
   const fieldWrapper = wrapper();
 
@@ -271,27 +267,27 @@ export function singleCheckbox(config, isChecked = false) {
   const input = document.createElement("input");
   input.className = "form-check-input";
   input.type = "checkbox";
-  input.id = inputId;
-  input.name = inputId;
+  input.id = id;
+  input.name = name;
 
   if (isChecked === true || isChecked === "true") {
     input.setAttribute("checked", "");
   }
 
-  const label = document.createElement("label");
-  label.className = "form-check-label";
-  label.htmlFor = inputId;
-  label.textContent = labelText;
+  const checkboxLabel = document.createElement("label");
+  checkboxLabel.className = "form-check-label";
+  checkboxLabel.htmlFor = id;
+  checkboxLabel.textContent = labelText;
 
   formCheck.appendChild(input);
-  formCheck.appendChild(label);
+  formCheck.appendChild(checkboxLabel);
 
   fieldWrapper.appendChild(formCheck);
   return fieldWrapper;
 }
 
 export function multipleCheckbox(config, checkedValues = []) {
-  const { inputId, labelText, list } = config;
+  const { id, label: labelText, list, name } = config;
 
   const fieldWrapper = wrapper();
 
@@ -312,21 +308,21 @@ export function multipleCheckbox(config, checkedValues = []) {
       const input = document.createElement("input");
       input.className = "form-check-input";
       input.type = "checkbox";
-      input.name = inputId;
+      input.name = name;
       input.value = key;
-      input.id = `${inputId}-${key}`;
+      input.id = `${id}-${key}`;
 
       if (safeValues.includes(String(key))) {
         input.setAttribute("checked", "");
       }
 
-      const label = document.createElement("label");
-      label.className = "form-check-label";
-      label.htmlFor = input.id;
-      label.textContent = value;
+      const optionLabel = document.createElement("label");
+      optionLabel.className = "form-check-label";
+      optionLabel.htmlFor = input.id;
+      optionLabel.textContent = value;
 
       checkWrapper.appendChild(input);
-      checkWrapper.appendChild(label);
+      checkWrapper.appendChild(optionLabel);
       fieldWrapper.appendChild(checkWrapper);
     });
   }
@@ -409,36 +405,6 @@ export function render(formConfig) {
   });
 }
 
-export function getFormData(schema) {
-  const data = {};
-
-  Object.keys(schema).forEach((key) => {
-    const config = schema[key];
-    const inputElement = document.getElementById(config.inputId);
-
-    switch (true) {
-      case config.component === "radio":
-        const checked = document.querySelector(
-          `input[name="${config.inputId}"]:checked`,
-        );
-        data[key] = checked ? checked.value : "";
-        break;
-      case inputElement && inputElement.type === "checkbox":
-        data[key] = inputElement.checked;
-        break;
-      case inputElement && config.inputType === "number":
-        data[key] =
-          inputElement.value === "" ? "" : inputElement.valueAsNumber;
-        break;
-      case !!inputElement:
-        data[key] = inputElement.value;
-        break;
-    }
-  });
-
-  return data;
-}
-
 export function getData(formID) {
   const form = document.querySelector(formID);
 
@@ -457,39 +423,10 @@ export function populate({ formID, data }) {
 
     if (!field) return;
 
-    // Checkbox
     if (field.type === "checkbox") {
-      field.checked = value;
-      field.defaultChecked = value;
-      return;
-    }
-
-    // Radio
-    if (field instanceof RadioNodeList || field.type === "radio") {
-      const radios = form.querySelectorAll(
-        `input[name="${key}"][type="radio"]`,
-      );
-
-      if (radios.length > 0) {
-        radios.forEach((radio) => {
-          const isChecked = radio.value === String(value);
-          radio.checked = isChecked;
-          radio.defaultChecked = isChecked;
-        });
-        return;
-      }
-    }
-
-    // Select
-    if (field.tagName === "SELECT") {
+      field.checked = !!value;
+    } else if (field.value !== undefined) {
       field.value = value;
-      Array.from(field.options).forEach((option) => {
-        option.defaultSelected = option.value === String(value);
-      });
-      return;
     }
-
-    field.value = value;
-    field.defaultValue = value;
   });
 }

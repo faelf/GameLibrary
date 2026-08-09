@@ -1,8 +1,7 @@
-import { config } from "../utils/config.js";
-import { formatters } from "../utils/formatters.js";
-import { stats } from "../data/stats.js";
-import { storages } from "../utils/storages.js";
 import HomePageHtml from "../html/home.html?raw";
+import { stats } from "../data/stats.js";
+import * as config from "../utils/config.js";
+import * as storages from "../utils/storages.js";
 
 export const HomePage = {
   title: "Dashboard",
@@ -20,7 +19,7 @@ export const HomePage = {
 
     const totalSpentEl = document.getElementById("total-spent");
     const totalSpent = stats.totalSpent(gamesData);
-    totalSpentEl.innerText = `${formatters.fullPrice(totalSpent)}`;
+    totalSpentEl.innerText = `${config.formatFullPrice(totalSpent)}`;
 
     const completedGamesTotal = stats.completedGames(gamesData);
     const completedGamesTotalEl = document.getElementById("completed-games");

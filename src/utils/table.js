@@ -1,4 +1,4 @@
-import { formatters } from "./formatters.js";
+import * as config from "./config.js";
 
 export function emptyTable(container) {
   container.innerHTML = /* html */ `
@@ -58,11 +58,11 @@ function tbody({ columns, data }) {
       td.setAttribute("data-cell", columns[column]);
 
       if (value && column.toLowerCase().includes("date")) {
-        td.textContent = formatters.longDate(value);
+        td.textContent = config.formatDate(value);
       } else if (value && column.toLowerCase().includes("price")) {
-        td.textContent = formatters.fullPrice(value);
+        td.textContent = config.formatFullPrice(value);
       } else {
-        td.textContent = value ?? "-";
+        td.textContent = value ?? "";
       }
 
       tr.appendChild(td);
@@ -76,11 +76,12 @@ function tbody({ columns, data }) {
 
 function thead(columns) {
   const thead = document.createElement("thead");
-  thead.className = "text-center";
+  thead.className = "text-left align-middle";
   const tr = document.createElement("tr");
 
   Object.values(columns).forEach((value) => {
     const th = document.createElement("th");
+    th.className = "bg-primary text-dark";
     th.innerText = value;
     tr.appendChild(th);
   });
@@ -97,7 +98,7 @@ export function loadTable(config) {
   tableContainer.innerHTML = "";
   // Create the table element
   const table = document.createElement("table");
-  table.className = "table table-striped table-hover align-middle";
+  table.className = "table table-borderless table-hover align-middle";
   // Append thead and tbody
   table.appendChild(thead(config.columns));
   table.appendChild(tbody({ columns: config.columns, data: config.data }));
