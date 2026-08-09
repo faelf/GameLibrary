@@ -11983,6 +11983,23 @@ textarea.form-control-lg {
   --bs-navbar-brand-font-size: 1.5rem;
   --svg-size: 1rem;
   --svg-stroke-width: 2;
+  --table-bg: hsla(0 0% 100% /0.3) !important;
+  --bg-body:
+    radial-gradient( circle at 15% 15%, hsl(190 100% 75% / 0.26), transparent 38% ),
+    radial-gradient( circle at 85% 20%, hsl(210 100% 72% / 0.22), transparent 42% ),
+    radial-gradient( circle at 25% 85%, hsl(170 80% 68% / 0.18), transparent 38% ),
+    radial-gradient( circle at 80% 80%, hsl(185 90% 72% / 0.14), transparent 45% ),
+    linear-gradient( 135deg, hsl(190 45% 98%) 0%, hsl(195 55% 96%) 45%, hsl(205 50% 94%) 100% );
+}
+
+:root[data-bs-theme=dark] {
+  --table-bg: hsla(0 0% 0% /0.3) !important;
+  --bg-body:
+    radial-gradient( circle at 15% 15%, hsl(190 100% 55% / 0.10), transparent 38% ),
+    radial-gradient( circle at 85% 20%, hsl(210 100% 60% / 0.08), transparent 42% ),
+    radial-gradient( circle at 25% 85%, hsl(170 80% 50% / 0.07), transparent 38% ),
+    radial-gradient( circle at 80% 80%, hsl(185 90% 55% / 0.05), transparent 45% ),
+    linear-gradient( 135deg, hsl(195 30% 7%) 0%, hsl(200 28% 10%) 45%, hsl(210 25% 12%) 100% );
 }
 
 ::-webkit-scrollbar {
@@ -12011,6 +12028,7 @@ textarea {
 }
 
 table {
+  --bs-table-bg: var(--table-bg) !important;
   border-collapse: separate;
   border-spacing: 0;
   border: var(--bs-border-width) solid var(--bs-border-color);
@@ -12045,7 +12063,7 @@ table {
   font-weight: 600;
   gap: 0.5rem;
   border-radius: 0.5rem;
-  padding: 0.25rem 0.75rem;
+  padding: 0.5rem 1rem;
 }
 .nav-link:hover {
   background: hsla(0, 0%, 0%, 0.3);
@@ -12054,6 +12072,7 @@ table {
   .nav-link {
     --svg-stroke-width: 1;
     --svg-size: 1.5rem;
+    padding: 0.25rem 0.75rem;
     flex-direction: column;
     gap: 0;
   }
@@ -12100,4 +12119,9 @@ svg {
 
 [data-href] {
   cursor: pointer;
+}
+
+body {
+  background: var(--bg-body);
+  background-repeat: no-repeat;
 }
