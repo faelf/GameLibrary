@@ -1,9 +1,8 @@
-version: "3.8"
-
 services:
   gameslibrary:
-    image: node:20
-    container_name: gameslibrary-dev
+    image: node:24-slim
+    hostname: gameslibrary
+    container_name: gameslibrary
     ports:
       - "8001:5173"
     volumes:
