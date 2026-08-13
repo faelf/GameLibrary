@@ -2,20 +2,24 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   base: "./",
-  // server: {
-  //   port: 4173,
-  // },
-  // preview: {
-  //   port: 4173,
-  // },
+  server: {
+    host: true,
+    port: 5173,
+    allowedHosts: [".faelf.uk", "gameslibrary"],
+  },
+  preview: {
+    host: true,
+    port: 4173,
+    allowedHosts: [".faelf.uk", "gameslibrary"],
+  },
   build: {
     outDir: "dist",
     rollupOptions: {
       input: "index.html",
       output: {
-        entryFileNames: "app.min.js",
-        chunkFileNames: "[name].js",
-        assetFileNames: "[name].[ext]",
+        entryFileNames: "assets/[name]-[hash].js",
+        chunkFileNames: "assets/[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash].[ext]",
       },
     },
     minify: "terser",

@@ -4,9 +4,15 @@ services:
     hostname: gameslibrary
     container_name: gameslibrary
     ports:
-      - "8001:5173"
+      - "8001:4173"
     volumes:
       - .:/app
     working_dir: /app
-    command: npm run dev -- --host 0.0.0.0
+    command: sh -c "npm run build && npm run preview -- --host 0.0.0.0"
     restart: unless-stopped
+    networks:
+      - cloudflare
+
+networks:
+  cloudflare:
+    external: true
