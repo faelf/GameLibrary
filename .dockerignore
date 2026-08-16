@@ -1,0 +1,29 @@
+# Git
+.git/
+.github/
+.gitignore
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.*
+
+# Editor
+.vscode/
+
+# Local development
+.nvmrc
+
+# Docker
+.dockerignore
+docker-compose.yml
+Dockerfile
+
+# Documentation
+readme.md
