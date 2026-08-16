@@ -1,7 +1,6 @@
 services:
-  vite:
+  vite-js:
     build: .
-    image: vite-js
     container_name: gameslibrary
     hostname: home
     ports:
